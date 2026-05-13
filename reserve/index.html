@@ -38,7 +38,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1.05;
     }
-    .res-info h1 em { font-style: italic; color: var(--gold-lt); }
+    .res-info h1 em { font-style: italic; color: var(--gold-2); }
     .res-info p { color: var(--muted); margin-top: 1.2rem; font-size: .88rem; max-width: 360px; }
 
     .hours { margin-top: 3rem; }
@@ -49,7 +49,7 @@
     }
     .hour-row:last-child { border-bottom: none; }
     .hour-row .day { color: rgba(237,232,224,.7); }
-    .hour-row .time { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold-lt); }
+    .hour-row .time { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold-2); }
 
     .res-contact { margin-top: 2.5rem; }
     .rc-row {
@@ -57,12 +57,12 @@
       margin-bottom: 1.1rem; font-size: .82rem; color: var(--muted);
     }
     .rc-icon { color: var(--gold); flex-shrink: 0; }
-    .rc-text a { color: var(--gold-lt); transition: color .3s; }
+    .rc-text a { color: var(--gold-2); transition: color .3s; }
     .rc-text a:hover { color: var(--text); }
 
     /* ── Right panel: form ── */
     .res-panel-form {
-      background: var(--bg2);
+      background: var(--bg-2);
       padding: calc(var(--nav-h) + 4rem) 5vw 4rem;
       display: flex; flex-direction: column; justify-content: center;
       border-left: 1px solid var(--border);
@@ -73,7 +73,7 @@
       font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.1;
       margin-bottom: 2.5rem;
     }
-    .form-title em { font-style: italic; color: var(--gold-lt); }
+    .form-title em { font-style: italic; color: var(--gold-2); }
 
     .form-group { margin-bottom: 1.4rem; }
     .form-group label {
@@ -84,7 +84,7 @@
     .form-group select,
     .form-group textarea {
       width: 100%;
-      background: var(--bg3);
+      background: var(--bg-3);
       border: 1px solid var(--border);
       color: var(--text);
       padding: .9rem 1.1rem;
@@ -98,7 +98,7 @@
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--gold);
-      background: var(--bg4);
+      background: var(--bg-4);
     }
     .form-group textarea { resize: vertical; min-height: 90px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
@@ -113,7 +113,7 @@
       transition: background .3s;
       border: none;
     }
-    .submit-btn:hover { background: var(--gold-lt); }
+    .submit-btn:hover { background: var(--gold-2); }
     .submit-btn svg { transition: transform .3s var(--ease-out); }
     .submit-btn:hover svg { transform: translateX(4px); }
 

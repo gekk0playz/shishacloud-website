@@ -25,12 +25,12 @@
       font-size: clamp(3.5rem, 9vw, 7.5rem);
       font-weight: 300; line-height: .95; letter-spacing: -.02em;
     }
-    .ph-title em { font-style: italic; color: var(--gold-lt); }
+    .ph-title em { font-style: italic; color: var(--gold-2); }
 
     /* ── Category Nav ── */
     .cat-nav {
       position: sticky; top: var(--nav-h); z-index: 200;
-      background: var(--bg2); border-bottom: 1px solid var(--border);
+      background: var(--bg-2); border-bottom: 1px solid var(--border);
       display: flex; overflow-x: auto; scrollbar-width: none;
     }
     .cat-nav::-webkit-scrollbar { display: none; }
@@ -43,7 +43,7 @@
       background: none;
     }
     .cat-btn:hover { color: var(--text); }
-    .cat-btn.active { color: var(--gold-lt); border-bottom-color: var(--gold); }
+    .cat-btn.active { color: var(--gold-2); border-bottom-color: var(--gold); }
 
     /* ── Menu Sections ── */
     .menu-section { padding: 7rem 5vw; border-bottom: 1px solid var(--border); }
@@ -54,7 +54,7 @@
       font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.05;
       margin-top: .8rem;
     }
-    .ms-header h2 em { font-style: italic; color: var(--gold-lt); }
+    .ms-header h2 em { font-style: italic; color: var(--gold-2); }
     .ms-header p { color: var(--muted); font-size: .88rem; margin-top: .8rem; max-width: 520px; }
 
     .ms-image {
@@ -76,7 +76,7 @@
       background: var(--bg); padding: 1.5rem 1.8rem;
       transition: background .3s;
     }
-    .flavour-item:hover { background: var(--bg3); }
+    .flavour-item:hover { background: var(--bg-3); }
     .fi-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.2rem; font-weight: 300;
@@ -92,7 +92,7 @@
       background: var(--bg); padding: 2.5rem 2.2rem;
       position: relative;
     }
-    .sp-item.featured { background: var(--bg3); }
+    .sp-item.featured { background: var(--bg-3); }
     .sp-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem; font-weight: 300;
@@ -100,7 +100,7 @@
     .sp-desc { font-size: .8rem; color: var(--muted); margin-top: .4rem; line-height: 1.55; }
     .sp-price {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem; font-weight: 300; color: var(--gold-lt);
+      font-size: 3rem; font-weight: 300; color: var(--gold-2);
       margin-top: 1.2rem; line-height: 1;
     }
     .sp-price small { font-size: 1.2rem; color: var(--muted); }
@@ -122,7 +122,7 @@
     .sp-extra-row span:last-child { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
     .shisha-note {
       margin-top: 2rem; padding: 1.5rem 2rem;
-      border: 1px solid var(--border); background: var(--bg3);
+      border: 1px solid var(--border); background: var(--bg-3);
       font-size: .75rem; color: var(--muted); line-height: 1.65;
     }
     .shisha-note strong { color: var(--gold); }
@@ -144,7 +144,7 @@
       display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
       transition: background .3s;
     }
-    .d-item:hover { background: var(--bg3); }
+    .d-item:hover { background: var(--bg-3); }
     .d-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.2rem; font-weight: 300;
@@ -152,7 +152,7 @@
     .d-desc { font-size: .75rem; color: var(--muted); margin-top: .2rem; line-height: 1.5; }
     .d-price {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem; color: var(--gold-lt); flex-shrink: 0; white-space: nowrap;
+      font-size: 1.2rem; color: var(--gold-2); flex-shrink: 0; white-space: nowrap;
     }
 
     /* Shots row */
@@ -165,9 +165,9 @@
       display: flex; justify-content: space-between; align-items: center;
       transition: background .3s;
     }
-    .shot-item:hover { background: var(--bg3); }
+    .shot-item:hover { background: var(--bg-3); }
     .shot-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; }
-    .shot-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-lt); }
+    .shot-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-2); }
 
     /* ── Snacks ── */
     .snacks-grid {
@@ -187,7 +187,7 @@
     .sn-item:last-child { border-bottom: none; }
     .sn-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; }
     .sn-desc { font-size: .74rem; color: var(--muted); margin-top: .2rem; line-height: 1.4; }
-    .sn-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-lt); flex-shrink: 0; }
+    .sn-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-2); flex-shrink: 0; }
     .allergy-note {
       margin-top: 2.5rem; padding: 1.2rem 1.8rem;
       border: 1px solid var(--border); font-size: .73rem; color: var(--muted); line-height: 1.6;
@@ -209,7 +209,7 @@
       font-size: .85rem; color: var(--muted);
     }
     .sangria-table td:first-child { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; color: var(--text); }
-    .sangria-table td:not(:first-child) { text-align: right; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold-lt); }
+    .sangria-table td:not(:first-child) { text-align: right; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold-2); }
     .sangria-table tr:last-child td { border-bottom: none; }
 
     @media (max-width: 700px) {
@@ -347,7 +347,7 @@
   </section>
 
   <!-- ────── COCKTAILS ────── -->
-  <section class="menu-section" id="cocktails" style="background: var(--bg2);">
+  <section class="menu-section" id="cocktails" style="background: var(--bg-2);">
     <div class="ms-header">
       <div class="section-tag r">Bar Menu</div>
       <h2 class="r d1">Cocktails &<br><em>Spirits</em></h2>
@@ -470,7 +470,7 @@
   </section>
 
   <!-- ────── BEBIDAS ────── -->
-  <section class="menu-section" id="bebidas" style="background: var(--bg2);">
+  <section class="menu-section" id="bebidas" style="background: var(--bg-2);">
     <div class="ms-header">
       <div class="section-tag r">Bebidas</div>
       <h2 class="r d1">Drinks &<br><em>Beverages</em></h2>
