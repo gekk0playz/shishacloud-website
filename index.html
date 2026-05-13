@@ -13,20 +13,53 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       overflow: hidden; text-align: center;
     }
-    /* Aurora orbs */
-    .orb {
-      position: absolute; border-radius: 50%; filter: blur(100px);
-      pointer-events: none; will-change: transform;
+
+    /* Parallax layers — each moves at different scroll speed */
+    .hero-layer { position: absolute; inset: 0; pointer-events: none; }
+
+    /* Background shisha photo */
+    .hero-bg-img {
+      position: absolute; inset: -15%;   /* oversized so parallax has room */
+      background-image: url('https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=88&auto=format&fit=crop');
+      background-size: cover; background-position: center 35%;
+      will-change: transform;
     }
-    .orb-1 { width: 700px; height: 500px; top: -15%; left: -15%; background: radial-gradient(circle, rgba(201,151,60,.14) 0%, transparent 70%); animation: orbFloat1 20s ease-in-out infinite alternate; }
-    .orb-2 { width: 500px; height: 600px; top: 20%; right: -10%; background: radial-gradient(circle, rgba(160,110,30,.1) 0%, transparent 70%); animation: orbFloat2 25s ease-in-out infinite alternate; }
-    .orb-3 { width: 400px; height: 400px; bottom: 0%; left: 35%; background: radial-gradient(circle, rgba(201,151,60,.08) 0%, transparent 70%); animation: orbFloat3 18s ease-in-out infinite alternate; }
-    @keyframes orbFloat1 { from { transform: translate(0,0) scale(1);     } to { transform: translate(60px,-40px) scale(1.1); } }
-    @keyframes orbFloat2 { from { transform: translate(0,0) scale(1);     } to { transform: translate(-50px,60px) scale(.9); } }
-    @keyframes orbFloat3 { from { transform: translate(0,0) scale(1);     } to { transform: translate(40px,-30px) scale(1.08); } }
+
+    /* Deep colour tint - sits above photo */
+    .hero-color-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 60%, rgba(5,4,10,.25) 0%, rgba(5,4,10,.72) 60%, rgba(5,4,10,.96) 100%),
+        linear-gradient(to top, rgba(5,4,10,1) 0%, rgba(5,4,10,.4) 45%, rgba(5,4,10,.15) 100%);
+    }
+
+    /* Gold glow above the hookah */
+    .hero-glow {
+      position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(201,151,60,.22) 0%, transparent 70%);
+      filter: blur(40px);
+      will-change: transform; pointer-events: none;
+    }
+
+    /* Smoke canvas */
+    #smoke-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 2; opacity: .65;
+    }
+
+    /* Grain */
+    #hero .grain { z-index: 3; opacity: .025; }
+
+    /* Content wrapper — all text lives here, moves as one unit */
+    .hero-content {
+      position: relative; z-index: 5;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 var(--gutter);
+      will-change: transform;
+    }
 
     .hero-eyebrow {
-      position: relative; z-index: 4;
       display: inline-flex; align-items: center; gap: .6rem;
       background: rgba(201,151,60,.1); border: 1px solid rgba(201,151,60,.22);
       padding: .38rem 1.1rem; border-radius: 100px;
@@ -37,28 +70,28 @@
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
     .hero-title {
-      position: relative; z-index: 4;
-      font-family: var(--serif); font-size: clamp(5rem, 13vw, 11rem);
+      font-family: var(--serif);
+      font-size: clamp(5rem, 13vw, 11rem);
       font-weight: 300; line-height: .9; letter-spacing: -.025em;
+      color: var(--text);
       opacity: 0;
     }
     .hero-title .line1 { display: block; }
-    .hero-title .line2 { display: block; font-style: italic; }
+    .hero-title .line2 { display: block; font-style: italic; color: var(--gold-2); }
 
     .hero-sub {
-      position: relative; z-index: 4; margin-top: 1.8rem;
+      margin-top: 1.8rem;
       font-size: clamp(.82rem, 1.4vw, 1rem); color: var(--text-2); letter-spacing: .04em;
       max-width: 460px; line-height: 1.75; opacity: 0;
     }
 
     .hero-cta {
-      position: relative; z-index: 4; margin-top: 2.8rem;
+      margin-top: 2.8rem;
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0;
     }
 
-    /* Floating chips */
     .hero-chips {
-      position: relative; z-index: 4; margin-top: 3.5rem;
+      margin-top: 3.2rem;
       display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; opacity: 0;
     }
     .chip {
@@ -69,12 +102,11 @@
       transition: border-color .25s, background .25s, color .25s;
     }
     .chip:hover { border-color: var(--border-g); color: var(--gold-2); background: rgba(201,151,60,.06); }
-    .chip .chip-icon { color: var(--gold); font-size: .7rem; line-height: 1; }
+    .chip-icon { color: var(--gold); font-size: .7rem; line-height: 1; }
 
-    /* Scroll indicator */
     .hero-scroll {
       position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .5rem; z-index: 4;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem; z-index: 5;
       opacity: 0;
     }
     .hero-scroll span { font-size: .5rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(155,141,126,.5); }
@@ -308,37 +340,48 @@
 
   <!-- ══ HERO ══ -->
   <section id="hero">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="dot-grid"></div>
+    <!-- Layer 0: photo (slowest on scroll) -->
+    <div class="hero-bg-img" id="heroBg"></div>
+    <!-- Layer 1: colour overlay -->
+    <div class="hero-color-overlay"></div>
+    <!-- Layer 2: gold glow above hookah (mid depth) -->
+    <div class="hero-glow" id="heroGlow"></div>
+    <!-- Layer 3: smoke (faster than photo) -->
+    <canvas id="smoke-canvas"></canvas>
+    <!-- Layer 4: dot grid -->
+    <div class="dot-grid" id="heroDotGrid"></div>
+    <!-- Layer 5: grain -->
     <div class="grain"></div>
 
-    <div class="hero-eyebrow">
-      <span class="dot"></span>
-      Almada · Portugal · Est. 2023
+    <!-- Content (fastest — lifts away on scroll) -->
+    <div class="hero-content" id="heroContent">
+      <div class="hero-eyebrow">
+        <span class="dot"></span>
+        Almada · Portugal · Est. 2023
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">Shisha</span>
+        <span class="line2">Cloud</span>
+      </h1>
+      <p class="hero-sub">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
+      <div class="hero-cta">
+        <a href="/reserve/" class="btn btn-fill magnet">
+          Reserve a Table
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="/menu/" class="btn btn-stroke">
+          Explore Menu
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="hero-chips">
+        <span class="chip"><span class="chip-icon">◆</span>11 Sabores</span>
+        <span class="chip"><span class="chip-icon">◆</span>Cocktails & Bar</span>
+        <span class="chip"><span class="chip-icon">◆</span>Seg–Dom · 18h–02h</span>
+        <span class="chip"><span class="chip-icon">◆</span>Almada, Portugal</span>
+      </div>
     </div>
-    <h1 class="hero-title">
-      <span class="line1 g-text">Shisha</span>
-      <span class="line2 g-text">Cloud</span>
-    </h1>
-    <p class="hero-sub">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
-    <div class="hero-cta">
-      <a href="/reserve/" class="btn btn-fill magnet">
-        Reserve a Table
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="/menu/" class="btn btn-stroke">
-        Explore Menu
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="hero-chips">
-      <span class="chip"><span class="chip-icon">◆</span>11 Sabores</span>
-      <span class="chip"><span class="chip-icon">◆</span>Cocktails & Bar</span>
-      <span class="chip"><span class="chip-icon">◆</span>Seg–Dom · 18h–02h</span>
-      <span class="chip"><span class="chip-icon">◆</span>Almada, Portugal</span>
-    </div>
+
     <div class="hero-scroll">
       <span>Scroll</span>
       <div class="hero-scroll-line"></div>
@@ -575,20 +618,118 @@
       });
     });
 
-    /* 3D gallery scroll-driven depth */
+    /* ══ SMOKE CANVAS ══ */
+    (function(){
+      const c = document.getElementById('smoke-canvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      let W, H, pts = [];
+      function resize(){ W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+      window.addEventListener('resize', resize); resize();
+      function rand(a,b){ return a + Math.random()*(b-a); }
+      function spawn(){
+        return { x: rand(W*.25, W*.75), y: rand(H*.45, H*.82),
+          vx: rand(-.3,.3), vy: rand(-.8,-.3), r: rand(35,90),
+          life: 0, max: rand(220,400), hue: rand(26,42) };
+      }
+      for(let i=0;i<28;i++){ const p=spawn(); p.life=Math.random()*p.max; pts.push(p); }
+      function frame(){
+        ctx.clearRect(0,0,W,H);
+        if(Math.random()<.04 && pts.length<50) pts.push(spawn());
+        pts = pts.filter(p=>{
+          p.life++; p.x += p.vx + Math.sin(p.life*.02)*.35; p.y += p.vy; p.r += .14;
+          const t = p.life/p.max;
+          const a = t<.2 ? (t/.2)*.16 : (1-t)*.16;
+          if(a<=0||p.life>=p.max) return false;
+          const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);
+          g.addColorStop(0, `hsla(${p.hue},50%,52%,${a})`);
+          g.addColorStop(1, `hsla(${p.hue},35%,38%,0)`);
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle=g; ctx.fill();
+          return true;
+        });
+        requestAnimationFrame(frame);
+      }
+      frame();
+    })();
+
+    /* ══ SCROLL PARALLAX — pull layers in/out at different depths ══ */
+    (function(){
+      const bg      = document.getElementById('heroBg');
+      const glow    = document.getElementById('heroGlow');
+      const dots    = document.getElementById('heroDotGrid');
+      const content = document.getElementById('heroContent');
+      const heroEl  = document.getElementById('hero');
+      if (!bg || !content) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroEl,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2,
+          invalidateOnRefresh: true
+        }
+      });
+
+      /* Background photo: moves slowest — feels furthest away */
+      tl.to(bg,      { yPercent: 22, scale: 1.12, ease: 'none' }, 0);
+      /* Glow: mid depth */
+      tl.to(glow,    { yPercent: -18, opacity: 0, ease: 'none' }, 0);
+      /* Dot grid: moves slightly */
+      tl.to(dots,    { yPercent: 10, ease: 'none' }, 0);
+      /* Content: fastest — lifts out of frame */
+      tl.to(content, { yPercent: -38, opacity: 0, ease: 'none' }, 0);
+    })();
+
+    /* ══ MOUSE PARALLAX — 3D tilt + depth shift ══ */
+    (function(){
+      const hero    = document.getElementById('hero');
+      const bg      = document.getElementById('heroBg');
+      const glow    = document.getElementById('heroGlow');
+      const content = document.getElementById('heroContent');
+      if (!hero || !bg) return;
+
+      let targetX=0, targetY=0, curX=0, curY=0;
+      let raf;
+
+      hero.addEventListener('mousemove', e => {
+        const r = hero.getBoundingClientRect();
+        targetX = (e.clientX - r.left) / r.width  - .5;   // -0.5 → 0.5
+        targetY = (e.clientY - r.top)  / r.height - .5;
+      });
+      hero.addEventListener('mouseleave', () => { targetX=0; targetY=0; });
+
+      function tick(){
+        curX += (targetX - curX) * .06;
+        curY += (targetY - curY) * .06;
+
+        /* Background: shift in same direction as mouse (parallax near) */
+        gsap.set(bg,      { x: curX * 38, y: curY * 28 });
+        /* Glow: slightly more movement */
+        gsap.set(glow,    { x: curX * 55, y: curY * 40 });
+        /* Content: shift opposite (depth illusion) */
+        gsap.set(content, { x: curX * -16, y: curY * -12 });
+
+        raf = requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    /* ══ 3D gallery scene tilt ══ */
     (function(){
       const scene = document.getElementById('g3scene');
       const track = document.getElementById('g3track');
       if (!scene || !track) return;
-      let tilt = 0;
-      const items = track.querySelectorAll('.g3-item');
       track.addEventListener('mousemove', e => {
         const r = track.getBoundingClientRect();
-        tilt = ((e.clientX - r.left) / r.width - .5) * 6;
-        scene.style.transform = `perspective(1100px) rotateY(${tilt}deg)`;
+        const tilt = ((e.clientX - r.left) / r.width - .5) * 6;
+        gsap.to(scene, { rotateY: tilt, duration: .8, ease: 'power2.out', overwrite: 'auto' });
       });
       track.addEventListener('mouseleave', () => {
-        scene.style.transform = '';
+        gsap.to(scene, { rotateY: 0, duration: 1, ease: 'power2.out' });
       });
     })();
   </script>

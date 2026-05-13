@@ -51,11 +51,16 @@ button { font-family: inherit; background: none; border: none; }
 ::-webkit-scrollbar-thumb { background: var(--gold); }
 @media (pointer:coarse) { body { cursor: auto; } }
 
-/* Gradient text utility */
-.g-text {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-3) 50%, var(--gold-2) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+/* Gradient text — only applies where browser supports it */
+@supports (-webkit-background-clip: text) {
+  .g-text {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-3) 52%, var(--gold-2) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
 }
+/* Fallback for browsers that don't support it */
+.g-text { color: var(--gold-2); }
 
 /* Glass card */
 .glass {
