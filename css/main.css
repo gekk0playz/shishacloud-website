@@ -244,5 +244,55 @@ footer {
   .nav-burger { display: flex; }
   footer { grid-template-columns: 1fr; text-align: center; }
   .f-copy { text-align: center; }
-  .f-links { justify-content: center; }
+  .f-links { justify-content: center; flex-wrap: wrap; gap: 1.2rem; }
+}
+
+/* ── Mobile / Touch ── */
+html { -webkit-text-size-adjust: 100%; }
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+body { overscroll-behavior-y: contain; }
+
+/* Prevent iOS input zoom — must be ≥ 16px */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+    border-radius: 0;
+  }
+}
+
+/* Minimum 44px tap targets on touch devices */
+@media (pointer: coarse) {
+  .btn, .nav-reserve, .cat-btn, .ig-handle,
+  .f-links a, .social-btn, .nav-burger { min-height: 44px; }
+  .nav-burger { width: 44px; justify-content: center; }
+  /* Disable magnetic — no hover on touch */
+  .magnet { transform: none !important; transition: none !important; }
+}
+
+/* Mobile nav: add Reserve link + better spacing */
+@media (max-width: 860px) {
+  .mobile-nav { gap: 0; padding: 2.5rem 2rem; justify-content: center; }
+  .mobile-nav a {
+    width: 100%; text-align: center; padding: 1rem 0;
+    font-size: 2.4rem; border-bottom: 1px solid rgba(200,146,42,.08);
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mob-reserve-link {
+    margin-top: 2rem;
+    border: 1px solid var(--border) !important;
+    color: var(--gold-lt) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: .7rem !important; letter-spacing: .2em;
+    text-transform: uppercase; padding: 1rem 2.5rem !important;
+    font-weight: 400 !important;
+  }
+}
+
+/* Tighten small screens */
+@media (max-width: 480px) {
+  :root { --nav-h: 64px; }
+  nav#nav { padding: 0 1.2rem; }
+  footer { padding: 2rem 1.2rem; gap: 1rem; }
+  .f-links { gap: 1rem; }
+  .pre-wordmark { font-size: 1.1rem; letter-spacing: .22em; }
 }

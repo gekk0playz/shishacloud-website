@@ -120,12 +120,17 @@
     /* ── Responsive ── */
     @media (max-width: 860px) {
       .reserve-page { grid-template-columns: 1fr; }
-      .res-panel-img { min-height: 50vh; }
-      .res-info { padding: calc(var(--nav-h) + 2rem) 1.4rem 3rem; }
-      .res-panel-form { padding: 3.5rem 1.4rem; }
+      .res-panel-img { min-height: 45vh; }
+      .res-info { padding: calc(var(--nav-h) + 2rem) 1.2rem 3rem; }
+      .res-info h1 { font-size: 2.4rem; }
+      .res-panel-form { padding: 3rem 1.2rem 4rem; border-left: none; border-top: 1px solid var(--border); }
+      .form-title { font-size: 1.8rem; margin-bottom: 2rem; }
     }
     @media (max-width: 520px) {
       .form-row { grid-template-columns: 1fr; }
+      .res-panel-img { min-height: 38vh; }
+      .hours { margin-top: 1.8rem; }
+      .hour-row { font-size: .78rem; }
     }
   </style>
 </head>
@@ -153,6 +158,7 @@
     <a href="/gallery/" onclick="closeMob()">Gallery</a>
     <a href="/reserve/" onclick="closeMob()">Reserve</a>
   </div>
+
 
   <main class="reserve-page">
     <!-- Left: info panel -->
@@ -278,7 +284,7 @@
         (f.notes.value ? `📝 Pedidos especiais: ${f.notes.value}\n` : '') +
         `\nObrigado!`
       );
-      window.open(`https://wa.me/351960098846?text=${msg}`, '_blank');
+      window.open(`https://wa.me/351937374037?text=${msg}`, '_blank');
     }
   </script>
 </body>

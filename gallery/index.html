@@ -156,8 +156,24 @@
     .lb-next { right: 1.5rem; }
     .lb-prev:hover, .lb-next:hover { color: var(--gold-lt); }
 
-    @media (max-width: 900px) { .masonry { columns: 2; } }
-    @media (max-width: 560px) { .masonry { columns: 1; } .ws-item { height: 280px; } #lightbox { padding: 1rem; } }
+    @media (max-width: 900px) { .masonry { columns: 2; column-gap: 3px; } }
+    @media (max-width: 560px) {
+      .masonry { columns: 1; }
+      .ws-item { height: 240px; }
+      .ws-item img { min-width: 260px; }
+      #lightbox { padding: .5rem; }
+      #lightbox img { max-height: 75vh; }
+      .lb-prev { left: .3rem; }
+      .lb-next { right: .3rem; }
+      .lb-close { top: 1rem; right: 1rem; }
+      .ph-title { font-size: clamp(3rem, 18vw, 6rem); }
+      .ph-content { padding: 0 1.2rem 4rem; }
+      .gallery-intro { padding: 3rem 1.2rem; flex-direction: column; gap: 1.5rem; }
+      .ig-section { padding: 4rem 1.2rem; }
+      .full-bleed { height: 55vh; }
+      .fb-content h2 { font-size: 2rem; }
+      .fb-content .btn { display: inline-flex; }
+    }
   </style>
 </head>
 <body>
@@ -183,6 +199,7 @@
     <a href="/menu/"    onclick="closeMob()">Menu</a>
     <a href="/gallery/" onclick="closeMob()">Gallery</a>
     <a href="/reserve/" onclick="closeMob()">Reserve</a>
+    <a href="/reserve/" onclick="closeMob()" class="mob-reserve-link">Book a Table</a>
   </div>
 
   <!-- Page Hero -->
@@ -381,6 +398,14 @@
       if (e.key === 'Escape') closeLb();
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
+    });
+
+    // Touch swipe for lightbox
+    let lbTouchX = 0;
+    lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - lbTouchX;
+      if (Math.abs(dx) > 50) dx > 0 ? prev() : next();
     });
   </script>
 </body>

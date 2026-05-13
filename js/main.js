@@ -133,8 +133,9 @@ function startReveal() {
     cObs.observe(el);
   });
 
-  /* Horizontal drag scroll */
+  /* Horizontal drag + touch scroll */
   document.querySelectorAll('.drag-scroll').forEach(track => {
+    // Mouse
     let down = false, sx, sl;
     track.style.cursor = 'grab';
     track.addEventListener('mousedown', e => { down = true; sx = e.pageX - track.offsetLeft; sl = track.scrollLeft; track.style.cursor = 'grabbing'; });
@@ -144,6 +145,10 @@ function startReveal() {
       if (!down) return;
       track.scrollLeft = sl - (e.pageX - track.offsetLeft - sx) * 1.6;
     });
+    // Touch
+    let tx = 0, tsl = 0;
+    track.addEventListener('touchstart', e => { tx = e.touches[0].pageX; tsl = track.scrollLeft; }, { passive: true });
+    track.addEventListener('touchmove',  e => { track.scrollLeft = tsl - (e.touches[0].pageX - tx) * 1.2; }, { passive: true });
   });
 
   /* Magnetic buttons */

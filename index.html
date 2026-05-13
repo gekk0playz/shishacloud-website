@@ -284,14 +284,26 @@
       #reserve-cta { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      #intro { padding: 6rem 1.4rem; }
-      .split-body { padding: 4rem 1.4rem; }
-      .cards-header { padding: 5rem 1.4rem 2rem; }
-      #gallery-strip { padding: 4rem 0; }
-      .gs-header { padding: 0 1.4rem 2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .gs-item { height: 300px; }
-      #manifesto { padding: 7rem 1.4rem; }
-      #reserve-cta { padding: 6rem 1.4rem; }
+      #intro { padding: 5rem 1.2rem; }
+      .split-body { padding: 3.5rem 1.2rem; }
+      .cards-header { padding: 4rem 1.2rem 2rem; }
+      #gallery-strip { padding: 3.5rem 0; }
+      .gs-header { padding: 0 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .gs-item { height: 260px; }
+      .gs-item img { min-width: 220px; }
+      #manifesto { padding: 5rem 1.2rem; }
+      #reserve-cta { padding: 4.5rem 1.2rem; }
+      .rcta-stats-row { grid-template-columns: 1fr 1fr; }
+      .hero-content { padding: 0 1.2rem 6vh; }
+      .hero-title { font-size: clamp(3.2rem, 18vw, 6rem); }
+      .hero-sub { font-size: .82rem; }
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { justify-content: center; }
+      .intro-text h2 { font-size: 2rem; }
+      .split-body h2 { font-size: 2rem; }
+      .cards-header h2 { font-size: 2rem; }
+      .manifesto-content blockquote { font-size: 1.7rem; }
+      .rcta-left h2 { font-size: 2rem; }
     }
   </style>
 </head>
@@ -324,6 +336,7 @@
     <a href="/menu/"    onclick="closeMob()">Menu</a>
     <a href="/gallery/" onclick="closeMob()">Gallery</a>
     <a href="/reserve/" onclick="closeMob()">Reserve</a>
+    <a href="/reserve/" onclick="closeMob()" class="mob-reserve-link">Book a Table</a>
   </div>
 
   <!-- Hero -->

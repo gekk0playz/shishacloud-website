@@ -213,10 +213,23 @@
     .sangria-table tr:last-child td { border-bottom: none; }
 
     @media (max-width: 700px) {
-      .menu-section { padding: 4.5rem 1.4rem; }
+      .menu-section { padding: 4rem 1.2rem; }
+      .ms-header { margin-bottom: 2.5rem; }
+      .ms-header h2 { font-size: 2rem; }
+      .ms-image { aspect-ratio: 16/8; }
       .snacks-grid { grid-template-columns: 1fr; }
       .bebidas-cols { grid-template-columns: 1fr; }
       .drinks-list { grid-template-columns: 1fr; }
+      .flavour-grid { grid-template-columns: 1fr 1fr; }
+      .shots-grid { grid-template-columns: 1fr 1fr; }
+      .shisha-prices { grid-template-columns: 1fr; }
+      .ph-title { font-size: clamp(3rem, 18vw, 6rem); }
+      .ph-content { padding: 0 1.2rem 4rem; }
+      .sangria-table { font-size: .78rem; }
+    }
+    @media (max-width: 400px) {
+      .flavour-grid { grid-template-columns: 1fr; }
+      .shots-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -243,6 +256,7 @@
     <a href="/menu/"    onclick="closeMob()">Menu</a>
     <a href="/gallery/" onclick="closeMob()">Gallery</a>
     <a href="/reserve/" onclick="closeMob()">Reserve</a>
+    <a href="/reserve/" onclick="closeMob()" class="mob-reserve-link">Book a Table</a>
   </div>
 
   <!-- Page Hero -->
