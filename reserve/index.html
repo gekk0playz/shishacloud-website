@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserve · Shisha Cloud Almada</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    /* ── Page layout ── */
+    .reserve-page {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── Left panel: image + info ── */
+    .res-panel-img {
+      position: relative;
+      overflow: hidden;
+      min-height: 100dvh;
+    }
+    .res-panel-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.4) saturate(.75);
+    }
+    .res-panel-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(8,6,6,.6) 0%, transparent 100%);
+    }
+    .res-info {
+      position: relative; z-index: 1;
+      padding: calc(var(--nav-h) + 4rem) 5vw 4rem 5vw;
+      height: 100%;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .res-info h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1.05;
+    }
+    .res-info h1 em { font-style: italic; color: var(--gold-lt); }
+    .res-info p { color: var(--muted); margin-top: 1.2rem; font-size: .88rem; max-width: 360px; }
+
+    .hours { margin-top: 3rem; }
+    .hours-title { font-size: .6rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hour-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .8rem 0; border-bottom: 1px solid var(--border); font-size: .82rem;
+    }
+    .hour-row:last-child { border-bottom: none; }
+    .hour-row .day { color: rgba(237,232,224,.7); }
+    .hour-row .time { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold-lt); }
+
+    .res-contact { margin-top: 2.5rem; }
+    .rc-row {
+      display: flex; align-items: center; gap: .9rem;
+      margin-bottom: 1.1rem; font-size: .82rem; color: var(--muted);
+    }
+    .rc-icon { color: var(--gold); flex-shrink: 0; }
+    .rc-text a { color: var(--gold-lt); transition: color .3s; }
+    .rc-text a:hover { color: var(--text); }
+
+    /* ── Right panel: form ── */
+    .res-panel-form {
+      background: var(--bg2);
+      padding: calc(var(--nav-h) + 4rem) 5vw 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid var(--border);
+    }
+    .res-panel-form .section-tag { margin-bottom: 1.5rem; }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.1;
+      margin-bottom: 2.5rem;
+    }
+    .form-title em { font-style: italic; color: var(--gold-lt); }
+
+    .form-group { margin-bottom: 1.4rem; }
+    .form-group label {
+      display: block; font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .5rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: .9rem 1.1rem;
+      font-family: 'Inter', sans-serif; font-size: .88rem; font-weight: 300;
+      outline: none;
+      transition: border-color .3s, background .3s;
+      -webkit-appearance: none; border-radius: 0;
+    }
+    .form-group select { cursor: none; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: var(--bg4);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-note { font-size: .72rem; color: var(--muted); margin-top: .5rem; }
+
+    .submit-btn {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: .8rem;
+      background: var(--gold); color: #000;
+      padding: 1.1rem 2rem;
+      font-size: .7rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+      cursor: none; margin-top: 1rem;
+      transition: background .3s;
+      border: none;
+    }
+    .submit-btn:hover { background: var(--gold-lt); }
+    .submit-btn svg { transition: transform .3s var(--ease-out); }
+    .submit-btn:hover svg { transform: translateX(4px); }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .reserve-page { grid-template-columns: 1fr; }
+      .res-panel-img { min-height: 50vh; }
+      .res-info { padding: calc(var(--nav-h) + 2rem) 1.4rem 3rem; }
+      .res-panel-form { padding: 3.5rem 1.4rem; }
+    }
+    @media (max-width: 520px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div id="pt"></div>
+
+  <nav id="nav">
+    <a href="/" class="nav-logo">Shisha <em>Cloud</em></a>
+    <ul class="nav-links">
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
+    </ul>
+    <a href="/reserve/" class="nav-reserve">Book a Table</a>
+    <button class="nav-burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/"         onclick="closeMob()">Home</a>
+    <a href="/menu/"    onclick="closeMob()">Menu</a>
+    <a href="/gallery/" onclick="closeMob()">Gallery</a>
+    <a href="/reserve/" onclick="closeMob()">Reserve</a>
+  </div>
+
+  <main class="reserve-page">
+    <!-- Left: info panel -->
+    <div class="res-panel-img">
+      <img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=1400&q=85&auto=format&fit=crop"
+           alt="Shisha Cloud Lounge" />
+      <div class="res-panel-img-overlay"></div>
+      <div class="res-info">
+        <div class="section-tag r">Reserve</div>
+        <h1 class="r d1">Reserve your<br><em>evening</em></h1>
+        <p class="r d2">Secure your table for the full Shisha Cloud experience. Walk-ins welcome subject to availability.</p>
+
+        <div class="hours r d3">
+          <div class="hours-title">Opening Hours</div>
+          <div class="hour-row"><span class="day">Monday – Thursday</span><span class="time">18:00 – 02:00</span></div>
+          <div class="hour-row"><span class="day">Friday</span><span class="time">18:00 – 04:00</span></div>
+          <div class="hour-row"><span class="day">Saturday</span><span class="time">17:00 – 04:00</span></div>
+          <div class="hour-row"><span class="day">Sunday</span><span class="time">17:00 – 02:00</span></div>
+        </div>
+
+        <div class="res-contact r d4">
+          <div class="rc-row">
+            <svg class="rc-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="rc-text">Almada, Setúbal, Portugal</div>
+          </div>
+          <div class="rc-row">
+            <svg class="rc-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+            <div class="rc-text"><a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener">@shishacloud_almada</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="res-panel-form">
+      <div class="section-tag r">Make a Booking</div>
+      <h2 class="form-title r d1">Your table<br><em>awaits</em></h2>
+
+      <form id="resForm" onsubmit="sendReservation(event)">
+        <div class="form-row">
+          <div class="form-group r d1">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group r d2">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" name="phone" placeholder="+351 ..." required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group r d2">
+            <label>Date</label>
+            <input type="date" name="date" id="dateInput" required />
+          </div>
+          <div class="form-group r d3">
+            <label>Arrival Time</label>
+            <input type="time" name="time" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group r d3">
+            <label>Number of Guests</label>
+            <select name="guests">
+              <option>1–2 guests</option>
+              <option selected>3–4 guests</option>
+              <option>5–6 guests</option>
+              <option>7–10 guests</option>
+              <option>Private event (10+)</option>
+            </select>
+          </div>
+          <div class="form-group r d4">
+            <label>Shisha Preference</label>
+            <select name="flavour">
+              <option>No preference</option>
+              <option>Fruity (mango, peach, lychee…)</option>
+              <option>Minty (mint, ice, cool blends)</option>
+              <option>Classic (double apple, grape)</option>
+              <option>Cloud Mix (our house blend)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group r d4">
+          <label>Special Requests</label>
+          <textarea name="notes" placeholder="Birthday, anniversary, dietary requirements, specific table…"></textarea>
+          <div class="form-note">Your reservation will be confirmed via WhatsApp.</div>
+        </div>
+        <button type="submit" class="submit-btn r d5 magnet">
+          Send Reservation via WhatsApp
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-3.9-.95L3 21l1.95-5.6a8.5 8.5 0 1 1 16.05-3.9z"/></svg>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="f-logo">Shisha Cloud</div>
+    <ul class="f-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+    <div class="f-copy">© 2025 Shisha Cloud · Almada</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    /* Set min date */
+    document.getElementById('dateInput').min = new Date().toISOString().split('T')[0];
+
+    function sendReservation(e) {
+      e.preventDefault();
+      const f = e.target;
+      const msg = encodeURIComponent(
+        `Olá Shisha Cloud! 🌿\n\nGostaria de fazer uma reserva:\n\n` +
+        `👤 Nome: ${f.name.value}\n` +
+        `📞 Contacto: ${f.phone.value}\n` +
+        `📅 Data: ${f.date.value}\n` +
+        `🕐 Hora: ${f.time.value}\n` +
+        `👥 Convidados: ${f.guests.value}\n` +
+        `💨 Preferência de Shisha: ${f.flavour.value}\n` +
+        (f.notes.value ? `📝 Pedidos especiais: ${f.notes.value}\n` : '') +
+        `\nObrigado!`
+      );
+      window.open(`https://wa.me/351000000000?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>

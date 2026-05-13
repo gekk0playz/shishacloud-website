@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery · Shisha Cloud Almada</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    /* ── Page Hero ── */
+    .page-hero {
+      position: relative; height: 62vh; min-height: 420px;
+      display: flex; align-items: flex-end; overflow: hidden;
+    }
+    .ph-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=1920&q=85&auto=format&fit=crop');
+      background-size: cover; background-position: center 30%;
+    }
+    .ph-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,6,6,.95) 0%, rgba(8,6,6,.25) 100%);
+    }
+    .ph-content { position: relative; z-index: 1; padding: 0 5vw 5rem; }
+    .ph-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 300; line-height: .95; letter-spacing: -.02em;
+    }
+    .ph-title em { font-style: italic; color: var(--gold-lt); }
+
+    /* ── Intro strip ── */
+    .gallery-intro {
+      padding: 5rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 3rem; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+    .gallery-intro p { color: var(--muted); font-size: .88rem; max-width: 500px; }
+
+    /* ── Masonry Grid ── */
+    #grid { padding: 3px; }
+    .masonry {
+      columns: 3; column-gap: 3px;
+    }
+    .grid-item {
+      break-inside: avoid; margin-bottom: 3px;
+      position: relative; overflow: hidden; cursor: none;
+    }
+    .grid-item img {
+      display: block; width: 100%;
+      transition: transform .7s var(--ease-out), filter .7s;
+      filter: brightness(.72) saturate(.8);
+    }
+    .grid-item:hover img { transform: scale(1.04); filter: brightness(.88) saturate(1); }
+    .grid-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,6,6,.75) 0%, transparent 55%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .grid-item:hover .grid-item-overlay { opacity: 1; }
+    .grid-item-label {
+      position: absolute; bottom: 1.2rem; left: 1.4rem;
+      font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--text); opacity: 0; transition: opacity .4s;
+      transform: translateY(6px); transition: opacity .4s, transform .4s;
+    }
+    .grid-item:hover .grid-item-label { opacity: 1; transform: none; }
+
+    /* ── Wide strip ── */
+    #wide-strip {
+      padding: 3px 0;
+      display: flex; gap: 3px; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    #wide-strip::-webkit-scrollbar { display: none; }
+    .ws-item {
+      flex-shrink: 0; height: 560px; overflow: hidden; position: relative;
+    }
+    .ws-item img {
+      height: 100%; width: auto; min-width: 380px;
+      object-fit: cover;
+      filter: brightness(.7) saturate(.82);
+      transition: transform .7s var(--ease-out), filter .7s;
+    }
+    .ws-item:hover img { transform: scale(1.04); filter: brightness(.88) saturate(1); }
+
+    /* ── Full-bleed ── */
+    .full-bleed {
+      position: relative; height: 70vh; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .fb-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.5) saturate(.7);
+    }
+    .fb-content {
+      position: relative; z-index: 1; text-align: center; padding: 0 5vw;
+    }
+    .fb-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; line-height: 1.1;
+    }
+    .fb-content h2 em { font-style: italic; color: var(--gold-lt); }
+    .fb-content p { color: var(--muted); margin-top: 1rem; font-size: .88rem; }
+    .fb-content .btn-fill { margin-top: 2.5rem; }
+
+    /* ── Instagram section ── */
+    .ig-section {
+      padding: 7rem 5vw;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .ig-section .section-tag { justify-content: center; }
+    .ig-section .section-tag::before { display: none; }
+    .ig-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; margin-top: 1rem;
+    }
+    .ig-section h2 em { font-style: italic; color: var(--gold-lt); }
+    .ig-section p { color: var(--muted); margin-top: 1rem; max-width: 440px; margin-left: auto; margin-right: auto; font-size: .88rem; }
+    .ig-handle {
+      display: inline-flex; align-items: center; gap: .8rem;
+      margin-top: 2.5rem;
+      font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold-lt); border: 1px solid var(--border);
+      padding: 1rem 2rem; transition: background .3s, border-color .3s;
+    }
+    .ig-handle:hover { background: var(--gold-dim); border-color: var(--gold); }
+    .ig-icon { flex-shrink: 0; }
+
+    /* ── Lightbox ── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9000;
+      background: rgba(8,6,6,.97);
+      align-items: center; justify-content: center;
+      padding: 4rem;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 100%; max-height: 85vh;
+      object-fit: contain;
+    }
+    .lb-close {
+      position: absolute; top: 2rem; right: 2.5rem;
+      cursor: none; color: var(--muted); font-size: 1.5rem;
+      line-height: 1; transition: color .3s;
+    }
+    .lb-close:hover { color: var(--text); }
+    .lb-prev, .lb-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      cursor: none; color: var(--muted); padding: 1rem;
+      transition: color .3s;
+    }
+    .lb-prev { left: 1.5rem; }
+    .lb-next { right: 1.5rem; }
+    .lb-prev:hover, .lb-next:hover { color: var(--gold-lt); }
+
+    @media (max-width: 900px) { .masonry { columns: 2; } }
+    @media (max-width: 560px) { .masonry { columns: 1; } .ws-item { height: 280px; } #lightbox { padding: 1rem; } }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div id="pt"></div>
+
+  <nav id="nav">
+    <a href="/" class="nav-logo">Shisha <em>Cloud</em></a>
+    <ul class="nav-links">
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
+    </ul>
+    <a href="/reserve/" class="nav-reserve">Book a Table</a>
+    <button class="nav-burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/"         onclick="closeMob()">Home</a>
+    <a href="/menu/"    onclick="closeMob()">Menu</a>
+    <a href="/gallery/" onclick="closeMob()">Gallery</a>
+    <a href="/reserve/" onclick="closeMob()">Reserve</a>
+  </div>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="ph-bg parallax" data-py="16%"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <div class="section-tag">Visual Journey</div>
+      <h1 class="ph-title">
+        <span class="split-line"><span class="hero-word">Our</span></span>
+        <span class="split-line"><em class="hero-word">Gallery</em></span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- Intro -->
+  <div class="gallery-intro">
+    <div>
+      <div class="section-tag r">Inside Shisha Cloud</div>
+      <p class="r d1">A glimpse into the atmosphere, the craft, and the moments that make Shisha Cloud unlike anything else in Almada.</p>
+    </div>
+    <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="ig-handle r">
+      <svg class="ig-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4.5"/>
+        <circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/>
+      </svg>
+      @shishacloud_almada
+    </a>
+  </div>
+
+  <!-- Masonry Grid -->
+  <section id="grid">
+    <div class="masonry" id="masonryGrid">
+      <div class="grid-item r" data-src="https://images.unsplash.com/photo-1635547821500-77542481940c?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1635547821500-77542481940c?w=700&q=85&auto=format&fit=crop" alt="The Lounge" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">The Lounge</div>
+      </div>
+      <div class="grid-item r d1" data-src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=700&q=85&auto=format&fit=crop" alt="Premium Shisha" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Premium Shisha</div>
+      </div>
+      <div class="grid-item r d2" data-src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=700&q=85&auto=format&fit=crop" alt="The Bar" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">The Bar</div>
+      </div>
+      <div class="grid-item r d3" data-src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=700&q=85&auto=format&fit=crop" alt="Evening Ambience" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Evening Ambience</div>
+      </div>
+      <div class="grid-item r" data-src="https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=700&q=85&auto=format&fit=crop" alt="Signature Session" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Signature Session</div>
+      </div>
+      <div class="grid-item r d1" data-src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=700&q=85&auto=format&fit=crop" alt="Hookah Craft" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Hookah Craft</div>
+      </div>
+      <div class="grid-item r d2" data-src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=700&q=85&auto=format&fit=crop" alt="Cloud Series" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Cloud Series</div>
+      </div>
+      <div class="grid-item r d3" data-src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=700&q=85&auto=format&fit=crop" alt="Shisha Bar" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Shisha Bar</div>
+      </div>
+      <div class="grid-item r" data-src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=700&q=85&auto=format&fit=crop" alt="The Ritual" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">The Ritual</div>
+      </div>
+      <div class="grid-item r d1" data-src="https://images.unsplash.com/photo-1574238919966-5cb3d9693a4b?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1574238919966-5cb3d9693a4b?w=700&q=85&auto=format&fit=crop" alt="Evening Sessions" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Evening Sessions</div>
+      </div>
+      <div class="grid-item r d2" data-src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=1200&q=85&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=700&q=85&auto=format&fit=crop" alt="Bar Atmosphere" loading="lazy" />
+        <div class="grid-item-overlay"></div>
+        <div class="grid-item-label">Bar Atmosphere</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wide horizontal strip -->
+  <div id="wide-strip" class="drag-scroll">
+    <div class="ws-item">
+      <img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=900&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+    </div>
+    <div class="ws-item">
+      <img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+    </div>
+    <div class="ws-item">
+      <img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=800&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+    </div>
+    <div class="ws-item">
+      <img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=900&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+    </div>
+  </div>
+
+  <!-- Full-bleed CTA -->
+  <div class="full-bleed">
+    <img class="fb-img parallax" data-py="15%"
+         src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=1920&q=85&auto=format&fit=crop"
+         alt="" loading="lazy" />
+    <div class="fb-content r">
+      <h2>Ready to<br><em>experience it?</em></h2>
+      <p>Reserve your table and make it a night to remember.</p>
+      <a href="/reserve/" class="btn btn-fill magnet" style="display:inline-flex; margin-top:2.5rem;">
+        Book a Table
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Instagram CTA -->
+  <div class="ig-section">
+    <div class="section-tag r">Follow Us</div>
+    <h2 class="r d1">More moments on<br><em>Instagram</em></h2>
+    <p class="r d2">New sessions, special nights, and exclusive flavour drops — all on our Instagram.</p>
+    <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="ig-handle r d3">
+      <svg class="ig-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4.5"/>
+        <circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/>
+      </svg>
+      @shishacloud_almada
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="f-logo">Shisha Cloud</div>
+    <ul class="f-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
+      <li><a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+    <div class="f-copy">© 2025 Shisha Cloud · Almada</div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <button class="lb-close" id="lbClose" aria-label="Close">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="2" y1="2" x2="20" y2="20"/><line x1="20" y1="2" x2="2" y2="20"/></svg>
+    </button>
+    <button class="lb-prev" id="lbPrev" aria-label="Previous">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3l-8 8 8 8"/></svg>
+    </button>
+    <img id="lbImg" src="" alt="" />
+    <button class="lb-next" id="lbNext" aria-label="Next">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3l8 8-8 8"/></svg>
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    /* Lightbox */
+    const items = Array.from(document.querySelectorAll('.grid-item'));
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    let cur = 0;
+
+    function openLb(i) {
+      cur = i;
+      lbImg.src = items[i].dataset.src;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function prev() { cur = (cur - 1 + items.length) % items.length; lbImg.src = items[cur].dataset.src; }
+    function next() { cur = (cur + 1) % items.length; lbImg.src = items[cur].dataset.src; }
+
+    items.forEach((el, i) => el.addEventListener('click', () => openLb(i)));
+    document.getElementById('lbClose').addEventListener('click', closeLb);
+    document.getElementById('lbPrev').addEventListener('click', prev);
+    document.getElementById('lbNext').addEventListener('click', next);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+  </script>
+</body>
+</html>

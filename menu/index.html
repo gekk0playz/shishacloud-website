@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu · Shisha Cloud Almada</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    /* ── Page Hero ── */
+    .page-hero {
+      position: relative;
+      height: 62vh; min-height: 420px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .ph-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=1920&q=85&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+    }
+    .ph-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,6,6,.95) 0%, rgba(8,6,6,.3) 100%);
+    }
+    .ph-content {
+      position: relative; z-index: 1;
+      padding: 0 5vw 5rem;
+    }
+    .ph-content .section-tag { margin-bottom: 1.2rem; }
+    .ph-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 300; line-height: .95;
+      letter-spacing: -.02em;
+    }
+    .ph-title em { font-style: italic; color: var(--gold-lt); }
+
+    /* ── Category Nav ── */
+    .cat-nav {
+      position: sticky; top: var(--nav-h); z-index: 200;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 0;
+      overflow-x: auto; overflow-y: hidden;
+      scrollbar-width: none;
+    }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      flex-shrink: 0;
+      padding: 1.1rem 2rem;
+      font-size: .63rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--muted); cursor: none;
+      border-bottom: 2px solid transparent;
+      transition: color .3s, border-color .3s;
+    }
+    .cat-btn:hover { color: var(--text); }
+    .cat-btn.active { color: var(--gold-lt); border-bottom-color: var(--gold); }
+
+    /* ── Menu Section ── */
+    .menu-section { padding: 7rem 5vw; border-bottom: 1px solid var(--border); }
+    .menu-section:last-of-type { border-bottom: none; }
+    .ms-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4vw; align-items: end;
+      margin-bottom: 5rem;
+    }
+    .ms-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.05;
+    }
+    .ms-header h2 em { font-style: italic; color: var(--gold-lt); }
+    .ms-header p { color: var(--muted); font-size: .88rem; max-width: 400px; }
+    .ms-image {
+      width: 100%; aspect-ratio: 16/7;
+      overflow: hidden; margin-bottom: 4rem; position: relative;
+    }
+    .ms-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.75) saturate(.85);
+      transition: transform 8s ease;
+    }
+    .ms-image:hover img { transform: scale(1.03); }
+
+    /* Flavour grid */
+    .flavour-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+    .flavour-item {
+      background: var(--bg);
+      padding: 1.6rem 1.8rem;
+      position: relative;
+      transition: background .3s;
+    }
+    .flavour-item:hover { background: var(--bg3); }
+    .fi-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 300;
+    }
+    .fi-desc { font-size: .77rem; color: var(--muted); margin-top: .3rem; line-height: 1.5; }
+    .fi-tag {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      font-size: .55rem; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--border); padding: .2rem .55rem;
+    }
+
+    /* Cocktails / beverages list */
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+      background: var(--border);
+    }
+    .drink-item {
+      background: var(--bg);
+      padding: 1.8rem 2rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1rem;
+      transition: background .3s;
+    }
+    .drink-item:hover { background: var(--bg3); }
+    .di-left { flex: 1; }
+    .di-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 300;
+    }
+    .di-desc { font-size: .78rem; color: var(--muted); margin-top: .25rem; line-height: 1.5; }
+    .di-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--gold-lt); flex-shrink: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .ms-header { grid-template-columns: 1fr; }
+      .menu-section { padding: 4rem 1.4rem; }
+      .drinks-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div id="pt"></div>
+
+  <nav id="nav">
+    <a href="/" class="nav-logo">Shisha <em>Cloud</em></a>
+    <ul class="nav-links">
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
+    </ul>
+    <a href="/reserve/" class="nav-reserve">Book a Table</a>
+    <button class="nav-burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/"         onclick="closeMob()">Home</a>
+    <a href="/menu/"    onclick="closeMob()">Menu</a>
+    <a href="/gallery/" onclick="closeMob()">Gallery</a>
+    <a href="/reserve/" onclick="closeMob()">Reserve</a>
+  </div>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="ph-bg parallax" data-py="16%"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <div class="section-tag">Our Offerings</div>
+      <h1 class="ph-title">
+        <span class="split-line"><span class="hero-word">Our</span></span>
+        <span class="split-line"><em class="hero-word">Menu</em></span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- Category Nav -->
+  <nav class="cat-nav" id="catNav">
+    <button class="cat-btn active" onclick="scrollTo('shisha', this)">Shisha</button>
+    <button class="cat-btn" onclick="scrollTo('cocktails', this)">Cocktails</button>
+    <button class="cat-btn" onclick="scrollTo('mocktails', this)">Mocktails</button>
+    <button class="cat-btn" onclick="scrollTo('beverages', this)">Beverages</button>
+  </nav>
+
+  <!-- ── Shisha Section ── -->
+  <section class="menu-section" id="shisha">
+    <div class="ms-header">
+      <div>
+        <div class="section-tag r">Premium Shisha</div>
+        <h2 class="r d1">50+ hand-selected<br><em>flavours</em></h2>
+      </div>
+      <p class="r d2">Every shisha is prepared fresh at your table using natural coals and premium tobacco blends, ensuring an authentic and smooth experience every time.</p>
+    </div>
+    <div class="ms-image r">
+      <img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=1600&q=85&auto=format&fit=crop" alt="Premium shisha" loading="lazy" />
+    </div>
+    <div class="flavour-grid">
+      <div class="flavour-item r"><span class="fi-tag">Classic</span><div class="fi-name">Double Apple</div><div class="fi-desc">The timeless staple — rich apple with a subtle anise finish.</div></div>
+      <div class="flavour-item r d1"><span class="fi-tag">Popular</span><div class="fi-name">Mint & Lemon</div><div class="fi-desc">Cool, crisp mint with a sharp citrus edge.</div></div>
+      <div class="flavour-item r d2"><div class="fi-name">Blueberry Ice</div><div class="fi-desc">Deep berry sweetness with an icy exhale.</div></div>
+      <div class="flavour-item r d3"><div class="fi-name">Watermelon</div><div class="fi-desc">Light and refreshing, ideal for warm evenings.</div></div>
+      <div class="flavour-item r d4"><div class="fi-name">Grape & Mint</div><div class="fi-desc">Smooth grape layered with a cooling mint finish.</div></div>
+      <div class="flavour-item r"><div class="fi-name">Peach</div><div class="fi-desc">Velvet-soft peach with a delicate sweetness.</div></div>
+      <div class="flavour-item r d1"><span class="fi-tag">Signature</span><div class="fi-name">Mango Tango</div><div class="fi-desc">Tropical mango with a tangy twist — one of our originals.</div></div>
+      <div class="flavour-item r d2"><div class="fi-name">Lychee</div><div class="fi-desc">Exotic and floral, a cult favourite.</div></div>
+      <div class="flavour-item r d3"><div class="fi-name">Strawberry Fields</div><div class="fi-desc">Ripe strawberry, clean and smooth.</div></div>
+      <div class="flavour-item r d4"><div class="fi-name">Guava Sunrise</div><div class="fi-desc">Bright, tropical guava with a citrus lift.</div></div>
+      <div class="flavour-item r"><div class="fi-name">Gum & Rose</div><div class="fi-desc">Aromatic and uniquely Middle Eastern.</div></div>
+      <div class="flavour-item r d1"><div class="fi-name">Cola Ice</div><div class="fi-desc">The nostalgic cola sweetness, ice-cold.</div></div>
+      <div class="flavour-item r d2"><div class="fi-name">Orange Citrus</div><div class="fi-desc">Zesty orange with a clean, dry finish.</div></div>
+      <div class="flavour-item r d3"><span class="fi-tag">Signature</span><div class="fi-name">Cloud Mix</div><div class="fi-desc">Our exclusive house blend — ask your server for today's edition.</div></div>
+      <div class="flavour-item r d4"><div class="fi-name">Coconut Cream</div><div class="fi-desc">Smooth, tropical, and subtly sweet.</div></div>
+      <div class="flavour-item r"><div class="fi-name">Berry Mix</div><div class="fi-desc">A vibrant medley of mixed berries.</div></div>
+    </div>
+  </section>
+
+  <!-- ── Cocktails Section ── -->
+  <section class="menu-section" id="cocktails" style="background: var(--bg2);">
+    <div class="ms-header">
+      <div>
+        <div class="section-tag r">Bar Menu</div>
+        <h2 class="r d1">Signature<br><em>Cocktails</em></h2>
+      </div>
+      <p class="r d2">Our bartenders craft each cocktail to complement your shisha session — from refreshing citrus pairings to rich, amber-toned evening drinks.</p>
+    </div>
+    <div class="ms-image r">
+      <img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=1600&q=85&auto=format&fit=crop" alt="Signature cocktails" loading="lazy" />
+    </div>
+    <div class="drinks-grid">
+      <div class="drink-item r"><div class="di-left"><div class="di-name">Cloud Negroni</div><div class="di-desc">Gin, Campari, sweet vermouth, smoke-infused orange peel</div></div><div class="di-price">12€</div></div>
+      <div class="drink-item r d1"><div class="di-left"><div class="di-name">Golden Sour</div><div class="di-desc">Bourbon, fresh lemon, honey syrup, egg white foam</div></div><div class="di-price">11€</div></div>
+      <div class="drink-item r d2"><div class="di-left"><div class="di-name">Mango Spritz</div><div class="di-desc">Fresh mango purée, prosecco, elderflower, chilli salt rim</div></div><div class="di-price">12€</div></div>
+      <div class="drink-item r d3"><div class="di-left"><div class="di-name">Rose Petal Martini</div><div class="di-desc">Vodka, rose water, lychee, fresh lime</div></div><div class="di-price">13€</div></div>
+      <div class="drink-item r"><div class="di-left"><div class="di-name">Almada Old Fashioned</div><div class="di-desc">Rye whiskey, Angostura, wild orange bitters, cedar smoke</div></div><div class="di-price">14€</div></div>
+      <div class="drink-item r d1"><div class="di-left"><div class="di-name">Midnight Storm</div><div class="di-desc">Dark rum, blackberry, ginger beer, fresh mint</div></div><div class="di-price">11€</div></div>
+      <div class="drink-item r d2"><div class="di-left"><div class="di-name">The Sundown</div><div class="di-desc">Tequila, blood orange, Aperol, agave, smoked salt</div></div><div class="di-price">12€</div></div>
+      <div class="drink-item r d3"><div class="di-left"><div class="di-name">Jasmine Highball</div><div class="di-desc">Japanese whisky, jasmine tea syrup, yuzu, soda</div></div><div class="di-price">14€</div></div>
+    </div>
+  </section>
+
+  <!-- ── Mocktails Section ── -->
+  <section class="menu-section" id="mocktails">
+    <div class="ms-header">
+      <div>
+        <div class="section-tag r">Non-Alcoholic</div>
+        <h2 class="r d1">Mocktails &<br><em>Elixirs</em></h2>
+      </div>
+      <p class="r d2">Crafted with the same care as our cocktail menu — no alcohol, no compromise.</p>
+    </div>
+    <div class="drinks-grid">
+      <div class="drink-item r"><div class="di-left"><div class="di-name">Passion Sunrise</div><div class="di-desc">Passionfruit, orange, ginger, sparkling water</div></div><div class="di-price">7€</div></div>
+      <div class="drink-item r d1"><div class="di-left"><div class="di-name">Garden Cooler</div><div class="di-desc">Cucumber, fresh mint, lime, elderflower, soda</div></div><div class="di-price">7€</div></div>
+      <div class="drink-item r d2"><div class="di-left"><div class="di-name">Hibiscus Fizz</div><div class="di-desc">Hibiscus syrup, lemon, rose water, ginger ale</div></div><div class="di-price">7€</div></div>
+      <div class="drink-item r d3"><div class="di-left"><div class="di-name">Berry Bliss</div><div class="di-desc">Mixed berries, lemon, basil, sparkling water</div></div><div class="di-price">7€</div></div>
+      <div class="drink-item r"><div class="di-left"><div class="di-name">Tropical Storm</div><div class="di-desc">Mango, coconut water, pineapple, lime, chilli</div></div><div class="di-price">7€</div></div>
+      <div class="drink-item r d1"><div class="di-left"><div class="di-name">Midnight Blue</div><div class="di-desc">Blueberry, lavender, lemon, tonic</div></div><div class="di-price">7€</div></div>
+    </div>
+  </section>
+
+  <!-- ── Beverages ── -->
+  <section class="menu-section" id="beverages" style="background: var(--bg2);">
+    <div class="ms-header">
+      <div>
+        <div class="section-tag r">Drinks</div>
+        <h2 class="r d1">Teas &<br><em>Beverages</em></h2>
+      </div>
+      <p class="r d2">From fresh-brewed loose-leaf teas to premium soft drinks and specialty coffees.</p>
+    </div>
+    <div class="drinks-grid">
+      <div class="drink-item r"><div class="di-left"><div class="di-name">Moroccan Mint Tea</div><div class="di-desc">Fresh mint, loose-leaf green tea, served ceremonially</div></div><div class="di-price">4€</div></div>
+      <div class="drink-item r d1"><div class="di-left"><div class="di-name">Masala Chai</div><div class="di-desc">Spiced black tea, milk, cardamom, cinnamon</div></div><div class="di-price">4€</div></div>
+      <div class="drink-item r d2"><div class="di-left"><div class="di-name">Rose & Cardamom Tea</div><div class="di-desc">Dried rose, cardamom pods, light honey</div></div><div class="di-price">4€</div></div>
+      <div class="drink-item r d3"><div class="di-left"><div class="di-name">Specialty Coffee</div><div class="di-desc">Espresso, cortado, or flat white — single origin</div></div><div class="di-price">3€</div></div>
+      <div class="drink-item r"><div class="di-left"><div class="di-name">Fresh Juices</div><div class="di-desc">Orange, watermelon, or mixed fruit — pressed to order</div></div><div class="di-price">5€</div></div>
+      <div class="drink-item r d1"><div class="di-left"><div class="di-name">Still & Sparkling Water</div><div class="di-desc">Premium bottled water</div></div><div class="di-price">2€</div></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="f-logo">Shisha Cloud</div>
+    <ul class="f-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
+      <li><a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+    <div class="f-copy">© 2025 Shisha Cloud · Almada</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    /* Category nav scroll spy */
+    function scrollTo(id, btn) {
+      const el = document.getElementById(id);
+      if (el) lenis.scrollTo(el, { offset: -130, duration: 1.2 });
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    const sections = ['shisha','cocktails','mocktails','beverages'].map(id => document.getElementById(id));
+    window.addEventListener('scroll', () => {
+      sections.forEach((s, i) => {
+        if (!s) return;
+        const rect = s.getBoundingClientRect();
+        if (rect.top <= 160 && rect.bottom > 160) {
+          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.cat-btn')[i].classList.add('active');
+        }
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>

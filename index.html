@@ -3,1126 +3,581 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Shisha Cloud — Almada's premium shisha lounge. Relax, exhale, escape." />
-  <title>Shisha Cloud | Almada</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <meta name="description" content="Shisha Cloud — Almada's premium shisha lounge. Premium flavours, handcrafted cocktails, unforgettable evenings." />
+  <title>Shisha Cloud · Almada</title>
+  <link rel="stylesheet" href="/css/main.css" />
   <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:        #0a0808;
-      --bg2:       #130f0f;
-      --bg3:       #1c1616;
-      --gold:      #c8922a;
-      --gold-lt:   #e8c07a;
-      --gold-pale: rgba(200,146,42,.12);
-      --text:      #f0ebe4;
-      --muted:     #8a7e74;
-      --border:    rgba(200,146,42,.18);
-      --nav-h:     72px;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-    ::selection { background: var(--gold); color: #000; }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-
-    /* ── Typography ── */
-    .serif { font-family: 'Cormorant Garamond', serif; }
-    h1,h2,h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.15; }
-
-    /* ── Navigation ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5vw;
-      transition: background .4s, backdrop-filter .4s, border-color .4s;
-    }
-    nav.scrolled {
-      background: rgba(10,8,8,.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem;
-      font-weight: 400;
-      letter-spacing: .06em;
-      color: var(--gold-lt);
-    }
-    .nav-logo span { color: var(--text); }
-    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-    .nav-links a {
-      font-size: .8rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color .25s;
-    }
-    .nav-links a:hover { color: var(--gold-lt); }
-    .nav-cta {
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold-lt);
-      padding: .55rem 1.4rem;
-      font-size: .75rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background .25s, color .25s;
-    }
-    .nav-cta:hover { background: var(--gold); color: #000; }
-    .burger {
-      display: none; flex-direction: column; gap: 5px; cursor: pointer;
-      background: none; border: none; padding: 4px;
-    }
-    .burger span {
-      display: block; width: 24px; height: 1.5px;
-      background: var(--text); transition: .3s;
-    }
-    .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .burger.open span:nth-child(2) { opacity: 0; }
-    .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .mobile-menu {
-      display: none;
-      position: fixed; inset: 0; top: var(--nav-h); z-index: 99;
-      background: rgba(10,8,8,.97);
-      flex-direction: column; align-items: center; justify-content: center;
-      gap: 2.5rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; letter-spacing: .05em; color: var(--text);
-      transition: color .25s;
-    }
-    .mobile-menu a:hover { color: var(--gold-lt); }
-
     /* ── Hero ── */
     #hero {
-      position: relative; min-height: 100dvh;
-      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      height: 100dvh; min-height: 600px;
+      display: flex; align-items: flex-end;
       overflow: hidden;
-    }
-    #smoke-canvas {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none;
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,146,42,.07) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(180,60,60,.06) 0%, transparent 55%),
-        linear-gradient(170deg, #0e0b0b 0%, #0a0808 50%, #0d0a0a 100%);
+      background-image: url('https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=85&auto=format&fit=crop');
+      background-size: cover; background-position: center 40%;
+      transform-origin: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(8,6,6,.96) 0%,
+        rgba(8,6,6,.5) 45%,
+        rgba(8,6,6,.2) 100%
+      );
+    }
+    #smoke-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; opacity: .55;
     }
     .hero-content {
       position: relative; z-index: 2;
-      text-align: center; padding: 0 1.5rem;
-      max-width: 820px;
-    }
-    .hero-badge {
-      display: inline-block;
-      border: 1px solid var(--border);
-      color: var(--gold);
-      font-size: .68rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      padding: .4rem 1.2rem;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp .8s .3s forwards;
-    }
-    .hero-title {
-      font-size: clamp(3.5rem, 10vw, 7.5rem);
-      font-weight: 300;
-      letter-spacing: -.01em;
-      line-height: 1.05;
-      opacity: 0;
-      animation: fadeUp .9s .5s forwards;
-    }
-    .hero-title em {
-      font-style: italic; color: var(--gold-lt);
-      display: block;
-    }
-    .hero-sub {
-      margin-top: 1.4rem;
-      font-size: 1rem;
-      color: var(--muted);
-      letter-spacing: .04em;
-      opacity: 0;
-      animation: fadeUp .8s .75s forwards;
-    }
-    .hero-actions {
-      margin-top: 2.8rem;
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp .8s .95s forwards;
-    }
-    .btn-primary {
-      background: var(--gold);
-      color: #000;
-      padding: .85rem 2.4rem;
-      font-size: .8rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      font-weight: 500;
-      transition: background .25s, transform .2s;
-      border: none; cursor: pointer;
-    }
-    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      padding: .85rem 2.4rem;
-      font-size: .8rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      border: 1px solid rgba(240,235,228,.25);
-      transition: border-color .25s, color .25s, transform .2s;
-      cursor: pointer;
-    }
-    .btn-outline:hover {
-      border-color: var(--gold);
-      color: var(--gold-lt);
-      transform: translateY(-2px);
-    }
-    .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      color: var(--muted); font-size: .65rem; letter-spacing: .18em;
-      text-transform: uppercase;
-      opacity: 0; animation: fadeUp .8s 1.4s forwards;
-    }
-    .scroll-line {
-      width: 1px; height: 50px; background: var(--muted);
-      animation: scrollPulse 2s 1.5s infinite;
-      transform-origin: top;
-    }
-
-    /* ── Sections shared ── */
-    section { padding: 8rem 5vw; }
-    .section-label {
-      display: inline-flex; align-items: center; gap: .8rem;
-      font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.2rem;
-    }
-    .section-label::before {
-      content: ''; display: block; width: 32px; height: 1px;
-      background: var(--gold);
-    }
-    .section-title {
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      line-height: 1.1;
-    }
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .75s ease, transform .75s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── About ── */
-    #about {
-      background: var(--bg2);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6vw;
-      align-items: center;
-    }
-    .about-visual {
-      position: relative;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-    }
-    .about-img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: brightness(.85) saturate(.9);
-    }
-    .about-img-fallback {
-      width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(200,146,42,.22) 0%, transparent 65%),
-        linear-gradient(160deg, #1c1010 0%, #0e0808 100%);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .smoke-icon {
-      width: 180px; height: 180px; opacity: .35;
-    }
-    .about-frame {
-      position: absolute; inset: 18px;
-      border: 1px solid var(--border); pointer-events: none;
-    }
-    .about-tag {
-      position: absolute; bottom: -1.2rem; right: -1.2rem;
-      background: var(--gold);
-      color: #000;
-      padding: 1.2rem 1.5rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem; font-weight: 400; line-height: 1;
-      text-align: center;
-    }
-    .about-tag small {
-      display: block; font-family: 'Inter', sans-serif;
-      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
-      font-weight: 500; margin-top: .2rem;
-    }
-    .about-text p {
-      color: var(--muted); margin-top: 1.4rem; max-width: 480px;
-      font-size: .95rem;
-    }
-    .about-features {
-      margin-top: 2.8rem; display: grid;
-      grid-template-columns: 1fr 1fr; gap: 1.2rem;
-    }
-    .feat {
-      border: 1px solid var(--border);
-      padding: 1.2rem 1.4rem;
-      background: var(--gold-pale);
-    }
-    .feat-icon { font-size: 1.4rem; margin-bottom: .5rem; }
-    .feat-name {
-      font-size: .75rem; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--gold-lt);
-    }
-
-    /* ── Menu ── */
-    #menu { background: var(--bg); }
-    .menu-grid {
-      margin-top: 4rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5px;
-    }
-    .menu-card {
-      background: var(--bg3);
-      padding: 2.5rem 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: background .3s;
-      cursor: default;
-    }
-    .menu-card::before {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      transform: scaleX(0); transition: transform .4s;
-    }
-    .menu-card:hover { background: #201818; }
-    .menu-card:hover::before { transform: scaleX(1); }
-    .menu-card-icon {
-      font-size: 2rem; margin-bottom: 1.2rem; opacity: .8;
-    }
-    .menu-card h3 {
-      font-size: 1.5rem; margin-bottom: .6rem;
-    }
-    .menu-card p { font-size: .85rem; color: var(--muted); }
-    .menu-tag {
-      position: absolute; top: 1.2rem; right: 1.2rem;
-      font-size: .6rem; letter-spacing: .15em;
-      text-transform: uppercase; color: var(--gold);
-      border: 1px solid var(--border); padding: .25rem .65rem;
-    }
-    .flavors-section {
-      margin-top: 4rem;
-      border-top: 1px solid var(--border);
-      padding-top: 3rem;
-    }
-    .flavors-title {
-      font-size: 1.1rem; color: var(--muted);
-      letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: 2rem;
-    }
-    .flavors-grid {
-      display: flex; flex-wrap: wrap; gap: .7rem;
-    }
-    .flavor-pill {
-      border: 1px solid var(--border);
-      padding: .45rem 1.1rem;
-      font-size: .78rem; letter-spacing: .08em;
-      transition: background .2s, border-color .2s, color .2s;
-      cursor: default;
-    }
-    .flavor-pill:hover {
-      background: var(--gold-pale);
-      border-color: var(--gold);
-      color: var(--gold-lt);
-    }
-
-    /* ── Atmosphere / Gallery ── */
-    #atmosphere {
-      background: var(--bg2); padding: 8rem 0;
-    }
-    .atmo-header { padding: 0 5vw; margin-bottom: 3.5rem; }
-    .gallery-scroll {
-      display: flex; gap: 1.5px; overflow-x: auto;
-      padding: 0 5vw 2rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold) var(--bg2);
-    }
-    .gallery-scroll::-webkit-scrollbar { height: 3px; }
-    .gallery-scroll::-webkit-scrollbar-thumb { background: var(--gold); }
-    .gallery-item {
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .gallery-item img {
-      height: 420px;
-      width: auto;
-      object-fit: cover;
-      transition: transform .5s, filter .5s;
-      filter: brightness(.75) saturate(.85);
-    }
-    .gallery-item:hover img {
-      transform: scale(1.04);
-      filter: brightness(.9) saturate(1);
-    }
-    .gallery-fallback {
-      height: 420px;
-      background: var(--bg3);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .gallery-fallback::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 80% at 50% 60%,
-        rgba(200,146,42,.13) 0%, transparent 70%);
-    }
-
-    /* ── Experience Stats ── */
-    #stats {
-      background: var(--bg);
-      display: flex; justify-content: center;
-      padding: 5rem 5vw;
-    }
-    .stats-inner {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0;
-      border: 1px solid var(--border);
-      max-width: 900px; width: 100%;
-    }
-    .stat {
-      padding: 3rem 2rem; text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3.2rem; font-weight: 300;
-      color: var(--gold-lt); line-height: 1;
-    }
-    .stat-label {
-      font-size: .7rem; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--muted);
-      margin-top: .5rem;
-    }
-
-    /* ── Reservations ── */
-    #reservations {
-      background: var(--bg2);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5vw;
-      align-items: start;
-    }
-    .res-info p { color: var(--muted); margin-top: 1.2rem; max-width: 400px; font-size: .95rem; }
-    .hours-grid {
-      margin-top: 2.5rem; display: flex; flex-direction: column; gap: .7rem;
-    }
-    .hour-row {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: .85rem; color: var(--muted);
-      border-bottom: 1px solid var(--border); padding-bottom: .7rem;
-    }
-    .hour-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .hour-row .day { color: var(--text); }
-    .hour-row .time { color: var(--gold-lt); }
-    .res-form { padding: 2.5rem; background: var(--bg3); border: 1px solid var(--border); }
-    .form-group { margin-bottom: 1.3rem; }
-    .form-group label {
-      display: block; font-size: .7rem; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
+      padding: 0 5vw 7vh;
       width: 100%;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: .8rem 1rem;
-      font-family: 'Inter', sans-serif;
-      font-size: .9rem;
-      font-weight: 300;
-      outline: none;
-      transition: border-color .25s;
-      -webkit-appearance: none;
     }
-    .form-group select { cursor: pointer; }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--gold); }
-    .form-group textarea { resize: vertical; min-height: 90px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .res-form .btn-primary { width: 100%; justify-content: center; display: block; font-family: 'Inter', sans-serif; }
-
-    /* ── Location ── */
-    #location {
-      background: var(--bg);
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 0;
+    .hero-eyebrow {
+      font-size: .62rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: .8rem;
+      opacity: 0;
     }
-    .location-info { padding: 6rem 4vw 6rem 5vw; }
-    .location-info p { color: var(--muted); margin-top: 1.2rem; font-size: .95rem; max-width: 380px; }
-    .address-block { margin-top: 2.5rem; }
-    .address-row {
-      display: flex; align-items: flex-start; gap: 1rem;
-      margin-bottom: 1.4rem;
-    }
-    .address-icon { color: var(--gold); font-size: 1.1rem; margin-top: .1rem; flex-shrink: 0; }
-    .address-text { font-size: .9rem; }
-    .address-text strong { display: block; color: var(--text); font-weight: 400; margin-bottom: .2rem; }
-    .address-text span { color: var(--muted); }
-    .social-row {
-      margin-top: 2.8rem; display: flex; gap: 1rem;
-    }
-    .social-btn {
-      display: flex; align-items: center; gap: .6rem;
-      border: 1px solid var(--border);
-      padding: .65rem 1.2rem;
-      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
-      transition: border-color .25s, color .25s, background .25s;
-    }
-    .social-btn:hover {
-      border-color: var(--gold);
-      background: var(--gold-pale);
-      color: var(--gold-lt);
-    }
-    .map-container {
-      position: relative; min-height: 520px;
-      overflow: hidden;
-    }
-    .map-container iframe {
-      width: 100%; height: 100%; border: none;
-      filter: grayscale(60%) invert(5%) sepia(20%);
-    }
-
-    /* ── Footer ── */
-    footer {
-      background: #050404;
-      padding: 3rem 5vw;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1.5rem;
-    }
-    .footer-logo {
+    .hero-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+    .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; color: var(--gold-lt); letter-spacing: .05em;
+      font-size: clamp(5.5rem, 14vw, 13rem);
+      font-weight: 300; line-height: .92;
+      letter-spacing: -.02em;
     }
-    .footer-copy {
-      font-size: .73rem; color: var(--muted); letter-spacing: .06em;
+    .hero-title .split-line { overflow: hidden; }
+    .hero-title em { font-style: italic; color: var(--gold-lt); }
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: .9rem; color: var(--muted); letter-spacing: .06em;
+      max-width: 420px; opacity: 0;
     }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a {
-      font-size: .73rem; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--muted);
-      transition: color .25s;
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
     }
-    .footer-links a:hover { color: var(--gold-lt); }
+    .hero-scroll-line {
+      position: absolute; bottom: 0; left: 5vw;
+      width: 1px; height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      animation: scrollLinePulse 2s 2s infinite;
+    }
+    @keyframes scrollLinePulse {
+      0%,100% { opacity: .4; transform: scaleY(1); }
+      50%      { opacity: 1;  transform: scaleY(.7); }
+    }
 
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── Intro ── */
+    #intro {
+      padding: 12rem 5vw;
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 8vw;
+      align-items: center;
+      background: var(--bg);
     }
-    @keyframes scrollPulse {
-      0%,100% { transform: scaleY(1); opacity: .5; }
-      50%      { transform: scaleY(.6); opacity: 1; }
+    .intro-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(6rem, 14vw, 11rem);
+      font-weight: 300; line-height: 1;
+      color: var(--bg4); letter-spacing: -.03em;
+      user-select: none;
     }
-    @keyframes floatParticle {
-      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: .3; }
-      100% { transform: translateY(-120px) translateX(var(--dx)) scale(.3); opacity: 0; }
+    .intro-text .section-tag { margin-bottom: 1.8rem; }
+    .intro-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 300; line-height: 1.15;
     }
+    .intro-text h2 em { font-style: italic; color: var(--gold-lt); }
+    .intro-text p { color: var(--muted); margin-top: 1.4rem; font-size: .9rem; max-width: 460px; }
+    .intro-text .btn-line { margin-top: 2.5rem; }
+
+    /* ── Split section (image + text) ── */
+    .split-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 680px;
+    }
+    .split-img {
+      overflow: hidden; position: relative;
+    }
+    .split-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease;
+    }
+    .split-img:hover img { transform: scale(1.04); }
+    .split-body {
+      background: var(--bg2);
+      padding: 7rem 5vw;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .split-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300; line-height: 1.12;
+    }
+    .split-body h2 em { font-style: italic; color: var(--gold-lt); }
+    .split-body p { color: var(--muted); margin-top: 1.2rem; font-size: .9rem; max-width: 400px; }
+    .split-body .btn-line { margin-top: 2.8rem; }
+
+    /* ── Three cards ── */
+    #cards { background: var(--bg); }
+    .cards-header { padding: 7rem 5vw 3rem; }
+    .cards-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 300; max-width: 560px; line-height: 1.12;
+    }
+    .cards-header h2 em { font-style: italic; color: var(--gold-lt); }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+    }
+    .card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+    .card img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .9s var(--ease-out), filter .9s;
+      filter: brightness(.6) saturate(.8);
+    }
+    .card:hover img { transform: scale(1.06); filter: brightness(.75) saturate(.9); }
+    .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,6,6,.9) 0%, transparent 55%);
+    }
+    .card-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2.4rem 2rem;
+    }
+    .card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem; font-weight: 300; line-height: 1;
+      color: rgba(200,146,42,.18); display: block; margin-bottom: .5rem;
+    }
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem; font-weight: 300;
+    }
+    .card p { font-size: .8rem; color: var(--muted); margin-top: .5rem; line-height: 1.55; }
+    .card-arrow {
+      margin-top: 1.2rem; display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+      transition: gap .3s;
+    }
+    .card:hover .card-arrow { gap: .9rem; }
+
+    /* ── Gallery strip ── */
+    #gallery-strip { background: var(--bg); padding: 6rem 0; }
+    .gs-header { padding: 0 5vw 3rem; display: flex; align-items: flex-end; justify-content: space-between; }
+    .gs-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
+    }
+    .gs-header h2 em { font-style: italic; color: var(--gold-lt); }
+    .gs-track {
+      display: flex; gap: 3px;
+      overflow-x: auto; overflow-y: hidden;
+      padding: 0 5vw 1.5rem;
+      scrollbar-width: none;
+    }
+    .gs-track::-webkit-scrollbar { display: none; }
+    .gs-item {
+      flex-shrink: 0; overflow: hidden;
+      height: 500px; position: relative;
+    }
+    .gs-item img {
+      height: 100%; width: auto; min-width: 320px;
+      object-fit: cover;
+      transition: transform .7s var(--ease-out), filter .7s;
+      filter: brightness(.7) saturate(.85);
+    }
+    .gs-item:hover img { transform: scale(1.05); filter: brightness(.88) saturate(1); }
+    .gs-label {
+      position: absolute; bottom: 1.4rem; left: 1.4rem;
+      font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(237,232,224,.5);
+    }
+
+    /* ── Manifesto ── */
+    #manifesto {
+      position: relative; overflow: hidden;
+      padding: 12rem 5vw;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .manifesto-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=1920&q=85&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+    }
+    .manifesto-overlay {
+      position: absolute; inset: 0;
+      background: rgba(8,6,6,.82);
+    }
+    .manifesto-content {
+      position: relative; z-index: 1;
+      text-align: center; max-width: 900px;
+    }
+    .manifesto-content blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-style: italic; font-weight: 300; line-height: 1.2;
+      color: var(--text);
+    }
+    .manifesto-content blockquote em { color: var(--gold-lt); }
+    .manifesto-attr {
+      margin-top: 2rem;
+      font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── Reserve CTA ── */
+    #reserve-cta {
+      background: var(--bg2);
+      padding: 10rem 5vw;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .rcta-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 300; line-height: 1.1;
+    }
+    .rcta-left h2 em { font-style: italic; color: var(--gold-lt); }
+    .rcta-left p { color: var(--muted); margin-top: 1.2rem; font-size: .9rem; max-width: 380px; }
+    .hours { margin-top: 2.5rem; }
+    .hour-row {
+      display: flex; justify-content: space-between;
+      padding: .85rem 0; border-bottom: 1px solid var(--border);
+      font-size: .82rem;
+    }
+    .hour-row:last-child { border-bottom: none; }
+    .hour-row .day { color: var(--text); }
+    .hour-row .time { color: var(--gold-lt); font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+    .rcta-right { display: flex; flex-direction: column; gap: 1rem; }
+    .rcta-stat {
+      border: 1px solid var(--border); padding: 2rem 2.5rem;
+      background: var(--bg3);
+    }
+    .rcta-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem; font-weight: 300; color: var(--gold-lt);
+      line-height: 1;
+    }
+    .rcta-stat-label { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: .4rem; }
+    .rcta-stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .rcta-cta { margin-top: 1.5rem; }
 
     /* ── Responsive ── */
-    @media (max-width: 900px) {
-      #about { grid-template-columns: 1fr; }
-      .about-visual { max-width: 400px; margin: 0 auto; }
-      .about-tag { right: 0; bottom: -1rem; }
-      #reservations { grid-template-columns: 1fr; }
-      #location { grid-template-columns: 1fr; }
-      .map-container { min-height: 320px; }
-      .stats-inner { grid-template-columns: 1fr 1fr; }
-      .stat { border-bottom: 1px solid var(--border); }
-      .stat:nth-child(even) { border-right: none; }
-      .stat:nth-last-child(-n+2) { border-bottom: none; }
+    @media (max-width: 960px) {
+      #intro { grid-template-columns: 1fr; gap: 2rem; }
+      .intro-number { display: none; }
+      .split-section { grid-template-columns: 1fr; }
+      .split-img { aspect-ratio: 16/9; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .card { aspect-ratio: 16/9; }
+      #reserve-cta { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .nav-links, .nav-cta { display: none; }
-      .burger { display: flex; }
-      section { padding: 5rem 1.3rem; }
-      .about-features { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .stats-inner { grid-template-columns: 1fr; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat:last-child { border-bottom: none; }
-      footer { flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
-      #stats { padding: 3rem 1.3rem; }
-      .gallery-item img { height: 260px; }
-      .gallery-fallback { height: 260px; }
+      #intro { padding: 6rem 1.4rem; }
+      .split-body { padding: 4rem 1.4rem; }
+      .cards-header { padding: 5rem 1.4rem 2rem; }
+      #gallery-strip { padding: 4rem 0; }
+      .gs-header { padding: 0 1.4rem 2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .gs-item { height: 300px; }
+      #manifesto { padding: 7rem 1.4rem; }
+      #reserve-cta { padding: 6rem 1.4rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── Navigation ── -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <div id="preloader">
+    <div class="pre-wordmark">Shisha Cloud</div>
+    <div class="pre-track"><div class="pre-fill"></div></div>
+  </div>
+
+  <div id="pt"></div>
+
+  <!-- Nav -->
   <nav id="nav">
-    <a href="#hero" class="nav-logo">Shisha <span>Cloud</span></a>
+    <a href="/" class="nav-logo">Shisha <em>Cloud</em></a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#menu">Menu</a></li>
-      <li><a href="#atmosphere">Atmosphere</a></li>
-      <li><a href="#location">Find Us</a></li>
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
     </ul>
-    <button class="nav-cta" onclick="document.getElementById('reservations').scrollIntoView({behavior:'smooth'})">Reserve</button>
-    <button class="burger" id="burger" aria-label="Menu">
+    <a href="/reserve/" class="nav-reserve">Book a Table</a>
+    <button class="nav-burger" id="burger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#about"        onclick="closeMobile()">About</a>
-    <a href="#menu"         onclick="closeMobile()">Menu</a>
-    <a href="#atmosphere"   onclick="closeMobile()">Atmosphere</a>
-    <a href="#reservations" onclick="closeMobile()">Reserve</a>
-    <a href="#location"     onclick="closeMobile()">Find Us</a>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/menu/"    onclick="closeMob()">Menu</a>
+    <a href="/gallery/" onclick="closeMob()">Gallery</a>
+    <a href="/reserve/" onclick="closeMob()">Reserve</a>
   </div>
 
-  <!-- ── Hero ── -->
+  <!-- Hero -->
   <section id="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg parallax" data-py="14%"></div>
+    <div class="hero-overlay"></div>
     <canvas id="smoke-canvas"></canvas>
+
     <div class="hero-content">
-      <div class="hero-badge">Almada · Portugal</div>
+      <div class="hero-eyebrow">Almada · Portugal · Since 2023</div>
       <h1 class="hero-title">
-        Shisha
-        <em>Cloud</em>
+        <span class="split-line"><span class="hero-word">Shisha</span></span>
+        <span class="split-line"><em class="hero-word">Cloud</em></span>
       </h1>
-      <p class="hero-sub">Relax. Exhale. Escape.</p>
-      <div class="hero-actions">
-        <a href="#reservations" class="btn-primary">Reserve a Table</a>
-        <a href="#menu"         class="btn-outline">Explore Menu</a>
+      <p class="hero-sub">Premium shisha. Handcrafted cocktails. Almada's most immersive lounge experience.</p>
+      <div class="hero-cta">
+        <a href="/reserve/" class="btn btn-fill magnet">Reserve a Table</a>
+        <a href="/menu/"    class="btn btn-stroke">Explore Menu
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+
+    <div class="hero-scroll-line"></div>
   </section>
 
-  <!-- ── About ── -->
-  <section id="about">
-    <div class="about-visual reveal">
-      <div class="about-img-fallback">
-        <svg class="smoke-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M100 180 C100 180 60 150 60 110 C60 80 80 70 100 70 C120 70 140 80 140 110 C140 150 100 180 100 180Z" stroke="#c8922a" stroke-width="1.5" fill="none" opacity=".6"/>
-          <path d="M100 70 C100 70 90 50 100 30 C110 10 120 20 115 35 C110 50 105 60 100 70Z" stroke="#c8922a" stroke-width="1.2" fill="none" opacity=".5"/>
-          <path d="M85 65 C85 65 70 50 75 30 C80 10 92 15 90 32 C88 48 87 57 85 65Z" stroke="#e8c07a" stroke-width="1" fill="none" opacity=".35"/>
-          <path d="M115 65 C115 65 130 50 125 30 C120 10 108 15 110 32 C112 48 113 57 115 65Z" stroke="#e8c07a" stroke-width="1" fill="none" opacity=".35"/>
-          <ellipse cx="100" cy="175" rx="30" ry="8" stroke="#c8922a" stroke-width="1" fill="none" opacity=".4"/>
-          <line x1="100" y1="168" x2="100" y2="185" stroke="#c8922a" stroke-width="2" opacity=".6"/>
-          <ellipse cx="100" cy="187" rx="18" ry="5" stroke="#c8922a" stroke-width="1.5" fill="none" opacity=".5"/>
-        </svg>
-      </div>
-      <div class="about-frame"></div>
-      <div class="about-tag">
-        Est. <br>2023
-        <small>Almada</small>
-      </div>
-    </div>
-    <div class="about-text reveal">
-      <div class="section-label">Our Story</div>
-      <h2 class="section-title">Where Every Cloud<br><em>Tells a Story</em></h2>
-      <p>
-        Born from a passion for authentic flavours and warm hospitality, Shisha Cloud is Almada's
-        premier lounge experience. We blend traditional shisha culture with a contemporary,
-        relaxed atmosphere — a place where time slows down.
-      </p>
-      <p>
-        Whether you're settling in for a long night with friends or unwinding solo, our curated
-        selection of premium tobacco blends and handcrafted cocktails ensures every visit is
-        uniquely yours.
-      </p>
-      <div class="about-features">
-        <div class="feat">
-          <div class="feat-icon">🌿</div>
-          <div class="feat-name">Premium Flavours</div>
-        </div>
-        <div class="feat">
-          <div class="feat-icon">🍹</div>
-          <div class="feat-name">Signature Drinks</div>
-        </div>
-        <div class="feat">
-          <div class="feat-icon">🎶</div>
-          <div class="feat-name">Live Music</div>
-        </div>
-        <div class="feat">
-          <div class="feat-icon">✨</div>
-          <div class="feat-name">Private Events</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Menu ── -->
-  <section id="menu">
-    <div class="section-label reveal">Our Offerings</div>
-    <h2 class="section-title reveal">Crafted for<br><em>Every Taste</em></h2>
-
-    <div class="menu-grid">
-      <div class="menu-card reveal">
-        <div class="menu-card-icon">💨</div>
-        <div class="menu-tag">Signature</div>
-        <h3>Classic Shisha</h3>
-        <p>Traditional hookah prepared with premium tobacco and fresh coals, served at your table with care.</p>
-      </div>
-      <div class="menu-card reveal">
-        <div class="menu-card-icon">🫧</div>
-        <div class="menu-tag">Popular</div>
-        <h3>Cloud Mixes</h3>
-        <p>Our exclusive in-house blends — layered combinations crafted by our shisha masters for a unique experience.</p>
-      </div>
-      <div class="menu-card reveal">
-        <div class="menu-card-icon">🍸</div>
-        <div class="menu-tag">Bar</div>
-        <h3>Cocktails</h3>
-        <p>Handcrafted cocktails that complement your session — from refreshing citrus to rich, smoky pairings.</p>
-      </div>
-      <div class="menu-card reveal">
-        <div class="menu-card-icon">🫖</div>
-        <div class="menu-tag">Non-Alcoholic</div>
-        <h3>Mocktails & Tea</h3>
-        <p>Aromatic teas, fresh juices, and creative alcohol-free cocktails for every preference.</p>
-      </div>
-    </div>
-
-    <div class="flavors-section reveal">
-      <div class="flavors-title">Available Flavours</div>
-      <div class="flavors-grid">
-        <span class="flavor-pill">Double Apple</span>
-        <span class="flavor-pill">Mint & Lemon</span>
-        <span class="flavor-pill">Blueberry Ice</span>
-        <span class="flavor-pill">Watermelon</span>
-        <span class="flavor-pill">Grape & Mint</span>
-        <span class="flavor-pill">Peach</span>
-        <span class="flavor-pill">Mango Tango</span>
-        <span class="flavor-pill">Lychee</span>
-        <span class="flavor-pill">Strawberry</span>
-        <span class="flavor-pill">Guava</span>
-        <span class="flavor-pill">Gum & Rose</span>
-        <span class="flavor-pill">Cola Ice</span>
-        <span class="flavor-pill">Orange Citrus</span>
-        <span class="flavor-pill">Berry Mix</span>
-        <span class="flavor-pill">Coconut</span>
-        <span class="flavor-pill">Vanilla</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Stats ── -->
-  <section id="stats">
-    <div class="stats-inner">
-      <div class="stat reveal">
-        <div class="stat-num" data-count="50">0</div>
-        <div class="stat-label">Flavours</div>
-      </div>
-      <div class="stat reveal">
-        <div class="stat-num" data-count="200">0</div>
-        <div class="stat-label">Happy Guests / Week</div>
-      </div>
-      <div class="stat reveal">
-        <div class="stat-num" data-count="5">0</div>
-        <div class="stat-label">⭐ Rating</div>
-      </div>
-      <div class="stat reveal">
-        <div class="stat-num" data-count="3">0</div>
-        <div class="stat-label">Years in Almada</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Atmosphere ── -->
-  <section id="atmosphere" style="padding: 8rem 0;">
-    <div class="atmo-header">
-      <div class="section-label reveal">The Space</div>
-      <h2 class="section-title reveal">Our Atmosphere</h2>
-    </div>
-    <div class="gallery-scroll">
-      <!-- Gallery items: CSS-art fallbacks so no external images needed -->
-      <div class="gallery-item reveal" style="transition-delay:.1s">
-        <div class="gallery-fallback" style="width:320px; background: linear-gradient(160deg,#1a0e0e,#0d0808); border: 1px solid var(--border);">
-          <div style="text-align:center; opacity:.5;">
-            <div style="font-size:3rem">💨</div>
-            <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:.8rem">Lounge Area</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:.2s">
-        <div class="gallery-fallback" style="width:260px; background: linear-gradient(200deg,#120e18,#0d0808); border: 1px solid var(--border);">
-          <div style="text-align:center; opacity:.5;">
-            <div style="font-size:3rem">🕯️</div>
-            <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:.8rem">Ambient Lighting</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:.3s">
-        <div class="gallery-fallback" style="width:380px; background: linear-gradient(130deg,#0e1218,#0d0808); border: 1px solid var(--border);">
-          <div style="text-align:center; opacity:.5;">
-            <div style="font-size:3rem">🍸</div>
-            <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:.8rem">Bar Area</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:.4s">
-        <div class="gallery-fallback" style="width:300px; background: linear-gradient(155deg,#160e0e,#0d0808); border: 1px solid var(--border);">
-          <div style="text-align:center; opacity:.5;">
-            <div style="font-size:3rem">🎶</div>
-            <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:.8rem">Live Nights</div>
-          </div>
-        </div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:.5s">
-        <div class="gallery-fallback" style="width:340px; background: linear-gradient(170deg,#0e1410,#0d0808); border: 1px solid var(--border);">
-          <div style="text-align:center; opacity:.5;">
-            <div style="font-size:3rem">🌿</div>
-            <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:.8rem">Premium Shisha</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p style="text-align:center;padding:1.2rem 5vw 0;color:var(--muted);font-size:.8rem;letter-spacing:.08em;">
-      Follow us on
-      <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener"
-         style="color:var(--gold-lt);border-bottom:1px solid var(--border);transition:color .2s;"
-         onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gold-lt)'">
-        @shishacloud_almada
+  <!-- Intro -->
+  <section id="intro">
+    <div class="intro-number r">01</div>
+    <div class="intro-text">
+      <div class="section-tag r">The Experience</div>
+      <h2 class="r d1">Where every cloud<br><em>tells a story</em></h2>
+      <p class="r d2">Born from a passion for authentic flavours and warm hospitality, Shisha Cloud is Almada's premier lounge. We blend traditional shisha culture with a sleek, contemporary space — a place where time slows and evenings become memories.</p>
+      <a href="/gallery/" class="btn btn-line btn-arrow r d3">
+        See the Space
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      for the latest photos & updates.
-    </p>
-  </section>
-
-  <!-- ── Reservations ── -->
-  <section id="reservations">
-    <div class="res-info">
-      <div class="section-label reveal">Book Your Session</div>
-      <h2 class="section-title reveal">Reserve<br><em>Your Table</em></h2>
-      <p class="reveal">Secure your spot in advance for the best experience. Walk-ins welcome subject to availability.</p>
-      <div class="hours-grid reveal">
-        <div class="hour-row">
-          <span class="day">Monday – Thursday</span>
-          <span class="time">18:00 – 02:00</span>
-        </div>
-        <div class="hour-row">
-          <span class="day">Friday</span>
-          <span class="time">18:00 – 04:00</span>
-        </div>
-        <div class="hour-row">
-          <span class="day">Saturday</span>
-          <span class="time">17:00 – 04:00</span>
-        </div>
-        <div class="hour-row">
-          <span class="day">Sunday</span>
-          <span class="time">17:00 – 02:00</span>
-        </div>
-      </div>
-    </div>
-    <div class="res-form reveal">
-      <form id="reservationForm" onsubmit="handleReservation(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Your name" required />
-          </div>
-          <div class="form-group">
-            <label>Phone / WhatsApp</label>
-            <input type="tel" name="phone" placeholder="+351 ..." required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Date</label>
-            <input type="date" name="date" required />
-          </div>
-          <div class="form-group">
-            <label>Time</label>
-            <input type="time" name="time" min="17:00" max="03:00" required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Guests</label>
-            <select name="guests">
-              <option>1–2</option>
-              <option selected>3–4</option>
-              <option>5–6</option>
-              <option>7+</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Shisha Preference</label>
-            <select name="preference">
-              <option>No preference</option>
-              <option>Fruity</option>
-              <option>Minty</option>
-              <option>Classic</option>
-              <option>Cloud Mix</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Special Requests</label>
-          <textarea name="message" placeholder="Birthday, anniversary, any requests…"></textarea>
-        </div>
-        <button type="submit" class="btn-primary">Send Reservation via WhatsApp</button>
-      </form>
     </div>
   </section>
 
-  <!-- ── Location ── -->
-  <section id="location" style="padding:0;">
-    <div class="location-info">
-      <div class="section-label reveal">Find Us</div>
-      <h2 class="section-title reveal">Come Visit<br><em>Us in Almada</em></h2>
-      <p class="reveal">Easily accessible from Lisbon via the 25 de Abril Bridge or the Cacilhas ferry — we're right in the heart of Almada.</p>
-      <div class="address-block reveal">
-        <div class="address-row">
-          <span class="address-icon">📍</span>
-          <div class="address-text">
-            <strong>Address</strong>
-            <span>Almada, Setúbal, Portugal</span>
-          </div>
-        </div>
-        <div class="address-row">
-          <span class="address-icon">📱</span>
-          <div class="address-text">
-            <strong>WhatsApp Reservations</strong>
-            <span>Message us for bookings</span>
-          </div>
-        </div>
-        <div class="address-row">
-          <span class="address-icon">📸</span>
-          <div class="address-text">
-            <strong>Instagram</strong>
-            <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener"
-               style="color:var(--gold-lt);">@shishacloud_almada</a>
-          </div>
-        </div>
-      </div>
-      <div class="social-row reveal">
-        <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="social-btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
-          Instagram
-        </a>
-        <a href="https://wa.me/351000000000?text=Olá%2C%20gostaria%20de%20fazer%20uma%20reserva%20no%20Shisha%20Cloud!"
-           target="_blank" rel="noopener" class="social-btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-          </svg>
-          WhatsApp
-        </a>
-      </div>
+  <!-- Split: image + about -->
+  <div class="split-section">
+    <div class="split-img r-left">
+      <img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=900&q=85&auto=format&fit=crop"
+           alt="Premium shisha setup" loading="lazy" />
     </div>
-    <div class="map-container">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24880.49776476817!2d-9.166689!3d38.674285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1940e5534f55fb%3A0x4000000000000000!2sAlmada%2C%20Portugal!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        title="Shisha Cloud Almada Location">
-      </iframe>
+    <div class="split-body">
+      <div class="section-tag r">Our Craft</div>
+      <h2 class="r d1">Ritual, not<br><em>routine</em></h2>
+      <p class="r d2">Every session at Shisha Cloud is prepared with precision — fresh coals, premium tobacco blends, and service that elevates the ritual of shisha into something extraordinary.</p>
+      <p class="r d3" style="margin-top:.8rem">Our bar extends the experience with handcrafted cocktails and mocktails designed to complement each flavour profile.</p>
+      <a href="/menu/" class="btn btn-line btn-arrow r d4">
+        View Full Menu
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Three experience cards -->
+  <section id="cards">
+    <div class="cards-header">
+      <div class="section-tag r">What We Offer</div>
+      <h2 class="r d1">A complete<br><em>evening</em></h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card r">
+        <img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=800&q=85&auto=format&fit=crop" alt="Premium Shisha" loading="lazy" />
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <span class="card-num">01</span>
+          <h3>Premium Shisha</h3>
+          <p>50+ flavours, fresh coals, and expert preparation at every table.</p>
+          <div class="card-arrow">
+            Explore
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card r d2">
+        <img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=800&q=85&auto=format&fit=crop" alt="Signature Cocktails" loading="lazy" />
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <span class="card-num">02</span>
+          <h3>Signature Cocktails</h3>
+          <p>Crafted to complement your session — from citrus to smoke-forward pairings.</p>
+          <div class="card-arrow">
+            Explore
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="card r d4">
+        <img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=800&q=85&auto=format&fit=crop" alt="Private Events" loading="lazy" />
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <span class="card-num">03</span>
+          <h3>Private Events</h3>
+          <p>Exclusive venue hire for birthdays, celebrations, and corporate gatherings.</p>
+          <div class="card-arrow">
+            Enquire
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ── Footer ── -->
+  <!-- Gallery strip -->
+  <section id="gallery-strip">
+    <div class="gs-header">
+      <div>
+        <div class="section-tag r">Inside Shisha Cloud</div>
+        <h2 class="r d1">The <em>atmosphere</em></h2>
+      </div>
+      <a href="/gallery/" class="btn btn-line btn-arrow r">
+        Full Gallery
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="gs-track drag-scroll">
+      <div class="gs-item">
+        <img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+        <span class="gs-label">The Lounge</span>
+      </div>
+      <div class="gs-item">
+        <img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=500&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+        <span class="gs-label">Premium Shisha</span>
+      </div>
+      <div class="gs-item">
+        <img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+        <span class="gs-label">The Bar</span>
+      </div>
+      <div class="gs-item">
+        <img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=500&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+        <span class="gs-label">Cloud Series</span>
+      </div>
+      <div class="gs-item">
+        <img src="https://images.unsplash.com/photo-1574238919966-5cb3d9693a4b?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+        <span class="gs-label">Evening Sessions</span>
+      </div>
+      <div class="gs-item">
+        <img src="https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=600&q=85&auto=format&fit=crop" alt="" loading="lazy" />
+        <span class="gs-label">Ambience</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifesto quote -->
+  <section id="manifesto">
+    <div class="manifesto-bg parallax" data-py="12%"></div>
+    <div class="manifesto-overlay"></div>
+    <div class="manifesto-content r">
+      <blockquote>
+        "Time spent here is not<br>lost — it is <em>savoured</em>."
+      </blockquote>
+      <p class="manifesto-attr">Shisha Cloud · Almada</p>
+    </div>
+  </section>
+
+  <!-- Reserve CTA -->
+  <section id="reserve-cta">
+    <div class="rcta-left">
+      <div class="section-tag r">Reserve</div>
+      <h2 class="r d1">Reserve your<br><em>evening</em></h2>
+      <p class="r d2">Secure your table in advance for the full experience. Walk-ins are welcome subject to availability.</p>
+      <div class="hours r d3">
+        <div class="hour-row"><span class="day">Monday – Thursday</span><span class="time">18:00 – 02:00</span></div>
+        <div class="hour-row"><span class="day">Friday</span><span class="time">18:00 – 04:00</span></div>
+        <div class="hour-row"><span class="day">Saturday</span><span class="time">17:00 – 04:00</span></div>
+        <div class="hour-row"><span class="day">Sunday</span><span class="time">17:00 – 02:00</span></div>
+      </div>
+      <a href="/reserve/" class="btn btn-fill magnet r d4" style="margin-top:2.5rem; display:inline-flex;">
+        Book Now
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="rcta-right">
+      <div class="rcta-stats-row">
+        <div class="rcta-stat r d1">
+          <div class="rcta-stat-num" data-count="50" data-suffix="+">0</div>
+          <div class="rcta-stat-label">Flavours</div>
+        </div>
+        <div class="rcta-stat r d2">
+          <div class="rcta-stat-num" data-count="5" data-suffix="★">0</div>
+          <div class="rcta-stat-label">Rating</div>
+        </div>
+      </div>
+      <div class="rcta-stat r d3" style="margin-top:0">
+        <div class="rcta-stat-num" data-count="200" data-suffix="+">0</div>
+        <div class="rcta-stat-label">Happy guests per week</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <div class="footer-logo">Shisha Cloud</div>
-    <div class="footer-links">
-      <a href="#about">About</a>
-      <a href="#menu">Menu</a>
-      <a href="#reservations">Reserve</a>
-      <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener">Instagram</a>
-    </div>
-    <div class="footer-copy">© 2025 Shisha Cloud · Almada, Portugal</div>
+    <div class="f-logo">Shisha Cloud</div>
+    <ul class="f-links">
+      <li><a href="/menu/">Menu</a></li>
+      <li><a href="/gallery/">Gallery</a></li>
+      <li><a href="/reserve/">Reserve</a></li>
+      <li><a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+    <div class="f-copy">© 2025 Shisha Cloud · Almada, Portugal</div>
   </footer>
 
-  <!-- ── Scripts ── -->
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="/js/main.js"></script>
   <script>
-    // ── Smoke Canvas
+    /* ── Smoke Canvas ── */
     (function() {
-      const canvas = document.getElementById('smoke-canvas');
-      const ctx = canvas.getContext('2d');
-      let W, H, particles = [];
+      const c = document.getElementById('smoke-canvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      let W, H, pts = [];
 
-      function resize() {
-        W = canvas.width  = canvas.offsetWidth;
-        H = canvas.height = canvas.offsetHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
+      function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+      window.addEventListener('resize', resize); resize();
 
-      function randomBetween(a, b) { return a + Math.random() * (b - a); }
+      function rand(a, b) { return a + Math.random() * (b - a); }
 
-      function spawnParticle() {
-        return {
-          x:    randomBetween(W * .25, W * .75),
-          y:    randomBetween(H * .5, H * .85),
-          vx:   randomBetween(-.35, .35),
-          vy:   randomBetween(-1.1, -.45),
-          r:    randomBetween(28, 72),
-          life: 0,
-          maxLife: randomBetween(160, 300),
-          hue:  randomBetween(28, 42),
-        };
+      function spawn() {
+        return { x: rand(W*.2, W*.8), y: rand(H*.55, H*.85),
+          vx: rand(-.3,.3), vy: rand(-.9,-.38), r: rand(30,80),
+          life: 0, max: rand(180,340), hue: rand(26,40) };
       }
 
-      for (let i = 0; i < 18; i++) {
-        const p = spawnParticle();
-        p.life = Math.random() * p.maxLife;
-        particles.push(p);
-      }
+      for (let i = 0; i < 22; i++) { const p = spawn(); p.life = Math.random() * p.max; pts.push(p); }
 
-      function draw() {
+      function frame() {
         ctx.clearRect(0, 0, W, H);
-        if (Math.random() < .06) particles.push(spawnParticle());
-        if (particles.length > 40) particles.splice(0, 1);
-
-        particles.forEach((p, i) => {
+        if (Math.random() < .05 && pts.length < 45) pts.push(spawn());
+        pts = pts.filter(p => {
           p.life++;
-          p.x += p.vx + Math.sin(p.life * .03) * .25;
+          p.x += p.vx + Math.sin(p.life * .025) * .3;
           p.y += p.vy;
-          p.r += .12;
-          const t = p.life / p.maxLife;
-          const alpha = t < .2 ? t / .2 * .18 : (1 - t) * .18;
-          if (alpha <= 0) { particles.splice(i, 1); return; }
-          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-          grad.addColorStop(0, `hsla(${p.hue},60%,55%,${alpha})`);
-          grad.addColorStop(1, `hsla(${p.hue},40%,40%,0)`);
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.fill();
-          if (p.life >= p.maxLife) particles.splice(i, 1);
+          p.r += .15;
+          const t = p.life / p.max;
+          const a = t < .2 ? (t / .2) * .14 : (1 - t) * .14;
+          if (a <= 0 || p.life >= p.max) return false;
+          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+          g.addColorStop(0, `hsla(${p.hue},55%,52%,${a})`);
+          g.addColorStop(1, `hsla(${p.hue},40%,38%,0)`);
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = g; ctx.fill();
+          return true;
         });
-        requestAnimationFrame(draw);
+        requestAnimationFrame(frame);
       }
-      draw();
+      frame();
     })();
-
-    // ── Nav scroll effect
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // ── Mobile menu
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    burger.addEventListener('click', () => {
-      burger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
-    function closeMobile() {
-      burger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    // ── Reveal on scroll
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-    }, { threshold: .12 });
-    revealEls.forEach(el => revealObs.observe(el));
-
-    // ── Counter animation
-    function animateCounter(el, target, suffix) {
-      const dur = 1600;
-      const step = 16;
-      const inc = target / (dur / step);
-      let cur = 0;
-      const tick = setInterval(() => {
-        cur = Math.min(cur + inc, target);
-        el.textContent = (cur < 10 ? cur.toFixed(1) : Math.round(cur)) + (suffix || '');
-        if (cur >= target) clearInterval(tick);
-      }, step);
-    }
-    const statsObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const el = e.target;
-          const target = +el.dataset.count;
-          animateCounter(el, target, target === 5 ? '★' : '+');
-          statsObs.unobserve(el);
-        }
-      });
-    }, { threshold: .5 });
-    document.querySelectorAll('[data-count]').forEach(el => statsObs.observe(el));
-
-    // ── Reservation form → WhatsApp
-    function handleReservation(e) {
-      e.preventDefault();
-      const f = e.target;
-      const name  = f.name.value;
-      const phone = f.phone.value;
-      const date  = f.date.value;
-      const time  = f.time.value;
-      const guests = f.guests.value;
-      const pref  = f.preference.value;
-      const msg   = f.message.value;
-      const text = encodeURIComponent(
-        `Olá Shisha Cloud! 🌿\n\nGostaria de fazer uma reserva:\n\n` +
-        `👤 Nome: ${name}\n` +
-        `📞 Contacto: ${phone}\n` +
-        `📅 Data: ${date}\n` +
-        `🕐 Hora: ${time}\n` +
-        `👥 Convidados: ${guests}\n` +
-        `💨 Preferência: ${pref}\n` +
-        (msg ? `📝 Pedido especial: ${msg}\n` : '') +
-        `\nObrigado!`
-      );
-      window.open(`https://wa.me/351000000000?text=${text}`, '_blank');
-    }
-
-    // ── Set min date for reservation form
-    const dateInput = document.querySelector('input[type="date"]');
-    if (dateInput) {
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.min = today;
-    }
   </script>
 </body>
 </html>
