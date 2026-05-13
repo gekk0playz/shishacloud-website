@@ -58,7 +58,7 @@
     background: rgba(201,151,60,.1); border: 1px solid rgba(201,151,60,.22);
     padding: .38rem 1rem; border-radius: 100px;
     font-size: .6rem; letter-spacing: .18em; color: var(--gold-2);
-    width: fit-content; margin-bottom: 2.2rem; opacity: 0;
+    width: fit-content; margin-bottom: 2.2rem;
   }
   .hero-badge .dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: blink 2.5s ease-in-out infinite; flex-shrink: 0; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
@@ -67,18 +67,18 @@
     font-family: var(--serif);
     font-size: clamp(4.5rem, 8vw, 9rem);
     font-weight: 300; line-height: .9; letter-spacing: -.025em;
-    color: var(--text); opacity: 0;
+    color: var(--text);
   }
   .hero-h1 em { display: block; font-style: italic; color: var(--gold-2); }
 
   .hero-line { width: 0; height: 1px; background: linear-gradient(to right,var(--gold),transparent); margin: 2rem 0; transition: width 1.4s var(--ease-out); }
   .hero-line.on { width: 220px; }
 
-  .hero-tagline { font-size: clamp(.85rem,1.3vw,.98rem); color: var(--text-2); max-width: 400px; line-height: 1.75; opacity: 0; }
+  .hero-tagline { font-size: clamp(.85rem,1.3vw,.98rem); color: var(--text-2); max-width: 400px; line-height: 1.75; }
 
-  .hero-actions { display: flex; gap: .9rem; margin-top: 2.4rem; flex-wrap: wrap; opacity: 0; }
+  .hero-actions { display: flex; gap: .9rem; margin-top: 2.4rem; flex-wrap: wrap; }
 
-  .hero-stats { display: flex; gap: 0; margin-top: 3rem; opacity: 0; border-top: 1px solid var(--border); padding-top: 1.8rem; }
+  .hero-stats { display: flex; gap: 0; margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1.8rem; }
   .h-stat { flex: 1; padding-right: 1.5rem; border-right: 1px solid var(--border); margin-right: 1.5rem; }
   .h-stat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
   .h-stat-n { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--gold-2); display: block; line-height: 1; }
@@ -107,7 +107,7 @@
   /* Scroll hint */
   .hero-scroll {
     position: absolute; bottom: 2.5rem; left: var(--gutter);
-    display: flex; align-items: center; gap: .8rem; z-index: 5; opacity: 0;
+    display: flex; align-items: center; gap: .8rem; z-index: 5;
   }
   .hero-scroll span { font-size: .5rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(155,141,126,.45); }
   .scroll-line { width: 40px; height: 1px; background: linear-gradient(to right,var(--gold),transparent); animation: scrollPulse 2.5s ease-in-out infinite; }
@@ -317,11 +317,11 @@
 
     <!-- LEFT: text -->
     <div class="hero-left">
-      <span class="hero-badge"><span class="dot"></span>Almada · Portugal · Est. 2023</span>
-      <h1 class="hero-h1">Shisha<em>Cloud</em></h1>
+      <span class="hero-badge r"><span class="dot"></span>Almada · Portugal · Est. 2023</span>
+      <h1 class="hero-h1 r d1">Shisha<em>Cloud</em></h1>
       <div class="hero-line"></div>
-      <p class="hero-tagline">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
-      <div class="hero-actions">
+      <p class="hero-tagline r d2">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
+      <div class="hero-actions r d3">
         <a href="/reserve/" class="btn btn-fill magnet">
           Reserve a Table
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -331,7 +331,7 @@
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
-      <div class="hero-stats">
+      <div class="hero-stats r d4">
         <div class="h-stat"><span class="h-stat-n">15€</span><span class="h-stat-l">Shisha</span></div>
         <div class="h-stat"><span class="h-stat-n">11</span><span class="h-stat-l">Sabores</span></div>
         <div class="h-stat"><span class="h-stat-n">18h</span><span class="h-stat-l">Abre diariamente</span></div>
@@ -347,7 +347,7 @@
       </div>
     </div>
 
-    <div class="hero-scroll">
+    <div class="hero-scroll r d5">
       <div class="scroll-line"></div>
       <span>Scroll</span>
     </div>
@@ -718,15 +718,17 @@
   }
   </script>
 
-  <!-- Hero entrance animations (runs after main.js which initialises GSAP) -->
+  <!-- Trigger hero-line width reveal after preloader hides -->
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Animate gold line after preloader
-    window._heroLineReady = function() {
-      var line = document.querySelector('.hero-line');
-      if (line) setTimeout(function(){ line.classList.add('on'); }, 1400);
-    };
-  });
+  (function(){
+    var pre = document.getElementById('preloader');
+    function triggerLine(){ var l=document.querySelector('.hero-line'); if(l) l.classList.add('on'); }
+    if (!pre) { setTimeout(triggerLine, 300); return; }
+    var mo = new MutationObserver(function(){
+      if (pre.style.display === 'none') { mo.disconnect(); setTimeout(triggerLine, 300); }
+    });
+    mo.observe(pre, { attributes: true, attributeFilter: ['style'] });
+  })();
   </script>
 </body>
 </html>
