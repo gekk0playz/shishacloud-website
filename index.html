@@ -7,335 +7,253 @@
   <title>Shisha Cloud · Almada</title>
   <link rel="stylesheet" href="/css/main.css"/>
   <style>
-    /* ── Hero ── */
+    /* ═══ HERO ═══ */
     #hero {
-      position: relative; height: 100dvh; min-height: 620px;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      overflow: hidden;
+      position: relative; height: 100dvh; min-height: 640px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      overflow: hidden; text-align: center;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=88&auto=format&fit=crop');
-      background-size: cover; background-position: center 38%;
-      transform-origin: center; will-change: transform;
+    /* Aurora orbs */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(100px);
+      pointer-events: none; will-change: transform;
     }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to top, rgba(7,6,10,.98) 0%, rgba(7,6,10,.55) 40%, rgba(7,6,10,.18) 100%),
-        linear-gradient(to right, rgba(7,6,10,.4) 0%, transparent 60%);
-    }
-    .hero-vignette {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(7,6,10,.6) 100%);
-      pointer-events: none;
-    }
-    #smoke-canvas {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; opacity: .5;
-    }
-    .hero-content {
-      position: relative; z-index: 3;
-      padding: 0 var(--gutter) clamp(3rem, 8vh, 6rem);
-      max-width: 900px;
-    }
+    .orb-1 { width: 700px; height: 500px; top: -15%; left: -15%; background: radial-gradient(circle, rgba(201,151,60,.14) 0%, transparent 70%); animation: orbFloat1 20s ease-in-out infinite alternate; }
+    .orb-2 { width: 500px; height: 600px; top: 20%; right: -10%; background: radial-gradient(circle, rgba(160,110,30,.1) 0%, transparent 70%); animation: orbFloat2 25s ease-in-out infinite alternate; }
+    .orb-3 { width: 400px; height: 400px; bottom: 0%; left: 35%; background: radial-gradient(circle, rgba(201,151,60,.08) 0%, transparent 70%); animation: orbFloat3 18s ease-in-out infinite alternate; }
+    @keyframes orbFloat1 { from { transform: translate(0,0) scale(1);     } to { transform: translate(60px,-40px) scale(1.1); } }
+    @keyframes orbFloat2 { from { transform: translate(0,0) scale(1);     } to { transform: translate(-50px,60px) scale(.9); } }
+    @keyframes orbFloat3 { from { transform: translate(0,0) scale(1);     } to { transform: translate(40px,-30px) scale(1.08); } }
+
     .hero-eyebrow {
-      display: flex; align-items: center; gap: 1rem;
-      font-size: .58rem; letter-spacing: .36em; text-transform: uppercase; color: var(--gold);
-      margin-bottom: 2rem; opacity: 0;
-    }
-    .hero-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
-    .hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(4.5rem, 13vw, 10.5rem);
-      font-weight: 300; line-height: .92; letter-spacing: -.02em;
-    }
-    .hero-title .split-line { overflow: hidden; }
-    .hero-title em { font-style: italic; color: var(--gold-2); display: block; }
-    .hero-gold-line {
-      width: 0; height: 1px;
-      background: linear-gradient(to right, var(--gold), transparent);
-      margin: 2.2rem 0;
-      transition: width 1.2s var(--ease-out);
-    }
-    .hero-gold-line.on { width: 280px; }
-    .hero-sub {
-      font-size: clamp(.85rem, 1.5vw, 1rem);
-      color: var(--text-2); letter-spacing: .05em; line-height: 1.7;
-      max-width: 440px; opacity: 0;
-    }
-    .hero-cta {
-      margin-top: 2.6rem; display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0;
-    }
-    .hero-scroll {
-      position: absolute; bottom: 0; left: var(--gutter);
-      display: flex; flex-direction: column; align-items: center; gap: .6rem;
-      z-index: 3; padding-bottom: 2rem;
-    }
-    .hero-scroll span {
-      font-size: .52rem; letter-spacing: .3em; text-transform: uppercase;
-      color: var(--muted); writing-mode: vertical-lr;
-    }
-    .hero-scroll-line {
-      width: 1px; height: 60px;
-      background: linear-gradient(to bottom, transparent, var(--gold));
-      animation: scrollPulse 2.5s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%,100% { opacity: .3; transform: scaleY(1); }
-      50%      { opacity: 1;  transform: scaleY(.65); transform-origin: bottom; }
-    }
-
-    /* ── Marquee strip ── */
-    .marquee-wrap {
-      position: relative; z-index: 3;
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      background: rgba(7,6,10,.85);
-      backdrop-filter: blur(12px);
-      overflow: hidden; padding: .85rem 0;
-    }
-    .marquee-track {
-      display: flex; gap: 4rem; white-space: nowrap;
-      animation: marquee 28s linear infinite;
-    }
-    .marquee-track:hover { animation-play-state: paused; }
-    .marquee-item {
-      display: flex; align-items: center; gap: 1.4rem; flex-shrink: 0;
-      font-size: .58rem; letter-spacing: .28em; text-transform: uppercase; color: var(--muted);
-    }
-    .marquee-item::before { content: '◆'; color: var(--gold); font-size: .45rem; }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* ── Intro ── */
-    #intro {
-      padding: clamp(5rem, 10vw, 10rem) var(--gutter);
-      display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(3rem, 6vw, 8rem);
-      align-items: center; background: var(--bg);
-    }
-    .intro-num {
-      font-family: var(--font-serif);
-      font-size: clamp(7rem, 15vw, 14rem); font-weight: 300; line-height: 1;
-      color: rgba(201,151,60,.06); letter-spacing: -.04em;
-      user-select: none; pointer-events: none;
-    }
-    .intro-body .section-tag { margin-bottom: 1.8rem; }
-    .intro-body h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.1;
-    }
-    .intro-body h2 em { font-style: italic; color: var(--gold-2); }
-    .intro-body p { color: var(--text-2); margin-top: 1.4rem; font-size: .92rem; max-width: 480px; line-height: 1.8; }
-    .intro-body .btn-line { margin-top: 2.6rem; }
-
-    /* ── Split ── */
-    .split-wrap {
-      display: grid; grid-template-columns: 1fr 1fr; min-height: 640px;
-    }
-    .split-img { overflow: hidden; position: relative; }
-    .split-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(.62) saturate(.8);
-      transition: transform 10s ease, filter 1s;
-    }
-    .split-img:hover img { transform: scale(1.04); filter: brightness(.75) saturate(.9); }
-    .split-img-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to right, transparent 60%, rgba(7,6,10,.6) 100%);
-    }
-    .split-body {
-      background: var(--bg-2);
-      padding: clamp(3.5rem, 6vw, 7rem) var(--gutter);
-      display: flex; flex-direction: column; justify-content: center;
-      border-left: 1px solid var(--border);
-    }
-    .split-body h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1.1;
-    }
-    .split-body h2 em { font-style: italic; color: var(--gold-2); }
-    .split-body p { color: var(--text-2); margin-top: 1.2rem; font-size: .9rem; max-width: 400px; line-height: 1.8; }
-    .split-body .btn-line { margin-top: 2.8rem; }
-
-    /* ── Experience cards ── */
-    #cards { background: var(--bg); }
-    .cards-header { padding: clamp(4rem, 7vw, 7rem) var(--gutter) clamp(2.5rem, 4vw, 4rem); }
-    .cards-header h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 300; max-width: 600px; line-height: 1.1;
-    }
-    .cards-header h2 em { font-style: italic; color: var(--gold-2); }
-    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-    .card {
-      position: relative; overflow: hidden; aspect-ratio: 4/5;
-      cursor: none;
-    }
-    .card img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(.55) saturate(.75);
-      transition: transform 1.2s var(--ease-out), filter 1s;
-    }
-    .card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(7,6,10,.92) 0%, transparent 55%);
-    }
-    .card:hover img { transform: scale(1.07); filter: brightness(.7) saturate(.85); }
-    .card-content {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;
-      padding: clamp(1.5rem, 3vw, 2.5rem);
-      transform: translateY(8px); transition: transform var(--dur-slow) var(--ease-out);
-    }
-    .card:hover .card-content { transform: none; }
-    .card-num {
-      font-family: var(--font-serif); font-size: 4.5rem; font-weight: 300; line-height: 1;
-      color: rgba(201,151,60,.14); display: block; margin-bottom: .4rem;
-    }
-    .card h3 {
-      font-family: var(--font-serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 300;
-    }
-    .card p {
-      font-size: .78rem; color: var(--text-2); margin-top: .5rem;
-      line-height: 1.6; max-height: 0; overflow: hidden;
-      transition: max-height .4s var(--ease-out), opacity .4s;
+      position: relative; z-index: 4;
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(201,151,60,.1); border: 1px solid rgba(201,151,60,.22);
+      padding: .38rem 1.1rem; border-radius: 100px;
+      font-size: .62rem; letter-spacing: .18em; color: var(--gold-2); margin-bottom: 2rem;
       opacity: 0;
     }
-    .card:hover p { max-height: 5rem; opacity: 1; }
-    .card-tag {
-      position: absolute; top: 1.4rem; right: 1.4rem; z-index: 1;
-      font-size: .52rem; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--gold); border: 1px solid var(--border);
-      padding: .28rem .7rem; background: rgba(7,6,10,.5);
-      backdrop-filter: blur(4px);
-    }
-    .card-arrow {
-      margin-top: 1.2rem; display: inline-flex; align-items: center; gap: .6rem;
-      font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold);
-      opacity: 0; transform: translateX(-8px);
-      transition: opacity .35s var(--ease-out), transform .35s var(--ease-out), gap var(--dur-base);
-    }
-    .card:hover .card-arrow { opacity: 1; transform: none; }
+    .hero-eyebrow .dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-    /* ── Gallery strip ── */
-    #gallery-strip { background: var(--bg-warm); padding: clamp(4rem, 7vw, 7rem) 0; }
-    .gs-header {
-      padding: 0 var(--gutter) clamp(2rem, 3.5vw, 3.5rem);
-      display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    .hero-title {
+      position: relative; z-index: 4;
+      font-family: var(--serif); font-size: clamp(5rem, 13vw, 11rem);
+      font-weight: 300; line-height: .9; letter-spacing: -.025em;
+      opacity: 0;
     }
-    .gs-header h2 { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; }
-    .gs-header h2 em { font-style: italic; color: var(--gold-2); }
-    .gs-track { display: flex; gap: 3px; overflow-x: auto; overflow-y: hidden; padding: 0 var(--gutter) 1.5rem; scrollbar-width: none; }
-    .gs-track::-webkit-scrollbar { display: none; }
-    .gs-item { flex-shrink: 0; overflow: hidden; height: clamp(280px, 38vw, 520px); position: relative; }
-    .gs-item img {
-      height: 100%; width: auto; min-width: clamp(200px, 22vw, 340px);
-      object-fit: cover;
-      filter: brightness(.65) saturate(.78);
-      transition: transform .8s var(--ease-out), filter .8s;
-    }
-    .gs-item:hover img { transform: scale(1.06); filter: brightness(.85) saturate(1); }
-    .gs-label {
-      position: absolute; bottom: 1.2rem; left: 1.4rem;
-      font-size: .58rem; letter-spacing: .22em; text-transform: uppercase;
-      color: rgba(240,235,225,.4);
-    }
-    .gs-drag-hint {
-      padding: .8rem var(--gutter) 0;
-      font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--muted-2); display: flex; align-items: center; gap: .6rem;
-    }
-    .gs-drag-hint::before { content: ''; width: 18px; height: 1px; background: var(--muted-2); }
+    .hero-title .line1 { display: block; }
+    .hero-title .line2 { display: block; font-style: italic; }
 
-    /* ── Manifesto ── */
+    .hero-sub {
+      position: relative; z-index: 4; margin-top: 1.8rem;
+      font-size: clamp(.82rem, 1.4vw, 1rem); color: var(--text-2); letter-spacing: .04em;
+      max-width: 460px; line-height: 1.75; opacity: 0;
+    }
+
+    .hero-cta {
+      position: relative; z-index: 4; margin-top: 2.8rem;
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0;
+    }
+
+    /* Floating chips */
+    .hero-chips {
+      position: relative; z-index: 4; margin-top: 3.5rem;
+      display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; opacity: 0;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: .55rem;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(12px); padding: .5rem 1rem;
+      font-size: .68rem; letter-spacing: .1em; color: var(--text-2);
+      transition: border-color .25s, background .25s, color .25s;
+    }
+    .chip:hover { border-color: var(--border-g); color: var(--gold-2); background: rgba(201,151,60,.06); }
+    .chip .chip-icon { color: var(--gold); font-size: .7rem; line-height: 1; }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem; z-index: 4;
+      opacity: 0;
+    }
+    .hero-scroll span { font-size: .5rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(155,141,126,.5); }
+    .hero-scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--gold)); animation: scrollPulse 2.5s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.6);transform-origin:bottom} }
+
+    /* ═══ BENTO GRID ═══ */
+    #bento {
+      padding: clamp(4rem, 8vw, 8rem) var(--gutter);
+      background: var(--bg);
+    }
+    .bento-header { margin-bottom: clamp(2.5rem, 4vw, 4rem); display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .bento-header h2 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.05; }
+    .bento-header h2 em { font-style: italic; }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(180px, auto);
+      gap: 1px; background: rgba(255,255,255,.04);
+    }
+
+    /* Base card */
+    .b-card {
+      background: rgba(255,255,255,.025);
+      border: none; position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.8rem; cursor: none;
+      transition: background .35s;
+    }
+    .b-card:hover { background: rgba(255,255,255,.045); }
+    .b-card::before {
+      content: ''; position: absolute; inset: 0;
+      border: 1px solid transparent;
+      transition: border-color .35s;
+    }
+    .b-card:hover::before { border-color: var(--border-g); }
+
+    /* Card image bg */
+    .b-card-img { position: absolute; inset: 0; }
+    .b-card-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.45) saturate(.7); transition: transform 1.2s var(--ease-out), filter .8s; }
+    .b-card:hover .b-card-img img { transform: scale(1.06); filter: brightness(.55) saturate(.8); }
+    .b-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,4,10,.92) 0%, rgba(5,4,10,.3) 55%, transparent 100%); }
+
+    .b-card-content { position: relative; z-index: 1; }
+    .b-num { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; line-height: 1; color: rgba(201,151,60,.12); display: block; margin-bottom: .3rem; }
+    .b-title { font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.8rem); font-weight: 300; }
+    .b-desc { font-size: .75rem; color: var(--text-2); margin-top: .4rem; line-height: 1.6; }
+    .b-tag { position: absolute; top: 1.2rem; right: 1.2rem; font-size: .52rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,151,60,.22); padding: .24rem .65rem; background: rgba(5,4,10,.5); backdrop-filter: blur(4px); }
+    .b-arrow { display: inline-flex; align-items: center; gap: .5rem; font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: 1rem; opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s; }
+    .b-card:hover .b-arrow { opacity: 1; transform: none; }
+
+    /* Stat card */
+    .b-stat { align-items: flex-start; justify-content: center; }
+    .b-stat-num { font-family: var(--serif); font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 300; line-height: 1; }
+    .b-stat-label { font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: var(--text-2); margin-top: .4rem; }
+
+    /* Hours card */
+    .b-hours { justify-content: center; }
+    .b-hours-item { display: flex; justify-content: space-between; padding: .55rem 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: .78rem; }
+    .b-hours-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .b-hours-item .day { color: var(--text-2); }
+    .b-hours-item .time { font-family: var(--serif); font-size: .95rem; color: var(--gold-2); }
+
+    /* IG card */
+    .b-ig { justify-content: space-between; text-decoration: none; }
+    .b-ig-handle { font-size: .7rem; letter-spacing: .12em; color: var(--text-2); display: flex; align-items: center; gap: .6rem; }
+    .b-ig-cta { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.4rem); font-style: italic; color: var(--gold-2); }
+
+    /* Grid spans */
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+    .row-2  { grid-row: span 2; }
+
+    /* ═══ GALLERY 3D ═══ */
+    #gallery3d {
+      padding: clamp(4rem, 7vw, 7rem) 0;
+      background: #030208; overflow: hidden;
+    }
+    .g3-header { padding: 0 var(--gutter) clamp(2.5rem, 4vw, 4rem); display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .g3-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; }
+    .g3-header h2 em { font-style: italic; }
+
+    /* perspective tunnel */
+    .g3-scene {
+      perspective: 1100px; perspective-origin: 50% 50%;
+      height: clamp(300px, 42vw, 540px); overflow: hidden;
+      position: relative;
+    }
+    .g3-track {
+      display: flex; align-items: center;
+      height: 100%; padding: 0 var(--gutter);
+      gap: clamp(1rem, 2vw, 2rem);
+      transform-style: preserve-3d;
+      transition: transform .8s var(--ease-out);
+    }
+    .g3-item {
+      flex-shrink: 0;
+      height: clamp(200px, 28vw, 380px);
+      width: clamp(160px, 22vw, 290px);
+      overflow: hidden; position: relative; cursor: none;
+      transition: transform .6s var(--ease-out), filter .5s;
+    }
+    .g3-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.65) saturate(.78); transition: transform .8s var(--ease-out), filter .5s; }
+    .g3-item:hover img { transform: scale(1.06); filter: brightness(.9) saturate(1); }
+    .g3-label { position: absolute; bottom: 1rem; left: 1.2rem; font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(240,235,225,.45); }
+
+    /* depth offsets */
+    .g3-item:nth-child(1) { transform: translateZ(-180px) rotateY(8deg); }
+    .g3-item:nth-child(2) { transform: translateZ(-80px)  rotateY(4deg); }
+    .g3-item:nth-child(3) { transform: translateZ(0px)    rotateY(0deg); height: clamp(240px, 34vw, 460px); width: clamp(190px, 26vw, 340px); }
+    .g3-item:nth-child(4) { transform: translateZ(-80px)  rotateY(-4deg); }
+    .g3-item:nth-child(5) { transform: translateZ(-180px) rotateY(-8deg); }
+    .g3-item:nth-child(6) { transform: translateZ(-300px) rotateY(-12deg); }
+
+    /* drag hint */
+    .g3-hint { padding: 1.2rem var(--gutter) 0; font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(155,141,126,.4); display: flex; align-items: center; gap: .6rem; }
+    .g3-hint::before { content: ''; width: 16px; height: 1px; background: currentColor; }
+
+    /* ═══ MANIFESTO ═══ */
     #manifesto {
       position: relative; overflow: hidden;
-      padding: clamp(6rem, 12vw, 14rem) var(--gutter);
+      padding: clamp(7rem, 13vw, 14rem) var(--gutter);
       display: flex; align-items: center; justify-content: center;
     }
-    .manifesto-bg {
-      position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=1920&q=88&auto=format&fit=crop');
-      background-size: cover; background-position: center;
-    }
-    .manifesto-overlay { position: absolute; inset: 0; background: rgba(7,6,10,.82); }
-    .manifesto-content { position: relative; z-index: 1; text-align: center; max-width: 860px; }
-    .manifesto-icon {
-      font-family: var(--font-serif); font-size: 6rem; line-height: .8;
-      color: rgba(201,151,60,.2); margin-bottom: 1.5rem; display: block;
-    }
-    .manifesto-content blockquote {
-      font-family: var(--font-serif);
-      font-size: clamp(1.9rem, 5vw, 4rem);
-      font-style: italic; font-weight: 300; line-height: 1.2; color: var(--text);
-    }
-    .manifesto-content blockquote em { color: var(--gold-2); font-style: normal; }
-    .manifesto-attr {
-      margin-top: 2rem; font-size: .58rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted);
-      display: flex; align-items: center; justify-content: center; gap: .8rem;
-    }
-    .manifesto-attr::before, .manifesto-attr::after { content: ''; width: 20px; height: 1px; background: var(--muted); }
+    .mf-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=1920&q=88&auto=format&fit=crop'); background-size: cover; background-position: center; }
+    .mf-overlay { position: absolute; inset: 0; background: rgba(5,4,10,.84); }
+    .mf-content { position: relative; z-index: 1; text-align: center; max-width: 840px; }
+    .mf-mark { font-family: var(--serif); font-size: 7rem; line-height: .75; color: rgba(201,151,60,.18); display: block; margin-bottom: 1rem; }
+    .mf-quote { font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 3.8rem); font-style: italic; font-weight: 300; line-height: 1.2; }
+    .mf-quote em { font-style: normal; }
+    .mf-attr { margin-top: 2rem; font-size: .56rem; letter-spacing: .34em; text-transform: uppercase; color: var(--text-2); display: flex; align-items: center; justify-content: center; gap: .8rem; }
+    .mf-attr::before, .mf-attr::after { content: ''; width: 18px; height: 1px; background: currentColor; }
 
-    /* ── Reserve CTA ── */
+    /* ═══ RESERVE ═══ */
     #reserve-cta {
-      background: var(--bg-2);
       padding: clamp(5rem, 9vw, 10rem) var(--gutter);
       display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 8rem); align-items: start;
       border-top: 1px solid var(--border);
     }
-    .rcta-left h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.08;
-    }
-    .rcta-left h2 em { font-style: italic; color: var(--gold-2); }
-    .rcta-left p { color: var(--text-2); margin-top: 1.2rem; font-size: .9rem; max-width: 380px; line-height: 1.8; }
-    .hours { margin-top: var(--sp-5); }
-    .hour-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: .85rem 0; border-bottom: 1px solid var(--border); font-size: .82rem;
-    }
+    .rc-h2 { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.05; }
+    .rc-h2 em { font-style: italic; }
+    .rc-p { color: var(--text-2); margin-top: 1.2rem; font-size: .9rem; max-width: 380px; line-height: 1.8; }
+    .hour-row { display: flex; justify-content: space-between; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--border); font-size: .82rem; }
     .hour-row:last-child { border-bottom: none; }
-    .hour-row .day { color: var(--text-2); font-weight: 400; }
-    .hour-row .time { font-family: var(--font-serif); font-size: 1.05rem; color: var(--gold-2); }
-    .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; margin-top: var(--sp-5); background: var(--border); }
-    .stat-box { background: var(--bg-3); padding: 1.8rem 1.5rem; }
-    .stat-num {
-      font-family: var(--font-serif); font-size: 3rem; font-weight: 300;
-      color: var(--gold-2); line-height: 1; display: block;
-    }
-    .stat-label { font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: .4rem; }
+    .hour-row .day { color: var(--text-2); }
+    .hour-row .time { font-family: var(--serif); font-size: 1.05rem; color: var(--gold-2); }
+    .rc-right { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,.04); }
+    .rc-stat { background: rgba(255,255,255,.025); padding: 2rem; transition: background .3s; }
+    .rc-stat:hover { background: rgba(255,255,255,.05); }
+    .rc-stat-num { font-family: var(--serif); font-size: 3.2rem; font-weight: 300; line-height: 1; }
+    .rc-stat-label { font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-2); margin-top: .4rem; }
+    .rc-stats-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,.04); }
 
-    /* ── Responsive ── */
+    /* Responsive */
     @media (max-width: 1024px) {
-      .cards-grid { grid-template-columns: repeat(3,1fr); }
+      .bento-grid { grid-template-columns: repeat(2,1fr); }
+      .span-3 { grid-column: span 2; }
     }
-    @media (max-width: 900px) {
-      #intro { grid-template-columns: 1fr; gap: 2.5rem; }
-      .intro-num { display: none; }
-      .split-wrap { grid-template-columns: 1fr; }
-      .split-img { aspect-ratio: 16/8; }
-      .split-img-overlay { display: none; }
-      .split-body { border-left: none; border-top: 1px solid var(--border); }
-      .cards-grid { grid-template-columns: 1fr; }
-      .card { aspect-ratio: 16/9; }
-      .card p { max-height: 5rem; opacity: 1; }
-      .card-arrow { opacity: 1; transform: none; }
+    @media (max-width: 860px) {
       #reserve-cta { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: repeat(3,1fr); }
     }
     @media (max-width: 640px) {
-      .hero-content { padding: 0 1.2rem clamp(2.5rem, 6vh, 4rem); }
-      .hero-title { font-size: clamp(3.2rem, 18vw, 6rem); }
-      .hero-cta { flex-direction: column; }
-      .hero-cta .btn { justify-content: center; }
-      .hero-gold-line.on { width: 180px; }
-      #intro { padding: 5rem 1.2rem; }
-      .split-body { padding: 3.5rem 1.2rem; }
-      .cards-header { padding: 4rem 1.2rem 2rem; }
-      #gallery-strip { padding: 3.5rem 0; }
-      .gs-header { padding: 0 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      #hero { text-align: left; }
+      .hero-eyebrow, .hero-cta, .hero-chips { justify-content: flex-start; }
+      .hero-title { font-size: clamp(3.5rem, 18vw, 6rem); }
+      .hero-sub { max-width: none; }
+      #bento { padding: 4rem 1.2rem; }
+      .bento-grid { grid-template-columns: 1fr 1fr; }
+      .span-2, .span-3 { grid-column: span 2; }
+      .g3-header { padding: 0 1.2rem 2rem; flex-direction: column; align-items: flex-start; }
       #manifesto { padding: 5.5rem 1.2rem; }
       #reserve-cta { padding: 4.5rem 1.2rem; }
-      .stats-row { grid-template-columns: 1fr 1fr; }
-      .marquee-track { animation-duration: 18s; }
+      .hero-cta .btn { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .span-2, .span-3 { grid-column: span 1; }
+      .row-2 { grid-row: span 1; }
     }
   </style>
 </head>
@@ -365,7 +283,7 @@
     <div class="mnav-inner">
       <div class="mnav-top">
         <div class="mnav-logo">Shisha <em>Cloud</em></div>
-        <button class="mnav-close" onclick="closeMob()" aria-label="Close menu">
+        <button class="mnav-close" onclick="closeMob()" aria-label="Close">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="2" y1="2" x2="18" y2="18"/><line x1="18" y1="2" x2="2" y2="18"/></svg>
         </button>
       </div>
@@ -376,7 +294,7 @@
       </nav>
       <div class="mnav-footer">
         <div class="mnav-meta">
-          <div class="mnav-hours">Seg – Dom &nbsp;·&nbsp; 18:00 – 02:00</div>
+          <div class="mnav-hours">Seg – Dom · 18:00 – 02:00</div>
           <div class="mnav-location">Almada, Portugal</div>
         </div>
         <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="mnav-ig">
@@ -388,179 +306,209 @@
     </div>
   </div>
 
-  <!-- ── HERO ── -->
+  <!-- ══ HERO ══ -->
   <section id="hero">
-    <div class="hero-bg parallax" data-py="14%"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-vignette"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="dot-grid"></div>
     <div class="grain"></div>
-    <canvas id="smoke-canvas"></canvas>
 
-    <div class="hero-content">
-      <div class="hero-eyebrow">Almada · Portugal · Est. 2023</div>
-      <h1 class="hero-title">
-        <span class="split-line"><span class="hero-word">Shisha</span></span>
-        <span class="split-line"><em class="hero-word">Cloud</em></span>
-      </h1>
-      <div class="hero-gold-line r"></div>
-      <p class="hero-sub">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
-      <div class="hero-cta">
-        <a href="/reserve/" class="btn btn-fill magnet">
-          Reserve a Table
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="/menu/" class="btn btn-stroke">
-          Explore Menu
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      Almada · Portugal · Est. 2023
     </div>
-
+    <h1 class="hero-title">
+      <span class="line1 g-text">Shisha</span>
+      <span class="line2 g-text">Cloud</span>
+    </h1>
+    <p class="hero-sub">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
+    <div class="hero-cta">
+      <a href="/reserve/" class="btn btn-fill magnet">
+        Reserve a Table
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="/menu/" class="btn btn-stroke">
+        Explore Menu
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip"><span class="chip-icon">◆</span>11 Sabores</span>
+      <span class="chip"><span class="chip-icon">◆</span>Cocktails & Bar</span>
+      <span class="chip"><span class="chip-icon">◆</span>Seg–Dom · 18h–02h</span>
+      <span class="chip"><span class="chip-icon">◆</span>Almada, Portugal</span>
+    </div>
     <div class="hero-scroll">
       <span>Scroll</span>
       <div class="hero-scroll-line"></div>
     </div>
   </section>
 
-  <!-- ── Marquee ── -->
+  <!-- ══ MARQUEE ══ -->
   <div class="marquee-wrap">
     <div class="marquee-track">
-      <span class="marquee-item">Premium Shisha</span><span class="marquee-item">Signature Cocktails</span>
-      <span class="marquee-item">Almada Portugal</span><span class="marquee-item">Seg – Dom · 18h – 02h</span>
-      <span class="marquee-item">11 Sabores</span><span class="marquee-item">Snacks & Petiscos</span>
-      <span class="marquee-item">Reservas Via WhatsApp</span><span class="marquee-item">Shisha Álcool</span>
-      <span class="marquee-item">Premium Shisha</span><span class="marquee-item">Signature Cocktails</span>
-      <span class="marquee-item">Almada Portugal</span><span class="marquee-item">Seg – Dom · 18h – 02h</span>
-      <span class="marquee-item">11 Sabores</span><span class="marquee-item">Snacks & Petiscos</span>
-      <span class="marquee-item">Reservas Via WhatsApp</span><span class="marquee-item">Shisha Álcool</span>
+      <span class="marquee-item">Premium Shisha</span><span class="marquee-item">Cocktails & Bar</span>
+      <span class="marquee-item">Almada Portugal</span><span class="marquee-item">18h – 02h</span>
+      <span class="marquee-item">11 Sabores</span><span class="marquee-item">Shisha Álcool 25€</span>
+      <span class="marquee-item">Sangrias · Vinhos</span><span class="marquee-item">Reservas WhatsApp</span>
+      <span class="marquee-item">Premium Shisha</span><span class="marquee-item">Cocktails & Bar</span>
+      <span class="marquee-item">Almada Portugal</span><span class="marquee-item">18h – 02h</span>
+      <span class="marquee-item">11 Sabores</span><span class="marquee-item">Shisha Álcool 25€</span>
+      <span class="marquee-item">Sangrias · Vinhos</span><span class="marquee-item">Reservas WhatsApp</span>
     </div>
   </div>
 
-  <!-- ── Intro ── -->
-  <section id="intro">
-    <div class="intro-num r">01</div>
-    <div class="intro-body">
-      <div class="section-tag r">The Experience</div>
-      <h2 class="r d1">Where every cloud<br><em>tells a story</em></h2>
-      <p class="r d2">Born from a passion for authentic flavours and warm hospitality, Shisha Cloud is Almada's premier lounge. We blend the ritual of traditional shisha with a sleek, contemporary space — a place where time slows and evenings become memories.</p>
-      <a href="/gallery/" class="btn btn-line r d3">
-        See the Space
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── Split ── -->
-  <div class="split-wrap">
-    <div class="split-img r-left">
-      <img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=900&q=88&auto=format&fit=crop" alt="Premium shisha setup" loading="lazy"/>
-      <div class="split-img-overlay"></div>
-    </div>
-    <div class="split-body">
-      <div class="section-tag r">Our Craft</div>
-      <h2 class="r d1">Ritual, not<br><em>routine</em></h2>
-      <p class="r d2">Every session is prepared with precision — fresh coals, premium tobacco, and service that elevates shisha into something extraordinary.</p>
-      <p class="r d3" style="margin-top:.8rem">Our bar extends the experience with handcrafted cocktails and mocktails designed to complement each flavour profile.</p>
-      <a href="/menu/" class="btn btn-line r d4">
-        View Full Menu
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- ── Cards ── -->
-  <section id="cards">
-    <div class="cards-header">
-      <div class="section-tag r">What We Offer</div>
-      <h2 class="r d1">A complete<br><em>evening</em></h2>
-    </div>
-    <div class="cards-grid">
-      <div class="card r">
-        <div class="card-tag">Signature</div>
-        <img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=800&q=88&auto=format&fit=crop" alt="Premium Shisha" loading="lazy"/>
-        <div class="card-content">
-          <span class="card-num">01</span>
-          <h3>Premium Shisha</h3>
-          <p>11 sabores exclusivos, cabeçote novo, prepared fresh at every table.</p>
-          <div class="card-arrow">
-            Discover
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="card r d2">
-        <div class="card-tag">Bar</div>
-        <img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=800&q=88&auto=format&fit=crop" alt="Signature Cocktails" loading="lazy"/>
-        <div class="card-content">
-          <span class="card-num">02</span>
-          <h3>Cocktails & Bar</h3>
-          <p>Vodka, gin, rum, whisky, tequila — crafted to complement your session.</p>
-          <div class="card-arrow">
-            Discover
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="card r d4">
-        <div class="card-tag">Events</div>
-        <img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=800&q=88&auto=format&fit=crop" alt="Private Events" loading="lazy"/>
-        <div class="card-content">
-          <span class="card-num">03</span>
-          <h3>Private Events</h3>
-          <p>Exclusive venue hire for birthdays, celebrations, and corporate gatherings.</p>
-          <div class="card-arrow">
-            Enquire
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Gallery strip ── -->
-  <section id="gallery-strip">
-    <div class="gs-header">
+  <!-- ══ BENTO GRID ══ -->
+  <section id="bento">
+    <div class="bento-header">
       <div>
-        <div class="section-tag r">Inside Shisha Cloud</div>
-        <h2 class="r d1">The <em>atmosphere</em></h2>
+        <div class="tag r" style="margin-bottom:1.2rem">What We Offer</div>
+        <h2 class="r d1">Everything you need<br><em class="g-text">for a perfect night</em></h2>
       </div>
-      <a href="/gallery/" class="btn btn-line r">
+      <a href="/menu/" class="btn btn-ghost r d2">
+        Full Menu
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Shisha (large, 2x2) -->
+      <div class="b-card span-2 row-2 r tilt-card">
+        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1635547821500-77542481940c?w=900&q=88&auto=format&fit=crop" alt="Premium Shisha" loading="lazy"/></div>
+        <div class="b-card-overlay"></div>
+        <div class="b-tag">Signature</div>
+        <div class="b-card-content">
+          <span class="b-num">01</span>
+          <div class="b-title">Premium Shisha</div>
+          <div class="b-desc">11 sabores exclusivos. Shisha 15€ · Shisha Álcool 25€ · Cabeçote Novo +8€</div>
+          <div class="b-arrow">
+            Explore
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cocktails (2×1) -->
+      <div class="b-card span-2 r d2 tilt-card">
+        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=800&q=88&auto=format&fit=crop" alt="Cocktails" loading="lazy"/></div>
+        <div class="b-card-overlay"></div>
+        <div class="b-tag">Bar Menu</div>
+        <div class="b-card-content">
+          <span class="b-num">02</span>
+          <div class="b-title">Cocktails & Spirits</div>
+          <div class="b-desc">Vodka, gin, rum, whisky, tequila. Mojitos, Caipirinha, Gin Tónico e muito mais.</div>
+          <div class="b-arrow">Discover <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Stat: Rating -->
+      <div class="b-card b-stat r d1">
+        <div class="b-card-content" style="width:100%">
+          <div class="b-stat-num g-text" data-count="5" data-suffix="★">0</div>
+          <div class="b-stat-label">Google Rating</div>
+        </div>
+      </div>
+
+      <!-- Stat: Guests -->
+      <div class="b-card b-stat r d2">
+        <div class="b-card-content" style="width:100%">
+          <div class="b-stat-num g-text" data-count="200" data-suffix="+">0</div>
+          <div class="b-stat-label">Guests per week</div>
+        </div>
+      </div>
+
+      <!-- Hours (2×1) -->
+      <div class="b-card span-2 b-hours r d3">
+        <div class="b-card-content" style="width:100%">
+          <div class="tag" style="margin-bottom:1.2rem">Opening Hours</div>
+          <div class="b-hours-item"><span class="day">Segunda a Domingo</span><span class="time">18:00 – 02:00</span></div>
+        </div>
+      </div>
+
+      <!-- Private events -->
+      <div class="b-card span-2 r d4 tilt-card">
+        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=800&q=88&auto=format&fit=crop" alt="Private Events" loading="lazy"/></div>
+        <div class="b-card-overlay"></div>
+        <div class="b-tag">Events</div>
+        <div class="b-card-content">
+          <span class="b-num">03</span>
+          <div class="b-title">Private Events</div>
+          <div class="b-desc">Aniversários, festas e eventos corporativos. Reserva exclusiva disponível.</div>
+          <div class="b-arrow">Enquire <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="b-card b-ig r d5 glass-hover" style="text-decoration:none;">
+        <div class="b-ig-handle">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+          @shishacloud_almada
+        </div>
+        <div class="b-ig-cta">Follow us</div>
+        <div class="b-arrow" style="opacity:1;transform:none">
+          Instagram
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+
+      <!-- Snacks -->
+      <div class="b-card span-2 r d6">
+        <div class="b-card-content">
+          <div class="tag" style="margin-bottom:.8rem">Snacks</div>
+          <div class="b-title">Tostas & Aperitivos</div>
+          <div class="b-desc" style="margin-top:.5rem">Torrada 4€ · Mista 5,50€ · Atum 6,50€ · Frango 6,50€ · Natchos 3,50€</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3D GALLERY ══ -->
+  <section id="gallery3d">
+    <div class="g3-header">
+      <div>
+        <div class="tag r" style="margin-bottom:1.2rem">The Space</div>
+        <h2 class="r d1">Step inside<br><em class="g-text">Shisha Cloud</em></h2>
+      </div>
+      <a href="/gallery/" class="btn btn-ghost r">
         Full Gallery
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div class="gs-track drag-scroll">
-      <div class="gs-item"><img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=700&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="gs-label">The Lounge</span></div>
-      <div class="gs-item"><img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=500&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="gs-label">Premium Shisha</span></div>
-      <div class="gs-item"><img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=700&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="gs-label">The Bar</span></div>
-      <div class="gs-item"><img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=500&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="gs-label">Cloud Series</span></div>
-      <div class="gs-item"><img src="https://images.unsplash.com/photo-1574238919966-5cb3d9693a4b?w=700&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="gs-label">Evening Sessions</span></div>
-      <div class="gs-item"><img src="https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="gs-label">Ambience</span></div>
+    <div class="g3-scene" id="g3scene">
+      <div class="g3-track drag-scroll" id="g3track">
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">The Lounge</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Premium Shisha</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Signature Session</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">The Bar</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Cloud Series</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Evening Sessions</span></div>
+      </div>
     </div>
-    <div class="gs-drag-hint">Drag to explore</div>
+    <div class="g3-hint">Drag to explore</div>
   </section>
 
-  <!-- ── Manifesto ── -->
+  <!-- ══ MANIFESTO ══ -->
   <section id="manifesto">
-    <div class="manifesto-bg parallax" data-py="12%"></div>
-    <div class="manifesto-overlay"></div>
+    <div class="mf-bg parallax" data-py="12%"></div>
+    <div class="mf-overlay"></div>
     <div class="grain"></div>
-    <div class="manifesto-content r">
-      <span class="manifesto-icon">"</span>
-      <blockquote>
-        Time spent here is not lost —<br>it is <em>savoured</em>.
+    <div class="mf-content r">
+      <span class="mf-mark">"</span>
+      <blockquote class="mf-quote">
+        Time spent here is not lost —<br>it is <em class="g-text">savoured</em>.
       </blockquote>
-      <p class="manifesto-attr">Shisha Cloud · Almada</p>
+      <p class="mf-attr">Shisha Cloud · Almada</p>
     </div>
   </section>
 
-  <!-- ── Reserve CTA ── -->
+  <!-- ══ RESERVE CTA ══ -->
   <section id="reserve-cta">
-    <div class="rcta-left">
-      <div class="section-tag r">Reserve</div>
-      <h2 class="r d1">Reserve your<br><em>evening</em></h2>
-      <p class="r d2">Secure your table in advance for the full experience. Walk-ins welcome subject to availability.</p>
-      <div class="hours r d3">
+    <div>
+      <div class="tag r" style="margin-bottom:1.4rem">Book Your Session</div>
+      <h2 class="rc-h2 r d1">Reserve your<br><em class="g-text">evening</em></h2>
+      <p class="rc-p r d2">Secure your table in advance for the full experience. Walk-ins welcome subject to availability.</p>
+      <div style="margin-top:2rem" class="r d3">
         <div class="hour-row"><span class="day">Segunda a Domingo</span><span class="time">18:00 – 02:00</span></div>
       </div>
       <a href="/reserve/" class="btn btn-fill magnet r d4" style="margin-top:2.5rem;display:inline-flex;">
@@ -568,31 +516,29 @@
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div>
-      <div class="stats-row r d2">
-        <div class="stat-box">
-          <span class="stat-num" data-count="11" data-suffix="">0</span>
-          <div class="stat-label">Sabores do Momento</div>
+    <div class="rc-right r d2">
+      <div class="rc-stats-2col">
+        <div class="rc-stat">
+          <div class="rc-stat-num g-text" data-count="11" data-suffix="">0</div>
+          <div class="rc-stat-label">Sabores</div>
         </div>
-        <div class="stat-box">
-          <span class="stat-num" data-count="5" data-suffix="★">0</span>
-          <div class="stat-label">Rating</div>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num" data-count="200" data-suffix="+">0</span>
-          <div class="stat-label">Guests / Week</div>
+        <div class="rc-stat">
+          <div class="rc-stat-num g-text" data-count="5" data-suffix="★">0</div>
+          <div class="rc-stat-label">Rating</div>
         </div>
       </div>
-      <!-- Instagram CTA -->
-      <div style="margin-top:1px;background:var(--bg-3);padding:2rem 1.8rem;border-top:1px solid var(--border)" class="r d3">
-        <div class="section-tag" style="margin-bottom:1rem">Follow Us</div>
+      <div class="rc-stat" style="grid-column:span 2">
+        <div class="rc-stat-num g-text" data-count="200" data-suffix="+">0</div>
+        <div class="rc-stat-label">Happy guests per week</div>
+      </div>
+      <div class="rc-stat">
+        <div class="tag" style="margin-bottom:.8rem">Follow</div>
         <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener"
-           style="display:inline-flex;align-items:center;gap:.7rem;color:var(--gold-2);font-size:.7rem;letter-spacing:.12em;transition:color var(--dur-base);cursor:none;"
+           style="font-size:.72rem;letter-spacing:.1em;color:var(--gold-2);display:flex;align-items:center;gap:.5rem;cursor:none;transition:color .25s"
            onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--gold-2)'">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
           @shishacloud_almada
         </a>
-        <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem;line-height:1.6;">Novidades, eventos especiais e os melhores momentos da noite.</p>
       </div>
     </div>
   </section>
@@ -614,43 +560,37 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="/js/main.js"></script>
   <script>
-    /* Smoke Canvas */
-    (function(){
-      const c=document.getElementById('smoke-canvas');
-      if(!c)return;
-      const ctx=c.getContext('2d');
-      let W,H,pts=[];
-      function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
-      window.addEventListener('resize',resize);resize();
-      function rand(a,b){return a+Math.random()*(b-a);}
-      function spawn(){return{x:rand(W*.2,W*.8),y:rand(H*.55,H*.85),vx:rand(-.28,.28),vy:rand(-.85,-.35),r:rand(28,72),life:0,max:rand(200,360),hue:rand(26,40)};}
-      for(let i=0;i<20;i++){const p=spawn();p.life=Math.random()*p.max;pts.push(p);}
-      function frame(){
-        ctx.clearRect(0,0,W,H);
-        if(Math.random()<.045&&pts.length<42)pts.push(spawn());
-        pts=pts.filter(p=>{
-          p.life++;p.x+=p.vx+Math.sin(p.life*.022)*.28;p.y+=p.vy;p.r+=.12;
-          const t=p.life/p.max;
-          const a=t<.2?(t/.2)*.13:(1-t)*.13;
-          if(a<=0||p.life>=p.max)return false;
-          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);
-          g.addColorStop(0,`hsla(${p.hue},50%,50%,${a})`);
-          g.addColorStop(1,`hsla(${p.hue},35%,35%,0)`);
-          ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-          return true;
-        });
-        requestAnimationFrame(frame);
-      }
-      frame();
-    })();
-
-    /* Animate gold line on hero reveal */
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const line = document.querySelector('.hero-gold-line');
-        if (line) line.classList.add('on');
-      }, 1400);
+    /* 3D card tilt */
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width  - .5) * 14;
+        const y = ((e.clientY - r.top)  / r.height - .5) * -14;
+        card.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg) scale(1.02)`;
+        card.style.transition = 'transform .12s ease-out';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform .6s var(--ease-out), background .35s';
+      });
     });
+
+    /* 3D gallery scroll-driven depth */
+    (function(){
+      const scene = document.getElementById('g3scene');
+      const track = document.getElementById('g3track');
+      if (!scene || !track) return;
+      let tilt = 0;
+      const items = track.querySelectorAll('.g3-item');
+      track.addEventListener('mousemove', e => {
+        const r = track.getBoundingClientRect();
+        tilt = ((e.clientX - r.left) / r.width - .5) * 6;
+        scene.style.transform = `perspective(1100px) rotateY(${tilt}deg)`;
+      });
+      track.addEventListener('mouseleave', () => {
+        scene.style.transform = '';
+      });
+    })();
   </script>
 </body>
 </html>

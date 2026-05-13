@@ -26,7 +26,7 @@
     }
     .res-panel-img-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to right, rgba(8,6,6,.6) 0%, transparent 100%);
+      background: linear-gradient(to right, rgba(5,4,10,.6) 0%, transparent 100%);
     }
     .res-info {
       position: relative; z-index: 1;
@@ -35,7 +35,7 @@
       display: flex; flex-direction: column; justify-content: flex-end;
     }
     .res-info h1 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--serif);
       font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300; line-height: 1.05;
     }
     .res-info h1 em { font-style: italic; color: var(--gold-2); }
@@ -49,7 +49,7 @@
     }
     .hour-row:last-child { border-bottom: none; }
     .hour-row .day { color: rgba(237,232,224,.7); }
-    .hour-row .time { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold-2); }
+    .hour-row .time { font-family: var(--serif); font-size: 1rem; color: var(--gold-2); }
 
     .res-contact { margin-top: 2.5rem; }
     .rc-row {
@@ -69,7 +69,7 @@
     }
     .res-panel-form .section-tag { margin-bottom: 1.5rem; }
     .form-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--serif);
       font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.1;
       margin-bottom: 2.5rem;
     }
@@ -88,7 +88,7 @@
       border: 1px solid var(--border);
       color: var(--text);
       padding: .9rem 1.1rem;
-      font-family: 'Inter', sans-serif; font-size: .88rem; font-weight: 300;
+      font-family: var(--sans); font-size: .88rem; font-weight: 300;
       outline: none;
       transition: border-color .3s, background .3s;
       -webkit-appearance: none; border-radius: 0;

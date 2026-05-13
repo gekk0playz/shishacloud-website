@@ -18,11 +18,11 @@
     }
     .ph-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(8,6,6,.95) 0%, rgba(8,6,6,.25) 100%);
+      background: linear-gradient(to top, rgba(5,4,10,.95) 0%, rgba(5,4,10,.25) 100%);
     }
     .ph-content { position: relative; z-index: 1; padding: 0 5vw 5rem; }
     .ph-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--serif);
       font-size: clamp(3.5rem, 9vw, 7.5rem);
       font-weight: 300; line-height: .95; letter-spacing: -.02em;
     }
@@ -54,7 +54,7 @@
     .grid-item:hover img { transform: scale(1.04); filter: brightness(.88) saturate(1); }
     .grid-item-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(8,6,6,.75) 0%, transparent 55%);
+      background: linear-gradient(to top, rgba(5,4,10,.75) 0%, transparent 55%);
       opacity: 0; transition: opacity .4s;
     }
     .grid-item:hover .grid-item-overlay { opacity: 1; }
@@ -98,7 +98,7 @@
       position: relative; z-index: 1; text-align: center; padding: 0 5vw;
     }
     .fb-content h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--serif);
       font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; line-height: 1.1;
     }
     .fb-content h2 em { font-style: italic; color: var(--gold-2); }
@@ -114,7 +114,7 @@
     .ig-section .section-tag { justify-content: center; }
     .ig-section .section-tag::before { display: none; }
     .ig-section h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--serif);
       font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; margin-top: 1rem;
     }
     .ig-section h2 em { font-style: italic; color: var(--gold-2); }
@@ -132,7 +132,7 @@
     /* ── Lightbox ── */
     #lightbox {
       display: none; position: fixed; inset: 0; z-index: 9000;
-      background: rgba(8,6,6,.97);
+      background: rgba(5,4,10,.97);
       align-items: center; justify-content: center;
       padding: 4rem;
     }
