@@ -5,294 +5,255 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Shisha Cloud — Almada's premium shisha lounge. Premium flavours, handcrafted cocktails, unforgettable evenings."/>
   <title>Shisha Cloud · Almada</title>
-  <!-- Resource hints — resolve DNS & connections before scripts need them -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
   <link rel="preconnect" href="https://images.unsplash.com"/>
-  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
-  <!-- Preload hero image — it's the LCP element -->
   <link rel="preload" as="image" href="https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=85&auto=format&fit=crop" fetchpriority="high"/>
   <link rel="stylesheet" href="/css/main.css"/>
   <style>
-    /* ═══ HERO ═══ */
-    #hero {
-      position: relative; height: 100dvh; min-height: 640px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      overflow: hidden; text-align: center;
-    }
+  /* ══════════════════════════════
+     HERO — two-column layout
+  ══════════════════════════════ */
+  #hero {
+    min-height: 100dvh; display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
 
-    /* Parallax layers — each moves at different scroll speed */
-    .hero-layer { position: absolute; inset: 0; pointer-events: none; }
+  /* Aurora background */
+  .hero-aurora {
+    position: absolute; inset: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(100px);
+    pointer-events: none; animation: orbdrift var(--d,18s) ease-in-out infinite alternate;
+  }
+  .orb-1 { width:700px;height:500px;top:-10%;left:-12%; background:radial-gradient(circle,rgba(201,151,60,.16) 0%,transparent 70%); --d:20s; }
+  .orb-2 { width:500px;height:600px;top:30%;right:-8%;  background:radial-gradient(circle,rgba(150,110,30,.10) 0%,transparent 70%); --d:26s; animation-delay:-8s; }
+  .orb-3 { width:350px;height:350px;bottom:5%;left:40%; background:radial-gradient(circle,rgba(201,151,60,.09) 0%,transparent 70%); --d:17s; animation-delay:-4s; }
+  @keyframes orbdrift { from{transform:translate(0,0) scale(1)} to{transform:translate(40px,-30px) scale(1.1)} }
 
-    /* Background shisha photo */
-    .hero-bg-img {
-      position: absolute; inset: -15%;   /* oversized so parallax has room */
-      background-image: url('https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=88&auto=format&fit=crop');
-      background-size: cover; background-position: center 35%;
-    }
+  .dot-grid {
+    position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:38px 38px;
+    -webkit-mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,#000 20%,transparent 80%);
+    mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,#000 20%,transparent 80%);
+  }
+  .grain { position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size:200px;mix-blend-mode:overlay;
+  }
 
-    /* Deep colour tint - sits above photo */
-    .hero-color-overlay {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 70% 80% at 50% 60%, rgba(5,4,10,.25) 0%, rgba(5,4,10,.72) 60%, rgba(5,4,10,.96) 100%),
-        linear-gradient(to top, rgba(5,4,10,1) 0%, rgba(5,4,10,.4) 45%, rgba(5,4,10,.15) 100%);
-    }
+  /* Left: text panel */
+  .hero-left {
+    position: relative; z-index: 5;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: calc(var(--nav-h) + 3rem) var(--gutter) 4rem var(--gutter);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: rgba(201,151,60,.1); border: 1px solid rgba(201,151,60,.22);
+    padding: .38rem 1rem; border-radius: 100px;
+    font-size: .6rem; letter-spacing: .18em; color: var(--gold-2);
+    width: fit-content; margin-bottom: 2.2rem; opacity: 0;
+  }
+  .hero-badge .dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: blink 2.5s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-    /* Gold glow above the hookah */
-    .hero-glow {
-      position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 300px;
-      background: radial-gradient(ellipse, rgba(201,151,60,.22) 0%, transparent 70%);
-      filter: blur(40px);
-      pointer-events: none;
-    }
+  .hero-h1 {
+    font-family: var(--serif);
+    font-size: clamp(4.5rem, 8vw, 9rem);
+    font-weight: 300; line-height: .9; letter-spacing: -.025em;
+    color: var(--text); opacity: 0;
+  }
+  .hero-h1 em { display: block; font-style: italic; color: var(--gold-2); }
 
-    /* Three.js hookah canvas */
-    #hookah-canvas {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 3;
-    }
+  .hero-line { width: 0; height: 1px; background: linear-gradient(to right,var(--gold),transparent); margin: 2rem 0; transition: width 1.4s var(--ease-out); }
+  .hero-line.on { width: 220px; }
 
-    /* Grain */
-    #hero .grain { z-index: 3; opacity: .025; }
+  .hero-tagline { font-size: clamp(.85rem,1.3vw,.98rem); color: var(--text-2); max-width: 400px; line-height: 1.75; opacity: 0; }
 
-    /* Content wrapper — all text lives here, moves as one unit */
-    .hero-content {
-      position: relative; z-index: 5;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 0 var(--gutter);
-    }
+  .hero-actions { display: flex; gap: .9rem; margin-top: 2.4rem; flex-wrap: wrap; opacity: 0; }
 
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: .6rem;
-      background: rgba(201,151,60,.1); border: 1px solid rgba(201,151,60,.22);
-      padding: .38rem 1.1rem; border-radius: 100px;
-      font-size: .62rem; letter-spacing: .18em; color: var(--gold-2); margin-bottom: 2rem;
-      opacity: 0;
-    }
-    .hero-eyebrow .dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .hero-stats { display: flex; gap: 0; margin-top: 3rem; opacity: 0; border-top: 1px solid var(--border); padding-top: 1.8rem; }
+  .h-stat { flex: 1; padding-right: 1.5rem; border-right: 1px solid var(--border); margin-right: 1.5rem; }
+  .h-stat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+  .h-stat-n { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--gold-2); display: block; line-height: 1; }
+  .h-stat-l { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-2); margin-top: .3rem; display: block; }
 
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(5rem, 13vw, 11rem);
-      font-weight: 300; line-height: .9; letter-spacing: -.025em;
-      color: var(--text);
-      opacity: 0;
-    }
-    .hero-title .line1 { display: block; }
-    .hero-title .line2 { display: block; font-style: italic; color: var(--gold-2); }
+  /* Right: 3D canvas */
+  .hero-right {
+    position: relative; z-index: 4;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100%;
+  }
+  #hookah-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero-open-chip {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    backdrop-filter: blur(16px); padding: .55rem 1.2rem; border-radius: 100px;
+    font-size: .62rem; letter-spacing: .12em; color: var(--text-2); white-space: nowrap;
+    z-index: 5;
+  }
+  .hero-open-chip .dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; flex-shrink: 0; animation: blink 2s ease-in-out infinite; }
 
-    .hero-sub {
-      margin-top: 1.8rem;
-      font-size: clamp(.82rem, 1.4vw, 1rem); color: var(--text-2); letter-spacing: .04em;
-      max-width: 460px; line-height: 1.75; opacity: 0;
-    }
+  /* Scroll hint */
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: var(--gutter);
+    display: flex; align-items: center; gap: .8rem; z-index: 5; opacity: 0;
+  }
+  .hero-scroll span { font-size: .5rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(155,141,126,.45); }
+  .scroll-line { width: 40px; height: 1px; background: linear-gradient(to right,var(--gold),transparent); animation: scrollPulse 2.5s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleX(1)} 50%{opacity:1;transform:scaleX(.6)} }
 
-    .hero-cta {
-      margin-top: 2.8rem;
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0;
+  /* Mobile hero */
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; min-height: 100dvh; }
+    .hero-right { display: none; }
+    .hero-left {
+      justify-content: flex-end;
+      padding-bottom: 5rem;
+      background-image: url('https://images.unsplash.com/photo-1635547821500-77542481940c?w=900&q=80&auto=format&fit=crop');
+      background-size: cover; background-position: center;
     }
-
-    .hero-chips {
-      margin-top: 3.2rem;
-      display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; opacity: 0;
-    }
-    .chip {
-      display: inline-flex; align-items: center; gap: .55rem;
-      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
-      backdrop-filter: blur(12px); padding: .5rem 1rem;
-      font-size: .68rem; letter-spacing: .1em; color: var(--text-2);
-      transition: border-color .25s, background .25s, color .25s;
-    }
-    .chip:hover { border-color: var(--border-g); color: var(--gold-2); background: rgba(201,151,60,.06); }
-    .chip-icon { color: var(--gold); font-size: .7rem; line-height: 1; }
-
-    .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .5rem; z-index: 5;
-      opacity: 0;
-    }
-    .hero-scroll span { font-size: .5rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(155,141,126,.5); }
-    .hero-scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--gold)); animation: scrollPulse 2.5s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.6);transform-origin:bottom} }
-
-    /* ═══ BENTO GRID ═══ */
-    #bento {
-      padding: clamp(4rem, 8vw, 8rem) var(--gutter);
-      background: var(--bg);
-    }
-    .bento-header { margin-bottom: clamp(2.5rem, 4vw, 4rem); display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
-    .bento-header h2 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.05; }
-    .bento-header h2 em { font-style: italic; }
-
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: minmax(180px, auto);
-      gap: 1px; background: rgba(255,255,255,.04);
-    }
-
-    /* Base card */
-    .b-card {
-      background: rgba(255,255,255,.025);
-      border: none; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 1.8rem; cursor: none;
-      transition: background .35s;
-    }
-    .b-card:hover { background: rgba(255,255,255,.045); }
-    .b-card::before {
+    .hero-left::before {
       content: ''; position: absolute; inset: 0;
-      border: 1px solid transparent;
-      transition: border-color .35s;
+      background: linear-gradient(to top,rgba(5,4,10,.97) 0%,rgba(5,4,10,.7) 50%,rgba(5,4,10,.3) 100%);
     }
-    .b-card:hover::before { border-color: var(--border-g); }
+    .hero-badge,.hero-h1,.hero-tagline,.hero-actions,.hero-stats,.hero-line { position: relative; }
+    .hero-h1 { font-size: clamp(3.5rem,16vw,6rem); }
+  }
 
-    /* Card image bg */
-    .b-card-img { position: absolute; inset: 0; }
-    .b-card-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.45) saturate(.7); transition: transform 1.2s var(--ease-out), filter .8s; }
-    .b-card:hover .b-card-img img { transform: scale(1.06); filter: brightness(.55) saturate(.8); }
-    .b-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,4,10,.92) 0%, rgba(5,4,10,.3) 55%, transparent 100%); }
+  /* ══════════════════════════════
+     ABOUT — editorial two-column
+  ══════════════════════════════ */
+  #about {
+    padding: clamp(6rem,10vw,10rem) var(--gutter);
+    display: grid; grid-template-columns: auto 1fr; gap: clamp(3rem,6vw,8rem);
+    align-items: center; background: var(--bg);
+  }
+  .about-num {
+    font-family: var(--serif); font-size: clamp(8rem,16vw,18rem);
+    font-weight: 300; line-height: 1; color: rgba(201,151,60,.07);
+    letter-spacing: -.04em; user-select: none; flex-shrink: 0;
+  }
+  .about-body .tag { margin-bottom: 1.4rem; }
+  .about-body h2 { font-family: var(--serif); font-size: clamp(2.2rem,4.5vw,3.8rem); font-weight: 300; line-height: 1.08; }
+  .about-body h2 em { font-style: italic; color: var(--gold-2); }
+  .about-body p { color: var(--text-2); margin-top: 1.3rem; font-size: .9rem; max-width: 500px; line-height: 1.82; }
+  .about-body a { margin-top: 2.4rem; }
+  @media (max-width: 768px) { #about { grid-template-columns: 1fr; } .about-num { display: none; } }
 
-    .b-card-content { position: relative; z-index: 1; }
-    .b-num { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; line-height: 1; color: rgba(201,151,60,.12); display: block; margin-bottom: .3rem; }
-    .b-title { font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.8rem); font-weight: 300; }
-    .b-desc { font-size: .75rem; color: var(--text-2); margin-top: .4rem; line-height: 1.6; }
-    .b-tag { position: absolute; top: 1.2rem; right: 1.2rem; font-size: .52rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,151,60,.22); padding: .24rem .65rem; background: rgba(5,4,10,.5); backdrop-filter: blur(4px); }
-    .b-arrow { display: inline-flex; align-items: center; gap: .5rem; font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: 1rem; opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s; }
-    .b-card:hover .b-arrow { opacity: 1; transform: none; }
+  /* ══════════════════════════════
+     SPLIT — image + text
+  ══════════════════════════════ */
+  .split { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+  .split-img { overflow: hidden; position: relative; }
+  .split-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(.78); transition:transform 10s ease,filter 1s; }
+  .split:hover .split-img img { transform:scale(1.04);filter:brightness(.72) saturate(.88); }
+  .split-img::after { content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(5,4,10,.7) 100%); }
+  .split-body { background:var(--bg); padding:clamp(3.5rem,6vw,7rem) var(--gutter); display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--border); }
+  .split-body h2 { font-family:var(--serif);font-size:clamp(2rem,4vw,3.4rem);font-weight:300;line-height:1.1; }
+  .split-body h2 em { font-style:italic;color:var(--gold-2); }
+  .split-body p { color:var(--text-2);margin-top:1.2rem;font-size:.9rem;max-width:400px;line-height:1.8; }
+  .split-body a { margin-top:2.8rem; }
+  @media (max-width:860px) { .split { grid-template-columns:1fr; } .split-img { aspect-ratio:16/8; } .split-img::after { display:none; } .split-body { border-left:none;border-top:1px solid var(--border); } }
 
-    /* Stat card */
-    .b-stat { align-items: flex-start; justify-content: center; }
-    .b-stat-num { font-family: var(--serif); font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 300; line-height: 1; }
-    .b-stat-label { font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: var(--text-2); margin-top: .4rem; }
+  /* ══════════════════════════════
+     SERVICES — 3 cards
+  ══════════════════════════════ */
+  #services { background: var(--bg); }
+  .srv-header { padding: clamp(5rem,8vw,8rem) var(--gutter) clamp(2.5rem,4vw,4rem); }
+  .srv-header h2 { font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.08; }
+  .srv-header h2 em { font-style:italic;color:var(--gold-2); }
+  .srv-grid { display:grid;grid-template-columns:repeat(3,1fr); }
+  .srv-card { position:relative;overflow:hidden;aspect-ratio:3/4;cursor:none; }
+  .srv-card img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.75);transition:transform 1.2s var(--ease-out),filter .9s; }
+  .srv-card:hover img { transform:scale(1.07);filter:brightness(.65) saturate(.88); }
+  .srv-card::after { content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(5,4,10,.95) 0%,rgba(5,4,10,.35) 55%,transparent 100%); }
+  .srv-content { position:absolute;bottom:0;left:0;right:0;z-index:1;padding:clamp(1.5rem,3vw,2.5rem);transform:translateY(6px);transition:transform .4s var(--ease-out); }
+  .srv-card:hover .srv-content { transform:none; }
+  .srv-n { font-family:var(--serif);font-size:4rem;font-weight:300;color:rgba(201,151,60,.12);display:block;line-height:1;margin-bottom:.3rem; }
+  .srv-price { font-family:var(--serif);font-size:.88rem;color:var(--gold-2);letter-spacing:.08em;margin-bottom:.5rem;display:block; }
+  .srv-title { font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:300; }
+  .srv-desc { font-size:.76rem;color:var(--text-2);margin-top:.5rem;line-height:1.6;max-height:0;overflow:hidden;transition:max-height .4s var(--ease-out),opacity .4s;opacity:0; }
+  .srv-card:hover .srv-desc { max-height:5rem;opacity:1; }
+  .srv-tag { position:absolute;top:1.2rem;right:1.2rem;z-index:1;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,151,60,.2);padding:.24rem .65rem;background:rgba(5,4,10,.5);backdrop-filter:blur(4px); }
+  @media (max-width:860px) { .srv-grid { grid-template-columns:1fr; } .srv-card { aspect-ratio:16/9; } .srv-desc { max-height:5rem;opacity:1; } }
+  @media (max-width:640px) { .srv-header { padding:4rem 1.2rem 2rem; } }
 
-    /* Hours card */
-    .b-hours { justify-content: center; }
-    .b-hours-item { display: flex; justify-content: space-between; padding: .55rem 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: .78rem; }
-    .b-hours-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .b-hours-item .day { color: var(--text-2); }
-    .b-hours-item .time { font-family: var(--serif); font-size: .95rem; color: var(--gold-2); }
+  /* ══════════════════════════════
+     FLAVOURS — pill grid
+  ══════════════════════════════ */
+  #flavours { padding:clamp(5rem,8vw,8rem) var(--gutter); background:rgba(255,255,255,.018); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .fl-header { display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:clamp(2rem,4vw,3.5rem); }
+  .fl-header h2 { font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300; }
+  .fl-header h2 em { font-style:italic;color:var(--gold-2); }
+  .fl-grid { display:flex;flex-wrap:wrap;gap:.6rem; }
+  .fl-pill { display:inline-flex;align-items:center;gap:.55rem; background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08); padding:.55rem 1.1rem;font-size:.76rem;letter-spacing:.06em;color:var(--text-2); transition:all .25s; cursor:default; }
+  .fl-pill:hover { background:rgba(201,151,60,.08);border-color:rgba(201,151,60,.22);color:var(--gold-2); }
+  .fl-pill .fl-dot { width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0; }
+  @media (max-width:640px) { #flavours { padding:4rem 1.2rem; } .fl-header { flex-direction:column;align-items:flex-start; } }
 
-    /* IG card */
-    .b-ig { justify-content: space-between; text-decoration: none; }
-    .b-ig-handle { font-size: .7rem; letter-spacing: .12em; color: var(--text-2); display: flex; align-items: center; gap: .6rem; }
-    .b-ig-cta { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.4rem); font-style: italic; color: var(--gold-2); }
+  /* ══════════════════════════════
+     GALLERY STRIP
+  ══════════════════════════════ */
+  #gallery-strip { padding:clamp(4rem,7vw,7rem) 0;background:#030208; }
+  .gs-header { padding:0 var(--gutter) clamp(2rem,3.5vw,3.5rem);display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap; }
+  .gs-header h2 { font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:300; }
+  .gs-header h2 em { font-style:italic;color:var(--gold-2); }
+  .gs-track { display:flex;gap:3px;overflow-x:auto;overflow-y:hidden;padding:0 var(--gutter) 1.5rem;scrollbar-width:none; }
+  .gs-track::-webkit-scrollbar { display:none; }
+  .gs-item { flex-shrink:0;overflow:hidden;height:clamp(240px,35vw,500px);position:relative; }
+  .gs-item img { height:100%;width:auto;min-width:clamp(190px,22vw,320px);object-fit:cover;filter:brightness(.62) saturate(.75);transition:transform .7s var(--ease-out),filter .7s; }
+  .gs-item:hover img { transform:scale(1.05);filter:brightness(.85) saturate(1); }
+  .gs-label { position:absolute;bottom:1rem;left:1.2rem;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,225,.38); }
+  .gs-hint { padding:.8rem var(--gutter) 0;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(155,141,126,.35);display:flex;align-items:center;gap:.5rem; }
+  .gs-hint::before { content:'';width:14px;height:1px;background:currentColor; }
+  @media (max-width:640px) { .gs-header { padding:0 1.2rem 1.5rem;flex-direction:column;align-items:flex-start; } }
 
-    /* Grid spans */
-    .span-2 { grid-column: span 2; }
-    .span-3 { grid-column: span 3; }
-    .row-2  { grid-row: span 2; }
+  /* ══════════════════════════════
+     MANIFESTO
+  ══════════════════════════════ */
+  #manifesto { position:relative;overflow:hidden;padding:clamp(7rem,13vw,14rem) var(--gutter);display:flex;align-items:center;justify-content:center; }
+  .mf-bg { position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=1920&q=85&auto=format&fit=crop');background-size:cover;background-position:center; }
+  .mf-overlay { position:absolute;inset:0;background:rgba(5,4,10,.83); }
+  .mf-grain { position:absolute;inset:0;pointer-events:none;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)'/%3E%3C/svg%3E");background-size:200px; }
+  .mf-content { position:relative;z-index:1;text-align:center;max-width:840px; }
+  .mf-mark { font-family:var(--serif);font-size:7rem;line-height:.75;color:rgba(201,151,60,.2);display:block;margin-bottom:.8rem; }
+  .mf-quote { font-family:var(--serif);font-size:clamp(2rem,5vw,3.8rem);font-style:italic;font-weight:300;line-height:1.2; }
+  .mf-quote em { font-style:normal;color:var(--gold-2); }
+  .mf-attr { margin-top:2rem;font-size:.56rem;letter-spacing:.34em;text-transform:uppercase;color:var(--text-2);display:flex;align-items:center;justify-content:center;gap:.8rem; }
+  .mf-attr::before,.mf-attr::after { content:'';width:18px;height:1px;background:currentColor; }
+  @media (max-width:640px) { #manifesto { padding:5.5rem 1.2rem; } }
 
-    /* ═══ GALLERY 3D ═══ */
-    #gallery3d {
-      padding: clamp(4rem, 7vw, 7rem) 0;
-      background: #030208; overflow: hidden;
-    }
-    .g3-header { padding: 0 var(--gutter) clamp(2.5rem, 4vw, 4rem); display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-    .g3-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; }
-    .g3-header h2 em { font-style: italic; }
-
-    /* perspective tunnel */
-    .g3-scene {
-      perspective: 1100px; perspective-origin: 50% 50%;
-      height: clamp(300px, 42vw, 540px); overflow: hidden;
-      position: relative;
-    }
-    .g3-track {
-      display: flex; align-items: center;
-      height: 100%; padding: 0 var(--gutter);
-      gap: clamp(1rem, 2vw, 2rem);
-      transform-style: preserve-3d;
-      transition: transform .8s var(--ease-out);
-    }
-    .g3-item {
-      flex-shrink: 0;
-      height: clamp(200px, 28vw, 380px);
-      width: clamp(160px, 22vw, 290px);
-      overflow: hidden; position: relative; cursor: none;
-      transition: transform .6s var(--ease-out), filter .5s;
-    }
-    .g3-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.65) saturate(.78); transition: transform .8s var(--ease-out), filter .5s; }
-    .g3-item:hover img { transform: scale(1.06); filter: brightness(.9) saturate(1); }
-    .g3-label { position: absolute; bottom: 1rem; left: 1.2rem; font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(240,235,225,.45); }
-
-    /* depth offsets */
-    .g3-item:nth-child(1) { transform: translateZ(-180px) rotateY(8deg); }
-    .g3-item:nth-child(2) { transform: translateZ(-80px)  rotateY(4deg); }
-    .g3-item:nth-child(3) { transform: translateZ(0px)    rotateY(0deg); height: clamp(240px, 34vw, 460px); width: clamp(190px, 26vw, 340px); }
-    .g3-item:nth-child(4) { transform: translateZ(-80px)  rotateY(-4deg); }
-    .g3-item:nth-child(5) { transform: translateZ(-180px) rotateY(-8deg); }
-    .g3-item:nth-child(6) { transform: translateZ(-300px) rotateY(-12deg); }
-
-    /* drag hint */
-    .g3-hint { padding: 1.2rem var(--gutter) 0; font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(155,141,126,.4); display: flex; align-items: center; gap: .6rem; }
-    .g3-hint::before { content: ''; width: 16px; height: 1px; background: currentColor; }
-
-    /* ═══ MANIFESTO ═══ */
-    #manifesto {
-      position: relative; overflow: hidden;
-      padding: clamp(7rem, 13vw, 14rem) var(--gutter);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .mf-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=1920&q=88&auto=format&fit=crop'); background-size: cover; background-position: center; }
-    .mf-overlay { position: absolute; inset: 0; background: rgba(5,4,10,.84); }
-    .mf-content { position: relative; z-index: 1; text-align: center; max-width: 840px; }
-    .mf-mark { font-family: var(--serif); font-size: 7rem; line-height: .75; color: rgba(201,151,60,.18); display: block; margin-bottom: 1rem; }
-    .mf-quote { font-family: var(--serif); font-size: clamp(1.9rem, 5vw, 3.8rem); font-style: italic; font-weight: 300; line-height: 1.2; }
-    .mf-quote em { font-style: normal; }
-    .mf-attr { margin-top: 2rem; font-size: .56rem; letter-spacing: .34em; text-transform: uppercase; color: var(--text-2); display: flex; align-items: center; justify-content: center; gap: .8rem; }
-    .mf-attr::before, .mf-attr::after { content: ''; width: 18px; height: 1px; background: currentColor; }
-
-    /* ═══ RESERVE ═══ */
-    #reserve-cta {
-      padding: clamp(5rem, 9vw, 10rem) var(--gutter);
-      display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 8rem); align-items: start;
-      border-top: 1px solid var(--border);
-    }
-    .rc-h2 { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.05; }
-    .rc-h2 em { font-style: italic; }
-    .rc-p { color: var(--text-2); margin-top: 1.2rem; font-size: .9rem; max-width: 380px; line-height: 1.8; }
-    .hour-row { display: flex; justify-content: space-between; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--border); font-size: .82rem; }
-    .hour-row:last-child { border-bottom: none; }
-    .hour-row .day { color: var(--text-2); }
-    .hour-row .time { font-family: var(--serif); font-size: 1.05rem; color: var(--gold-2); }
-    .rc-right { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,.04); }
-    .rc-stat { background: rgba(255,255,255,.025); padding: 2rem; transition: background .3s; }
-    .rc-stat:hover { background: rgba(255,255,255,.05); }
-    .rc-stat-num { font-family: var(--serif); font-size: 3.2rem; font-weight: 300; line-height: 1; }
-    .rc-stat-label { font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-2); margin-top: .4rem; }
-    .rc-stats-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,.04); }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .bento-grid { grid-template-columns: repeat(2,1fr); }
-      .span-3 { grid-column: span 2; }
-    }
-    @media (max-width: 860px) {
-      #reserve-cta { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      #hero { text-align: left; }
-      .hero-eyebrow, .hero-cta, .hero-chips { justify-content: flex-start; }
-      .hero-title { font-size: clamp(3.5rem, 18vw, 6rem); }
-      .hero-sub { max-width: none; }
-      #bento { padding: 4rem 1.2rem; }
-      .bento-grid { grid-template-columns: 1fr 1fr; }
-      .span-2, .span-3 { grid-column: span 2; }
-      .g3-header { padding: 0 1.2rem 2rem; flex-direction: column; align-items: flex-start; }
-      #manifesto { padding: 5.5rem 1.2rem; }
-      #reserve-cta { padding: 4.5rem 1.2rem; }
-      .hero-cta .btn { justify-content: center; }
-    }
-    @media (max-width: 480px) {
-      .bento-grid { grid-template-columns: 1fr; }
-      .span-2, .span-3 { grid-column: span 1; }
-      .row-2 { grid-row: span 1; }
-    }
+  /* ══════════════════════════════
+     RESERVE CTA
+  ══════════════════════════════ */
+  #reserve-cta { padding:clamp(5rem,9vw,10rem) var(--gutter);display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,6vw,8rem);align-items:start;border-top:1px solid var(--border); }
+  .rc-h2 { font-family:var(--serif);font-size:clamp(2.5rem,5vw,4.2rem);font-weight:300;line-height:1.05; }
+  .rc-h2 em { font-style:italic;color:var(--gold-2); }
+  .rc-p { color:var(--text-2);margin-top:1.2rem;font-size:.9rem;max-width:380px;line-height:1.8; }
+  .rc-hours { margin-top:var(--sp-5); }
+  .hour-row { display:flex;justify-content:space-between;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--border);font-size:.82rem; }
+  .hour-row:last-child { border-bottom:none; }
+  .hour-row .day { color:var(--text-2); }
+  .hour-row .time { font-family:var(--serif);font-size:1.05rem;color:var(--gold-2); }
+  .rc-right { display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.04); }
+  .rc-stat { background:rgba(255,255,255,.025);padding:2rem 2rem;transition:background .3s; }
+  .rc-stat:hover { background:rgba(255,255,255,.048); }
+  .rc-snum { font-family:var(--serif);font-size:3.2rem;font-weight:300;line-height:1;color:var(--gold-2); }
+  .rc-slabel { font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-2);margin-top:.4rem; }
+  .rc-2col { display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.04); }
+  @media (max-width:860px) { #reserve-cta { grid-template-columns:1fr; } }
+  @media (max-width:640px) { #reserve-cta { padding:4.5rem 1.2rem; } .srv-header { padding:4rem 1.2rem 2rem; } }
   </style>
 </head>
 <body>
@@ -306,7 +267,7 @@
   </div>
   <div id="pt"></div>
 
-  <!-- Nav -->
+  <!-- ── NAV ── -->
   <nav id="nav">
     <a href="/" class="nav-logo">Shisha <em>Cloud</em></a>
     <ul class="nav-links">
@@ -315,7 +276,7 @@
       <li><a href="/reserve/">Reserve</a></li>
     </ul>
     <a href="/reserve/" class="nav-reserve">Book a Table</a>
-    <button class="nav-burger" id="burger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
   <div class="mobile-nav" id="mobileNav">
     <div class="mnav-inner">
@@ -346,31 +307,21 @@
 
   <!-- ══ HERO ══ -->
   <section id="hero">
-    <!-- Layer 0: photo (slowest on scroll) -->
-    <div class="hero-bg-img" id="heroBg"></div>
-    <!-- Layer 1: colour overlay -->
-    <div class="hero-color-overlay"></div>
-    <!-- Layer 2: gold glow above hookah (mid depth) -->
-    <div class="hero-glow" id="heroGlow"></div>
-    <!-- Layer 3: Three.js hookah + smoke -->
-    <canvas id="hookah-canvas"></canvas>
-    <!-- Layer 4: dot grid -->
-    <div class="dot-grid" id="heroDotGrid"></div>
-    <!-- Layer 5: grain -->
+    <div class="hero-aurora">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="dot-grid"></div>
     <div class="grain"></div>
 
-    <!-- Content (fastest — lifts away on scroll) -->
-    <div class="hero-content" id="heroContent">
-      <div class="hero-eyebrow">
-        <span class="dot"></span>
-        Almada · Portugal · Est. 2023
-      </div>
-      <h1 class="hero-title">
-        <span class="line1">Shisha</span>
-        <span class="line2">Cloud</span>
-      </h1>
-      <p class="hero-sub">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
-      <div class="hero-cta">
+    <!-- LEFT: text -->
+    <div class="hero-left">
+      <span class="hero-badge"><span class="dot"></span>Almada · Portugal · Est. 2023</span>
+      <h1 class="hero-h1">Shisha<em>Cloud</em></h1>
+      <div class="hero-line"></div>
+      <p class="hero-tagline">Premium shisha. Handcrafted cocktails.<br>Almada's most immersive lounge experience.</p>
+      <div class="hero-actions">
         <a href="/reserve/" class="btn btn-fill magnet">
           Reserve a Table
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -380,17 +331,25 @@
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
-      <div class="hero-chips">
-        <span class="chip"><span class="chip-icon">◆</span>11 Sabores</span>
-        <span class="chip"><span class="chip-icon">◆</span>Cocktails & Bar</span>
-        <span class="chip"><span class="chip-icon">◆</span>Seg–Dom · 18h–02h</span>
-        <span class="chip"><span class="chip-icon">◆</span>Almada, Portugal</span>
+      <div class="hero-stats">
+        <div class="h-stat"><span class="h-stat-n">15€</span><span class="h-stat-l">Shisha</span></div>
+        <div class="h-stat"><span class="h-stat-n">11</span><span class="h-stat-l">Sabores</span></div>
+        <div class="h-stat"><span class="h-stat-n">18h</span><span class="h-stat-l">Abre diariamente</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: 3D hookah -->
+    <div class="hero-right">
+      <canvas id="hookah-canvas"></canvas>
+      <div class="hero-open-chip">
+        <span class="dot"></span>
+        Aberto hoje · 18:00 – 02:00
       </div>
     </div>
 
     <div class="hero-scroll">
+      <div class="scroll-line"></div>
       <span>Scroll</span>
-      <div class="hero-scroll-line"></div>
     </div>
   </section>
 
@@ -408,145 +367,135 @@
     </div>
   </div>
 
-  <!-- ══ BENTO GRID ══ -->
-  <section id="bento">
-    <div class="bento-header">
-      <div>
-        <div class="tag r" style="margin-bottom:1.2rem">What We Offer</div>
-        <h2 class="r d1">Everything you need<br><em class="g-text">for a perfect night</em></h2>
-      </div>
-      <a href="/menu/" class="btn btn-ghost r d2">
-        Full Menu
+  <!-- ══ ABOUT ══ -->
+  <section id="about">
+    <div class="about-num r">01</div>
+    <div class="about-body">
+      <div class="tag r" style="margin-bottom:1.4rem">The Experience</div>
+      <h2 class="r d1">Where every cloud<br><em>tells a story</em></h2>
+      <p class="r d2">Born from a passion for authentic flavours and warm hospitality, Shisha Cloud is Almada's premier lounge. We blend the ritual of traditional shisha with a sleek, contemporary space — a place where time slows and evenings become memories.</p>
+      <a href="/gallery/" class="btn btn-ghost r d3" style="margin-top:2.4rem">
+        See the Space
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
+  </section>
 
-    <div class="bento-grid">
-      <!-- Shisha (large, 2x2) -->
-      <div class="b-card span-2 row-2 r tilt-card">
-        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1635547821500-77542481940c?w=900&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="Premium Shisha" loading="lazy"/></div>
-        <div class="b-card-overlay"></div>
-        <div class="b-tag">Signature</div>
-        <div class="b-card-content">
-          <span class="b-num">01</span>
-          <div class="b-title">Premium Shisha</div>
-          <div class="b-desc">11 sabores exclusivos. Shisha 15€ · Shisha Álcool 25€ · Cabeçote Novo +8€</div>
-          <div class="b-arrow">
-            Explore
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cocktails (2×1) -->
-      <div class="b-card span-2 r d2 tilt-card">
-        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=800&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="Cocktails" loading="lazy"/></div>
-        <div class="b-card-overlay"></div>
-        <div class="b-tag">Bar Menu</div>
-        <div class="b-card-content">
-          <span class="b-num">02</span>
-          <div class="b-title">Cocktails & Spirits</div>
-          <div class="b-desc">Vodka, gin, rum, whisky, tequila. Mojitos, Caipirinha, Gin Tónico e muito mais.</div>
-          <div class="b-arrow">Discover <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-      </div>
-
-      <!-- Stat: Rating -->
-      <div class="b-card b-stat r d1">
-        <div class="b-card-content" style="width:100%">
-          <div class="b-stat-num g-text" data-count="5" data-suffix="★">0</div>
-          <div class="b-stat-label">Google Rating</div>
-        </div>
-      </div>
-
-      <!-- Stat: Guests -->
-      <div class="b-card b-stat r d2">
-        <div class="b-card-content" style="width:100%">
-          <div class="b-stat-num g-text" data-count="200" data-suffix="+">0</div>
-          <div class="b-stat-label">Guests per week</div>
-        </div>
-      </div>
-
-      <!-- Hours (2×1) -->
-      <div class="b-card span-2 b-hours r d3">
-        <div class="b-card-content" style="width:100%">
-          <div class="tag" style="margin-bottom:1.2rem">Opening Hours</div>
-          <div class="b-hours-item"><span class="day">Segunda a Domingo</span><span class="time">18:00 – 02:00</span></div>
-        </div>
-      </div>
-
-      <!-- Private events -->
-      <div class="b-card span-2 r d4 tilt-card">
-        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=800&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="Private Events" loading="lazy"/></div>
-        <div class="b-card-overlay"></div>
-        <div class="b-tag">Events</div>
-        <div class="b-card-content">
-          <span class="b-num">03</span>
-          <div class="b-title">Private Events</div>
-          <div class="b-desc">Aniversários, festas e eventos corporativos. Reserva exclusiva disponível.</div>
-          <div class="b-arrow">Enquire <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-      </div>
-
-      <!-- Instagram -->
-      <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="b-card b-ig r d5 glass-hover" style="text-decoration:none;">
-        <div class="b-ig-handle">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
-          @shishacloud_almada
-        </div>
-        <div class="b-ig-cta">Follow us</div>
-        <div class="b-arrow" style="opacity:1;transform:none">
-          Instagram
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5h9M6 2l3.5 3.5L6 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
+  <!-- ══ SPLIT: image + craft text ══ -->
+  <div class="split">
+    <div class="split-img r-left">
+      <img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=900&q=85&auto=format&fit=crop" alt="Premium shisha" loading="lazy" decoding="async"/>
+    </div>
+    <div class="split-body">
+      <div class="tag r">Our Craft</div>
+      <h2 class="r d1">Ritual, not<br><em>routine</em></h2>
+      <p class="r d2">Every session is prepared with precision — fresh coals, premium tobacco, and service that elevates shisha into something extraordinary.</p>
+      <p class="r d3" style="margin-top:.8rem">Our bar extends the experience with handcrafted cocktails and mocktails designed to complement each flavour profile.</p>
+      <a href="/menu/" class="btn btn-ghost r d4" style="margin-top:2.8rem">
+        View Full Menu
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
+    </div>
+  </div>
 
-      <!-- Snacks -->
-      <div class="b-card span-2 r d6">
-        <div class="b-card-content">
-          <div class="tag" style="margin-bottom:.8rem">Snacks</div>
-          <div class="b-title">Tostas & Aperitivos</div>
-          <div class="b-desc" style="margin-top:.5rem">Torrada 4€ · Mista 5,50€ · Atum 6,50€ · Frango 6,50€ · Natchos 3,50€</div>
+  <!-- ══ SERVICES ══ -->
+  <section id="services">
+    <div class="srv-header">
+      <div class="tag r" style="margin-bottom:1.2rem">What We Offer</div>
+      <h2 class="r d1">A complete<em> evening</em></h2>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card r">
+        <div class="srv-tag">Signature</div>
+        <img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=700&q=85&auto=format&fit=crop" alt="Premium Shisha" loading="lazy" decoding="async"/>
+        <div class="srv-content">
+          <span class="srv-n">01</span>
+          <span class="srv-price">A partir de 15€</span>
+          <div class="srv-title">Premium Shisha</div>
+          <div class="srv-desc">11 sabores exclusivos. Shisha 15€ · Shisha Álcool 25€ · Cabeçote Novo +8€</div>
+        </div>
+      </div>
+      <div class="srv-card r d2">
+        <div class="srv-tag">Bar</div>
+        <img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=700&q=85&auto=format&fit=crop" alt="Cocktails" loading="lazy" decoding="async"/>
+        <div class="srv-content">
+          <span class="srv-n">02</span>
+          <span class="srv-price">De 7€ a 14€</span>
+          <div class="srv-title">Cocktails & Bar</div>
+          <div class="srv-desc">Vodka, gin, rum, whisky — Mojitos, Caipirinha, Gin Tónico e muito mais.</div>
+        </div>
+      </div>
+      <div class="srv-card r d4">
+        <div class="srv-tag">Events</div>
+        <img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=700&q=85&auto=format&fit=crop" alt="Private Events" loading="lazy" decoding="async"/>
+        <div class="srv-content">
+          <span class="srv-n">03</span>
+          <span class="srv-price">Sob consulta</span>
+          <div class="srv-title">Private Events</div>
+          <div class="srv-desc">Aniversários, festas e eventos corporativos — reserva exclusiva disponível.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══ 3D GALLERY ══ -->
-  <section id="gallery3d">
-    <div class="g3-header">
+  <!-- ══ FLAVOURS ══ -->
+  <section id="flavours">
+    <div class="fl-header">
       <div>
-        <div class="tag r" style="margin-bottom:1.2rem">The Space</div>
-        <h2 class="r d1">Step inside<br><em class="g-text">Shisha Cloud</em></h2>
+        <div class="tag r" style="margin-bottom:1rem">Sabores do Momento</div>
+        <h2 class="r d1">Os nossos <em>sabores</em></h2>
+      </div>
+      <a href="/menu/" class="btn btn-ghost r">
+        Menu Completo
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="fl-grid r d2">
+      <span class="fl-pill"><span class="fl-dot"></span>Love 66 — Frutos exóticos e menta</span>
+      <span class="fl-pill"><span class="fl-dot"></span>DragonCode — Coca-Cola e RedBull</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Baku Night — Tutti-frutti e menta</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Jhawaii — Manga, menta e ananás</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Wattermelon — Melancia</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Rocktime — Limoncello e morango</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Lady Killer — Pêssego, manga e menta</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Moscow — Pêssego, melancia e menta</span>
+      <span class="fl-pill"><span class="fl-dot"></span>London Fog — Maçã, laranja, menta e pitaya</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Swiss Bonbon — Doces e menta</span>
+      <span class="fl-pill"><span class="fl-dot"></span>Mi Amor — Banana, ananás e menta</span>
+    </div>
+  </section>
+
+  <!-- ══ GALLERY ══ -->
+  <section id="gallery-strip">
+    <div class="gs-header">
+      <div>
+        <div class="tag r" style="margin-bottom:1rem">Inside Shisha Cloud</div>
+        <h2 class="r d1">The <em>atmosphere</em></h2>
       </div>
       <a href="/gallery/" class="btn btn-ghost r">
         Full Gallery
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div class="g3-scene" id="g3scene">
-      <div class="g3-track drag-scroll" id="g3track">
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">The Lounge</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Premium Shisha</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Signature Session</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">The Bar</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Cloud Series</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Evening Sessions</span></div>
-      </div>
+    <div class="gs-track drag-scroll">
+      <div class="gs-item"><img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" decoding="async"/><span class="gs-label">The Lounge</span></div>
+      <div class="gs-item"><img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=500&q=85&auto=format&fit=crop" alt="" loading="lazy" decoding="async"/><span class="gs-label">Premium Shisha</span></div>
+      <div class="gs-item"><img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" decoding="async"/><span class="gs-label">The Bar</span></div>
+      <div class="gs-item"><img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=500&q=85&auto=format&fit=crop" alt="" loading="lazy" decoding="async"/><span class="gs-label">Cloud Series</span></div>
+      <div class="gs-item"><img src="https://images.unsplash.com/photo-1574238919966-5cb3d9693a4b?w=700&q=85&auto=format&fit=crop" alt="" loading="lazy" decoding="async"/><span class="gs-label">Evening Sessions</span></div>
+      <div class="gs-item"><img src="https://images.unsplash.com/photo-1636024299675-96f8a62e12f6?w=600&q=85&auto=format&fit=crop" alt="" loading="lazy" decoding="async"/><span class="gs-label">Ambience</span></div>
     </div>
-    <div class="g3-hint">Drag to explore</div>
+    <div class="gs-hint">Drag to explore</div>
   </section>
 
   <!-- ══ MANIFESTO ══ -->
   <section id="manifesto">
-    <div class="mf-bg parallax" data-py="12%"></div>
+    <div class="mf-bg parallax" data-py="10%"></div>
     <div class="mf-overlay"></div>
-    <div class="grain"></div>
+    <div class="mf-grain"></div>
     <div class="mf-content r">
       <span class="mf-mark">"</span>
-      <blockquote class="mf-quote">
-        Time spent here is not lost —<br>it is <em class="g-text">savoured</em>.
-      </blockquote>
+      <blockquote class="mf-quote">Time spent here is not lost —<br>it is <em>savoured</em>.</blockquote>
       <p class="mf-attr">Shisha Cloud · Almada</p>
     </div>
   </section>
@@ -554,10 +503,10 @@
   <!-- ══ RESERVE CTA ══ -->
   <section id="reserve-cta">
     <div>
-      <div class="tag r" style="margin-bottom:1.4rem">Book Your Session</div>
-      <h2 class="rc-h2 r d1">Reserve your<br><em class="g-text">evening</em></h2>
+      <div class="tag r" style="margin-bottom:1.4rem">Reserve</div>
+      <h2 class="rc-h2 r d1">Reserve your<br><em>evening</em></h2>
       <p class="rc-p r d2">Secure your table in advance for the full experience. Walk-ins welcome subject to availability.</p>
-      <div style="margin-top:2rem" class="r d3">
+      <div class="rc-hours r d3">
         <div class="hour-row"><span class="day">Segunda a Domingo</span><span class="time">18:00 – 02:00</span></div>
       </div>
       <a href="/reserve/" class="btn btn-fill magnet r d4" style="margin-top:2.5rem;display:inline-flex;">
@@ -565,25 +514,25 @@
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div class="rc-right r d2">
-      <div class="rc-stats-2col">
+    <div class="r d2">
+      <div class="rc-2col">
         <div class="rc-stat">
-          <div class="rc-stat-num g-text" data-count="11" data-suffix="">0</div>
-          <div class="rc-stat-label">Sabores</div>
+          <div class="rc-snum" data-count="11" data-suffix="">0</div>
+          <div class="rc-slabel">Sabores</div>
         </div>
         <div class="rc-stat">
-          <div class="rc-stat-num g-text" data-count="5" data-suffix="★">0</div>
-          <div class="rc-stat-label">Rating</div>
+          <div class="rc-snum" data-count="5" data-suffix="★">0</div>
+          <div class="rc-slabel">Rating</div>
         </div>
       </div>
-      <div class="rc-stat" style="grid-column:span 2">
-        <div class="rc-stat-num g-text" data-count="200" data-suffix="+">0</div>
-        <div class="rc-stat-label">Happy guests per week</div>
+      <div class="rc-stat" style="background:rgba(255,255,255,.025)">
+        <div class="rc-snum" data-count="200" data-suffix="+">0</div>
+        <div class="rc-slabel">Happy guests per week</div>
       </div>
-      <div class="rc-stat">
+      <div class="rc-stat" style="padding:1.5rem 2rem">
         <div class="tag" style="margin-bottom:.8rem">Follow</div>
         <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener"
-           style="font-size:.72rem;letter-spacing:.1em;color:var(--gold-2);display:flex;align-items:center;gap:.5rem;cursor:none;transition:color .25s"
+           style="font-size:.72rem;letter-spacing:.1em;color:var(--gold-2);display:inline-flex;align-items:center;gap:.55rem;cursor:none;transition:color .25s"
            onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--gold-2)'">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
           @shishacloud_almada
@@ -592,7 +541,7 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ══ FOOTER ══ -->
   <footer>
     <div class="f-logo">Shisha Cloud</div>
     <ul class="f-links">
@@ -604,353 +553,180 @@
     <div class="f-copy">© 2025 Shisha Cloud · Almada, Portugal</div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <!-- Three.js only on desktop — skip the 580KB on mobile -->
-  <script>if(window.innerWidth>=768){document.write('<scr'+'ipt src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js" defer></scr'+'ipt>');}</script>
-  <script src="/js/main.js" defer></script>
+  <!-- ── Scripts: all at bottom, no defer needed since they're already end-of-body ── -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="/js/main.js"></script>
+
+  <!-- Three.js only on desktop — no defer so the hookah init below sees it immediately -->
   <script>
-    /* 3D card tilt */
-    document.querySelectorAll('.tilt-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = ((e.clientX - r.left) / r.width  - .5) * 14;
-        const y = ((e.clientY - r.top)  / r.height - .5) * -14;
-        card.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg) scale(1.02)`;
-        card.style.transition = 'transform .12s ease-out';
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-        card.style.transition = 'transform .6s var(--ease-out), background .35s';
-      });
+  (function(){
+    if (window.innerWidth < 768) {
+      var c = document.getElementById('hookah-canvas');
+      if (c) c.style.display = 'none';
+      return;
+    }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js';
+    s.onload = initHookah;
+    document.head.appendChild(s);
+  })();
+
+  function initHookah() {
+    var canvas = document.getElementById('hookah-canvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.5;
+
+    function resize() {
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+
+    var camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    camera.position.set(0, 3.0, 9);
+    camera.lookAt(0, 2.8, 0);
+
+    var scene = new THREE.Scene();
+    scene.add(new THREE.AmbientLight(0x10111a, 1.5));
+
+    var key = new THREE.PointLight(0xf0c060, 5, 18);
+    key.position.set(2.5, 7, 5); scene.add(key);
+    var rim = new THREE.DirectionalLight(0x5070c0, 0.7);
+    rim.position.set(-4, 3, -4); scene.add(rim);
+    var fill = new THREE.PointLight(0xc9973c, 1.2, 8);
+    fill.position.set(-2, 2, 3); scene.add(fill);
+
+    var goldM = new THREE.MeshStandardMaterial({ color:0xc9973c, metalness:0.92, roughness:0.16 });
+    var bodyM = new THREE.MeshStandardMaterial({ color:0x0b0e1c, metalness:0.06, roughness:0.05, transparent:true, opacity:0.9 });
+    var darkM = new THREE.MeshStandardMaterial({ color:0x18151f, metalness:0.55, roughness:0.45 });
+    var coalM = new THREE.MeshStandardMaterial({ color:0xff4400, emissive:0xcc2800, emissiveIntensity:2.5, roughness:0.95, metalness:0 });
+
+    var group = new THREE.Group();
+    scene.add(group);
+
+    function add(geo, mat, x,y,z,rx,ry,rz) {
+      x=x||0;y=y||0;z=z||0;rx=rx||0;ry=ry||0;rz=rz||0;
+      var m = new THREE.Mesh(geo, mat);
+      m.position.set(x,y,z); m.rotation.set(rx,ry,rz);
+      group.add(m); return m;
+    }
+
+    // Vase
+    var vPts = [[.05,0],[.32,.06],[.42,.28],[.52,.70],[.50,1.15],[.40,1.50],[.27,1.78],[.24,1.98],[.20,2.20],[.18,2.40]].map(function(p){return new THREE.Vector2(p[0],p[1]);});
+    add(new THREE.LatheGeometry(vPts,40), bodyM);
+    add(new THREE.TorusGeometry(.32,.022,16,48), goldM, 0,.07);
+    add(new THREE.TorusGeometry(.50,.020,16,48), goldM, 0,.70);
+    add(new THREE.TorusGeometry(.28,.022,16,48), goldM, 0,1.78);
+    add(new THREE.TorusGeometry(.20,.018,16,32), goldM, 0,2.40);
+
+    // Shaft
+    add(new THREE.CylinderGeometry(.036,.040,2.4,20), goldM, 0,2.40+1.2);
+    for(var i=0;i<4;i++) add(new THREE.TorusGeometry(.055,.014,8,24), goldM, 0,2.50+i*.60);
+
+    // Tray
+    var tY = 2.40+2.4;
+    add(new THREE.CylinderGeometry(.52,.50,.065,40), goldM, 0,tY+.032);
+    add(new THREE.TorusGeometry(.50,.020,12,48), goldM, 0,tY+.065);
+
+    // Bowl stem
+    var sY = tY+.065;
+    add(new THREE.CylinderGeometry(.050,.055,.50,16), darkM, 0,sY+.25);
+
+    // Bowl
+    var bY = sY+.50;
+    var bPts = [[.04,0],[.22,.06],[.26,.24],[.23,.48],[.14,.62],[.07,.72],[.05,.78]].map(function(p){return new THREE.Vector2(p[0],p[1]);});
+    add(new THREE.LatheGeometry(bPts,32), darkM, 0,bY);
+    add(new THREE.TorusGeometry(.23,.014,8,32), goldM, 0,bY+.10);
+
+    // Coal
+    var cY = bY+.82;
+    add(new THREE.CylinderGeometry(.148,.148,.055,32), coalM, 0,cY);
+    var coalPt = new THREE.PointLight(0xff6020, 3.0, 5);
+    coalPt.position.set(0,cY,0); group.add(coalPt);
+
+    // Hose ports
+    [-1,1].forEach(function(s){
+      add(new THREE.CylinderGeometry(.052,.052,.40,12), goldM, s*.56,1.1,0, 0,0,Math.PI/2);
+      add(new THREE.SphereGeometry(.062,12,12), goldM, s*.77,1.1,0);
     });
 
-    /* ══ THREE.JS HOOKAH SCENE ══ */
-    (function(){
-      const canvas = document.getElementById('hookah-canvas');
-      /* Skip on mobile or if Three.js didn't load */
-      if (!canvas || typeof THREE === 'undefined' || window.innerWidth < 768) {
-        if (canvas) canvas.style.display = 'none';
-        return;
-      }
+    // Hose
+    try {
+      var curve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(.77,1.1,0), new THREE.Vector3(1.25,.8,.5),
+        new THREE.Vector3(1.7,.2,1.0), new THREE.Vector3(2.0,-.5,1.4)
+      ]);
+      add(new THREE.TubeGeometry(curve,20,.038,10,false), new THREE.MeshStandardMaterial({color:0x1e0f0a,roughness:.85,metalness:0}));
+    } catch(e){}
 
-      /* ── Renderer ── */
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); /* was 2 — halves fill-rate on retina */
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.5;
-      function resize() {
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-        camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.updateProjectionMatrix();
-      }
+    // Smoke
+    var stC = document.createElement('canvas'); stC.width=stC.height=128;
+    var stX = stC.getContext('2d');
+    var sg = stX.createRadialGradient(64,64,0,64,64,64);
+    sg.addColorStop(0,'rgba(215,195,165,.65)'); sg.addColorStop(.4,'rgba(185,165,135,.28)'); sg.addColorStop(1,'rgba(0,0,0,0)');
+    stX.fillStyle=sg; stX.fillRect(0,0,128,128);
+    var smokeTex = new THREE.CanvasTexture(stC);
 
-      /* ── Camera ── */
-      const camera = new THREE.PerspectiveCamera(52, 1, 0.1, 100);
-      camera.position.set(0, 3.2, 8.5);
-      camera.lookAt(0, 2.8, 0);
+    var particles = [];
+    for(var pi=0;pi<30;pi++){
+      var mat = new THREE.SpriteMaterial({map:smokeTex,transparent:true,depthWrite:false,blending:THREE.NormalBlending,opacity:0,rotation:Math.random()*Math.PI*2});
+      var sp = new THREE.Sprite(mat);
+      var sx=(Math.random()-.5)*.28, sz=(Math.random()-.5)*.28;
+      sp.position.set(sx, cY+Math.random()*2.5, sz);
+      var sc=.25+Math.random()*.35; sp.scale.set(sc,sc,1);
+      scene.add(sp);
+      particles.push({s:sp,sx:sx,sz:sz,speed:.004+Math.random()*.005,drift:(Math.random()-.5)*.002,life:Math.random(),maxS:.32+Math.random()*.55,rot:(Math.random()-.5)*.013});
+    }
 
-      /* ── Scene ── */
-      const scene = new THREE.Scene();
+    var tRY=0,tRX=0,cRY=0,cRX=0,scrollY=0,t=0,raf=null,running=false;
+    window.addEventListener('mousemove',function(e){tRY=(e.clientX/window.innerWidth-.5)*.55;tRX=(e.clientY/window.innerHeight-.5)*.18;},{passive:true});
+    window.addEventListener('scroll',function(){scrollY=window.scrollY;},{passive:true});
+    window.addEventListener('resize',resize,{passive:true});
 
-      /* ── Lights ── */
-      scene.add(new THREE.AmbientLight(0x10111a, 1.5));
+    function stop(){if(raf){cancelAnimationFrame(raf);raf=null;running=false;}}
+    function start(){if(!running){running=true;animate();}}
+    document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
+    var obs=new IntersectionObserver(function(entries){entries[0].isIntersecting?start():stop();},{threshold:.01});
+    obs.observe(document.getElementById('hero'));
 
-      const keyLight = new THREE.PointLight(0xf0c060, 5, 18);
-      keyLight.position.set(2.5, 7, 5);
-      scene.add(keyLight);
-
-      const rimLight = new THREE.DirectionalLight(0x5070c0, 0.7);
-      rimLight.position.set(-4, 3, -4);
-      scene.add(rimLight);
-
-      const fillLight = new THREE.PointLight(0xc9973c, 1.2, 8);
-      fillLight.position.set(-2, 2, 3);
-      scene.add(fillLight);
-
-      /* ── Materials ── */
-      const goldMat = new THREE.MeshStandardMaterial({ color: 0xc9973c, metalness: 0.92, roughness: 0.16 });
-      const bodyMat = new THREE.MeshStandardMaterial({ color: 0x0b0e1c, metalness: 0.08, roughness: 0.06, transparent: true, opacity: 0.9 });
-      const darkMat = new THREE.MeshStandardMaterial({ color: 0x18151f, metalness: 0.55, roughness: 0.45 });
-      const coalMat = new THREE.MeshStandardMaterial({ color: 0xff4400, emissive: 0xcc2800, emissiveIntensity: 2.5, roughness: 0.95, metalness: 0 });
-
-      /* ── Hookah group ── */
-      const hookah = new THREE.Group();
-      scene.add(hookah);
-
-      function mesh(geo, mat, x=0,y=0,z=0, rx=0,ry=0,rz=0) {
-        const m = new THREE.Mesh(geo, mat);
-        m.position.set(x,y,z); m.rotation.set(rx,ry,rz);
-        hookah.add(m); return m;
-      }
-
-      /* 1. VASE — LatheGeometry */
-      const vPts = [
-        new THREE.Vector2(0.05, 0.00),
-        new THREE.Vector2(0.32, 0.06),
-        new THREE.Vector2(0.42, 0.28),
-        new THREE.Vector2(0.52, 0.70),
-        new THREE.Vector2(0.50, 1.15),
-        new THREE.Vector2(0.40, 1.50),
-        new THREE.Vector2(0.27, 1.78),
-        new THREE.Vector2(0.24, 1.98),
-        new THREE.Vector2(0.20, 2.20),
-        new THREE.Vector2(0.18, 2.40),
-      ];
-      mesh(new THREE.LatheGeometry(vPts, 40), bodyMat); /* 64→40 segments */
-
-      /* Decorative rings on vase */
-      mesh(new THREE.TorusGeometry(0.32, 0.022, 16, 48), goldMat, 0, 0.07);
-      mesh(new THREE.TorusGeometry(0.50, 0.020, 16, 48), goldMat, 0, 0.70);
-      mesh(new THREE.TorusGeometry(0.28, 0.022, 16, 48), goldMat, 0, 1.78);
-      mesh(new THREE.TorusGeometry(0.20, 0.018, 16, 32), goldMat, 0, 2.40);
-
-      /* 2. SHAFT */
-      const shaftY = 2.40;
-      mesh(new THREE.CylinderGeometry(0.036, 0.040, 2.4, 20), goldMat, 0, shaftY + 1.2);
-      for(let i=0; i<4; i++)
-        mesh(new THREE.TorusGeometry(0.055, 0.014, 8, 24), goldMat, 0, shaftY + 0.3 + i * 0.6);
-
-      /* 3. TRAY */
-      const trayY = shaftY + 2.4;
-      mesh(new THREE.CylinderGeometry(0.52, 0.50, 0.065, 42), goldMat, 0, trayY + 0.032);
-      mesh(new THREE.TorusGeometry(0.50, 0.020, 12, 48), goldMat, 0, trayY + 0.065);
-
-      /* 4. BOWL STEM */
-      const stemY = trayY + 0.065;
-      mesh(new THREE.CylinderGeometry(0.050, 0.055, 0.50, 16), darkMat, 0, stemY + 0.25);
-
-      /* 5. CLAY BOWL — LatheGeometry */
-      const bowlBase = stemY + 0.50;
-      const bPts = [
-        new THREE.Vector2(0.04, 0.00),
-        new THREE.Vector2(0.22, 0.06),
-        new THREE.Vector2(0.26, 0.24),
-        new THREE.Vector2(0.23, 0.48),
-        new THREE.Vector2(0.14, 0.62),
-        new THREE.Vector2(0.07, 0.72),
-        new THREE.Vector2(0.05, 0.78),
-      ];
-      mesh(new THREE.LatheGeometry(bPts, 32), darkMat, 0, bowlBase);
-      mesh(new THREE.TorusGeometry(0.23, 0.014, 8, 32), goldMat, 0, bowlBase + 0.10);
-
-      /* 6. COAL */
-      const coalY = bowlBase + 0.82;
-      mesh(new THREE.CylinderGeometry(0.148, 0.148, 0.055, 32), coalMat, 0, coalY);
-
-      /* Coal point light — pulses */
-      const coalPt = new THREE.PointLight(0xff6020, 3.0, 5);
-      coalPt.position.set(0, coalY, 0);
-      hookah.add(coalPt);
-
-      /* 7. HOSE PORTS */
-      for(let s of [-1, 1]) {
-        mesh(new THREE.CylinderGeometry(0.052,0.052,0.40,12), goldMat, s*0.56, 1.1, 0, 0,0,Math.PI/2);
-        mesh(new THREE.SphereGeometry(0.062,12,12), goldMat, s*0.77, 1.1, 0);
-      }
-
-      /* 8. HOSE */
-      try {
-        const curve = new THREE.CatmullRomCurve3([
-          new THREE.Vector3(0.77, 1.1, 0),
-          new THREE.Vector3(1.25, 0.8, 0.5),
-          new THREE.Vector3(1.7, 0.2, 1.0),
-          new THREE.Vector3(2.0, -0.5, 1.4),
-          new THREE.Vector3(2.2, -1.1, 1.7),
-        ]);
-        mesh(new THREE.TubeGeometry(curve, 24, 0.038, 10, false),
-             new THREE.MeshStandardMaterial({ color:0x1e0f0a, roughness:0.85, metalness:0 }));
-        mesh(new THREE.CylinderGeometry(0.052,0.038,0.38,12), goldMat, 2.0,-1.1,1.7, 0.4,0,0);
-      } catch(e){}
-
-      /* ── Smoke particles ── */
-      const stCanvas = document.createElement('canvas');
-      stCanvas.width = stCanvas.height = 128;
-      const stCtx = stCanvas.getContext('2d');
-      const stGrad = stCtx.createRadialGradient(64,64,0,64,64,64);
-      stGrad.addColorStop(0,   'rgba(215,195,165,.65)');
-      stGrad.addColorStop(0.4, 'rgba(185,165,135,.28)');
-      stGrad.addColorStop(1,   'rgba(155,135,110,0)');
-      stCtx.fillStyle = stGrad;
-      stCtx.fillRect(0,0,128,128);
-      const smokeTex = new THREE.CanvasTexture(stCanvas);
-
-      const PTCOUNT = 30; /* was 70 — each sprite is a draw call */
-      const particles = [];
-      for(let i=0; i<PTCOUNT; i++) {
-        const mat = new THREE.SpriteMaterial({
-          map: smokeTex, transparent: true, depthWrite: false,
-          blending: THREE.NormalBlending, opacity: 0,
-          rotation: Math.random() * Math.PI * 2,
-        });
-        const s = new THREE.Sprite(mat);
-        const sx = (Math.random()-.5)*.28, sz = (Math.random()-.5)*.28;
-        s.position.set(sx, coalY + Math.random()*3, sz);
-        scene.add(s);
-        particles.push({
-          s, sx, sz,
-          speed:    0.0035 + Math.random()*0.005,
-          drift:    (Math.random()-.5)*.0018,
-          life:     Math.random(),
-          maxScale: 0.32 + Math.random()*0.55,
-          rotSpeed: (Math.random()-.5)*0.013,
-        });
-      }
-
-      /* ── Interaction state ── */
-      let targetRY=0, targetRX=0, curRY=0, curRX=0;
-      let scrollY = 0;
-      let t = 0;
-      let raf = null;
-      let running = false;
-
-      window.addEventListener('mousemove', e => {
-        targetRY = (e.clientX/window.innerWidth  - .5) * 0.55;
-        targetRX = (e.clientY/window.innerHeight - .5) * 0.18;
-      }, { passive: true });
-      window.addEventListener('scroll', ()=>{ scrollY = window.scrollY; }, { passive: true });
-      window.addEventListener('resize', resize, { passive: true });
-
-      /* Pause when tab hidden or hero off-screen */
-      function stopLoop()  { if(raf){ cancelAnimationFrame(raf); raf=null; running=false; } }
-      function startLoop() { if(!running){ running=true; animate(); } }
-
-      document.addEventListener('visibilitychange', () => {
-        document.hidden ? stopLoop() : startLoop();
+    function animate(){
+      raf=requestAnimationFrame(animate); t+=.016;
+      cRY+=(tRY-cRY)*.045; cRX+=(tRX-cRX)*.045;
+      group.rotation.y=cRY+t*.003; group.rotation.x=cRX;
+      coalPt.intensity=2.8+Math.sin(t*3.8)*.7;
+      var sp=Math.min(scrollY/window.innerHeight,1);
+      camera.position.z=9+sp*3; camera.position.y=3.0-sp*1.5;
+      camera.lookAt(0,2.8-sp*.6,0);
+      particles.forEach(function(p){
+        p.life+=p.speed;
+        if(p.life>1){p.life=0;p.s.position.set(p.sx+(Math.random()-.5)*.18,cY+.05,p.sz+(Math.random()-.5)*.18);}
+        p.s.position.y+=p.speed*2.0; p.s.position.x+=p.drift+Math.sin(t*.8+p.life*8)*.0015;
+        p.s.material.rotation+=p.rot;
+        var l=p.life,op=l<.18?(l/.18)*.38:(1-l)*.38,sc=p.maxS*(.35+l*.9);
+        p.s.material.opacity=op; p.s.scale.set(sc,sc,1);
       });
+      renderer.render(scene,camera);
+    }
 
-      const heroObs = new IntersectionObserver(([e]) => {
-        e.isIntersecting ? startLoop() : stopLoop();
-      }, { threshold: 0.01 });
-      heroObs.observe(document.getElementById('hero'));
+    resize(); start();
+  }
+  </script>
 
-      /* ── Animation loop ── */
-      function animate() {
-        raf = requestAnimationFrame(animate);
-        t += 0.016;
-
-        /* Smooth mouse tilt */
-        curRY += (targetRY - curRY) * 0.045;
-        curRX += (targetRX - curRX) * 0.045;
-        hookah.rotation.y = curRY + t * 0.003;   /* slow auto-rotate */
-        hookah.rotation.x = curRX;
-
-        /* Coal glow pulse */
-        coalPt.intensity = 2.8 + Math.sin(t * 3.8) * 0.7;
-
-        /* Scroll: camera pulls back, looks down */
-        const sp = Math.min(scrollY / window.innerHeight, 1);
-        camera.position.z = 8.5 + sp * 3.5;
-        camera.position.y = 3.2 - sp * 1.8;
-        camera.lookAt(0, 2.8 - sp * 0.8, 0);
-
-        /* Smoke */
-        particles.forEach(p => {
-          p.life += p.speed;
-          if(p.life > 1) {
-            p.life = 0;
-            p.s.position.set(
-              p.sx + (Math.random()-.5)*.18,
-              coalY + 0.05,
-              p.sz + (Math.random()-.5)*.18
-            );
-          }
-          p.s.position.y  += p.speed * 2.0;
-          p.s.position.x  += p.drift + Math.sin(t*.8 + p.life*8) * 0.0014;
-          p.s.material.rotation += p.rotSpeed;
-
-          const l = p.life;
-          const op = l < .18 ? (l/.18)*.38 : (1-l)*.38;
-          p.s.material.opacity = op;
-          const sc = p.maxScale * (.35 + l * .9);
-          p.s.scale.set(sc, sc, 1);
-        });
-
-        renderer.render(scene, camera);
-      }
-
-      resize();
-      startLoop();
-    })();
-
-    /* ══ SCROLL PARALLAX — pull layers in/out at different depths ══ */
-    (function(){
-      const bg      = document.getElementById('heroBg');
-      const glow    = document.getElementById('heroGlow');
-      const dots    = document.getElementById('heroDotGrid');
-      const content = document.getElementById('heroContent');
-      const heroEl  = document.getElementById('hero');
-      if (!bg || !content) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroEl,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.2,
-          invalidateOnRefresh: true
-        }
-      });
-
-      /* Background photo: moves slowest — feels furthest away */
-      tl.to(bg,      { yPercent: 22, scale: 1.12, ease: 'none' }, 0);
-      /* Glow: mid depth */
-      tl.to(glow,    { yPercent: -18, opacity: 0, ease: 'none' }, 0);
-      /* Dot grid: moves slightly */
-      tl.to(dots,    { yPercent: 10, ease: 'none' }, 0);
-      /* Content: fastest — lifts out of frame */
-      tl.to(content, { yPercent: -38, opacity: 0, ease: 'none' }, 0);
-    })();
-
-    /* ══ MOUSE PARALLAX — only on desktop, rAF-throttled ══ */
-    (function(){
-      if (window.innerWidth < 768) return; /* skip on mobile */
-      const hero    = document.getElementById('hero');
-      const bg      = document.getElementById('heroBg');
-      const glow    = document.getElementById('heroGlow');
-      const content = document.getElementById('heroContent');
-      if (!hero || !bg) return;
-
-      let targetX=0, targetY=0, curX=0, curY=0, active=false;
-
-      hero.addEventListener('mousemove', e => {
-        const r = hero.getBoundingClientRect();
-        targetX = (e.clientX - r.left) / r.width  - .5;
-        targetY = (e.clientY - r.top)  / r.height - .5;
-        active = true;
-      }, { passive: true });
-      hero.addEventListener('mouseleave', () => { targetX=0; targetY=0; }, { passive: true });
-
-      function tick(){
-        if (active || Math.abs(curX) > 0.001 || Math.abs(curY) > 0.001) {
-          curX += (targetX - curX) * .055;
-          curY += (targetY - curY) * .055;
-          bg.style.transform      = `translate3d(${curX*36}px,${curY*26}px,0)`;
-          if (glow)    glow.style.transform    = `translate3d(${curX*52}px,${curY*38}px,0)`;
-          if (content) content.style.transform = `translate3d(${curX*-14}px,${curY*-10}px,0)`;
-        }
-        requestAnimationFrame(tick);
-      }
-      tick();
-    })();
-
-    /* ══ 3D gallery scene tilt ══ */
-    (function(){
-      const scene = document.getElementById('g3scene');
-      const track = document.getElementById('g3track');
-      if (!scene || !track) return;
-      track.addEventListener('mousemove', e => {
-        const r = track.getBoundingClientRect();
-        const tilt = ((e.clientX - r.left) / r.width - .5) * 6;
-        gsap.to(scene, { rotateY: tilt, duration: .8, ease: 'power2.out', overwrite: 'auto' });
-      });
-      track.addEventListener('mouseleave', () => {
-        gsap.to(scene, { rotateY: 0, duration: 1, ease: 'power2.out' });
-      });
-    })();
+  <!-- Hero entrance animations (runs after main.js which initialises GSAP) -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Animate gold line after preloader
+    window._heroLineReady = function() {
+      var line = document.querySelector('.hero-line');
+      if (line) setTimeout(function(){ line.classList.add('on'); }, 1400);
+    };
+  });
   </script>
 </body>
 </html>
