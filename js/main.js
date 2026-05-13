@@ -72,10 +72,8 @@ function transitionIn(cb) {
 
 function transitionOut() {
   if (!pt) return;
-  gsap.fromTo(pt,
-    { scaleY: 1, transformOrigin: 'top' },
-    { scaleY: 0, duration: .65, ease: 'power3.inOut', delay: .05 }
-  );
+  // pt already starts at scaleY(1) via inline style on inner pages — animate it away
+  gsap.to(pt, { scaleY: 0, transformOrigin: 'top', duration: .65, ease: 'power3.inOut', delay: .05 });
 }
 
 document.querySelectorAll('a').forEach(a => {
@@ -91,8 +89,18 @@ document.querySelectorAll('a').forEach(a => {
 /* ── Preloader ── */
 const preloader = document.getElementById('preloader');
 
+// Home page: hide nav until preloader finishes to prevent stutter
+if (preloader && nav) gsap.set(nav, { autoAlpha: 0 });
+
 function startReveal() {
-  if (!preloader) transitionOut();
+  if (!preloader) {
+    // Inner pages: animate #pt (already covering screen) away
+    transitionOut();
+  } else {
+    // Home page: ensure #pt is hidden (preloader was on top), then fade nav in
+    if (pt) gsap.set(pt, { scaleY: 0 });
+    if (nav) gsap.to(nav, { autoAlpha: 1, duration: .5, ease: 'power2.out' });
+  }
 
   /* Intersection observer for reveal classes */
   const obs = new IntersectionObserver(entries => {
