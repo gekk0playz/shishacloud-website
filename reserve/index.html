@@ -153,10 +153,31 @@
     </button>
   </nav>
   <div class="mobile-nav" id="mobileNav">
-    <a href="/"         onclick="closeMob()">Home</a>
-    <a href="/menu/"    onclick="closeMob()">Menu</a>
-    <a href="/gallery/" onclick="closeMob()">Gallery</a>
-    <a href="/reserve/" onclick="closeMob()">Reserve</a>
+    <div class="mnav-inner">
+      <div class="mnav-top">
+        <div class="mnav-logo">Shisha <em>Cloud</em></div>
+        <button class="mnav-close" onclick="closeMob()" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="2" y1="2" x2="18" y2="18"/><line x1="18" y1="2" x2="2" y2="18"/></svg>
+        </button>
+      </div>
+      <nav class="mnav-links">
+        <a href="/"         class="mnav-item" onclick="closeMob()"><span class="mnav-num">00</span><span class="mnav-text">Home</span></a>
+        <a href="/menu/"    class="mnav-item" onclick="closeMob()"><span class="mnav-num">01</span><span class="mnav-text">Menu</span></a>
+        <a href="/gallery/" class="mnav-item" onclick="closeMob()"><span class="mnav-num">02</span><span class="mnav-text">Gallery</span></a>
+        <a href="/reserve/" class="mnav-item" onclick="closeMob()"><span class="mnav-num">03</span><span class="mnav-text">Reserve</span></a>
+      </nav>
+      <div class="mnav-footer">
+        <div class="mnav-meta">
+          <div class="mnav-hours">Seg – Dom &nbsp;·&nbsp; 18:00 – 02:00</div>
+          <div class="mnav-location">Almada, Portugal</div>
+        </div>
+        <a href="https://www.instagram.com/shishacloud_almada/" target="_blank" rel="noopener" class="mnav-ig">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+          @shishacloud_almada
+        </a>
+        <a href="/reserve/" class="mnav-cta" onclick="closeMob()">Book a Table</a>
+      </div>
+    </div>
   </div>
 
 

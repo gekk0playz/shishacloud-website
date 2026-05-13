@@ -54,7 +54,7 @@ function closeMob() {
 
 /* ── Active nav link ── */
 const path = window.location.pathname.replace(/\/$/, '') || '/';
-document.querySelectorAll('.nav-links a, .mobile-nav a').forEach(a => {
+document.querySelectorAll('.nav-links a, .mnav-item').forEach(a => {
   const href = a.getAttribute('href').replace(/\/$/, '') || '/';
   if (href === path || (href !== '/' && path.startsWith(href))) a.classList.add('active');
 });
