@@ -330,7 +330,7 @@
 
   <!-- Full-bleed CTA -->
   <div class="full-bleed">
-    <img class="fb-img parallax" data-py="15%"
+    <img loading="lazy" decoding="async" class="fb-img parallax" data-py="15%"
          src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=1920&q=85&auto=format&fit=crop"
          alt="" loading="lazy" />
     <div class="fb-content r">
@@ -378,16 +378,16 @@
     <button class="lb-prev" id="lbPrev" aria-label="Previous">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3l-8 8 8 8"/></svg>
     </button>
-    <img id="lbImg" src="" alt="" />
+    <img loading="lazy" decoding="async" id="lbImg" src="" alt="" />
     <button class="lb-next" id="lbNext" aria-label="Next">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3l8 8-8 8"/></svg>
     </button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="/js/main.js" defer></script>
   <script>
     /* Lightbox */
     const items = Array.from(document.querySelectorAll('.grid-item'));

@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Shisha Cloud — Almada's premium shisha lounge. Premium flavours, handcrafted cocktails, unforgettable evenings."/>
   <title>Shisha Cloud · Almada</title>
+  <!-- Resource hints — resolve DNS & connections before scripts need them -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+  <link rel="preconnect" href="https://images.unsplash.com"/>
+  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
+  <!-- Preload hero image — it's the LCP element -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=85&auto=format&fit=crop" fetchpriority="high"/>
   <link rel="stylesheet" href="/css/main.css"/>
   <style>
     /* ═══ HERO ═══ */
@@ -22,7 +30,6 @@
       position: absolute; inset: -15%;   /* oversized so parallax has room */
       background-image: url('https://images.unsplash.com/photo-1635547821500-77542481940c?w=1920&q=88&auto=format&fit=crop');
       background-size: cover; background-position: center 35%;
-      will-change: transform;
     }
 
     /* Deep colour tint - sits above photo */
@@ -39,7 +46,7 @@
       width: 600px; height: 300px;
       background: radial-gradient(ellipse, rgba(201,151,60,.22) 0%, transparent 70%);
       filter: blur(40px);
-      will-change: transform; pointer-events: none;
+      pointer-events: none;
     }
 
     /* Three.js hookah canvas */
@@ -56,7 +63,6 @@
       position: relative; z-index: 5;
       display: flex; flex-direction: column; align-items: center;
       padding: 0 var(--gutter);
-      will-change: transform;
     }
 
     .hero-eyebrow {
@@ -418,7 +424,7 @@
     <div class="bento-grid">
       <!-- Shisha (large, 2x2) -->
       <div class="b-card span-2 row-2 r tilt-card">
-        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1635547821500-77542481940c?w=900&q=88&auto=format&fit=crop" alt="Premium Shisha" loading="lazy"/></div>
+        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1635547821500-77542481940c?w=900&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="Premium Shisha" loading="lazy"/></div>
         <div class="b-card-overlay"></div>
         <div class="b-tag">Signature</div>
         <div class="b-card-content">
@@ -434,7 +440,7 @@
 
       <!-- Cocktails (2×1) -->
       <div class="b-card span-2 r d2 tilt-card">
-        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=800&q=88&auto=format&fit=crop" alt="Cocktails" loading="lazy"/></div>
+        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1598968255928-108f28e37e12?w=800&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="Cocktails" loading="lazy"/></div>
         <div class="b-card-overlay"></div>
         <div class="b-tag">Bar Menu</div>
         <div class="b-card-content">
@@ -471,7 +477,7 @@
 
       <!-- Private events -->
       <div class="b-card span-2 r d4 tilt-card">
-        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=800&q=88&auto=format&fit=crop" alt="Private Events" loading="lazy"/></div>
+        <div class="b-card-img"><img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=800&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="Private Events" loading="lazy"/></div>
         <div class="b-card-overlay"></div>
         <div class="b-tag">Events</div>
         <div class="b-card-content">
@@ -520,12 +526,12 @@
     </div>
     <div class="g3-scene" id="g3scene">
       <div class="g3-track drag-scroll" id="g3track">
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">The Lounge</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Premium Shisha</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Signature Session</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">The Bar</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Cloud Series</span></div>
-        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=600&q=88&auto=format&fit=crop" alt="" loading="lazy"/><span class="g3-label">Evening Sessions</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1635548308183-45920db8ec88?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">The Lounge</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1636190479047-1f9aca70f966?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Premium Shisha</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574238752695-675b86d49267?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Signature Session</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1663791087889-ab0080ae0f08?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">The Bar</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1628231234164-b356aede0dcc?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Cloud Series</span></div>
+        <div class="g3-item"><img src="https://images.unsplash.com/photo-1574751749605-0f1e41b6cf67?w=600&q=88&auto=format&fit=crop" loading="lazy" decoding="async" alt="" loading="lazy"/><span class="g3-label">Evening Sessions</span></div>
       </div>
     </div>
     <div class="g3-hint">Drag to explore</div>
@@ -598,11 +604,12 @@
     <div class="f-copy">© 2025 Shisha Cloud · Almada, Portugal</div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <!-- Three.js only on desktop — skip the 580KB on mobile -->
+  <script>if(window.innerWidth>=768){document.write('<scr'+'ipt src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js" defer></scr'+'ipt>');}</script>
+  <script src="/js/main.js" defer></script>
   <script>
     /* 3D card tilt */
     document.querySelectorAll('.tilt-card').forEach(card => {
@@ -622,11 +629,15 @@
     /* ══ THREE.JS HOOKAH SCENE ══ */
     (function(){
       const canvas = document.getElementById('hookah-canvas');
-      if (!canvas || typeof THREE === 'undefined') return;
+      /* Skip on mobile or if Three.js didn't load */
+      if (!canvas || typeof THREE === 'undefined' || window.innerWidth < 768) {
+        if (canvas) canvas.style.display = 'none';
+        return;
+      }
 
       /* ── Renderer ── */
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); /* was 2 — halves fill-rate on retina */
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.5;
       function resize() {
@@ -687,7 +698,7 @@
         new THREE.Vector2(0.20, 2.20),
         new THREE.Vector2(0.18, 2.40),
       ];
-      mesh(new THREE.LatheGeometry(vPts, 64), bodyMat);
+      mesh(new THREE.LatheGeometry(vPts, 40), bodyMat); /* 64→40 segments */
 
       /* Decorative rings on vase */
       mesh(new THREE.TorusGeometry(0.32, 0.022, 16, 48), goldMat, 0, 0.07);
@@ -765,7 +776,7 @@
       stCtx.fillRect(0,0,128,128);
       const smokeTex = new THREE.CanvasTexture(stCanvas);
 
-      const PTCOUNT = 70;
+      const PTCOUNT = 30; /* was 70 — each sprite is a draw call */
       const particles = [];
       for(let i=0; i<PTCOUNT; i++) {
         const mat = new THREE.SpriteMaterial({
@@ -791,17 +802,32 @@
       let targetRY=0, targetRX=0, curRY=0, curRX=0;
       let scrollY = 0;
       let t = 0;
+      let raf = null;
+      let running = false;
 
       window.addEventListener('mousemove', e => {
         targetRY = (e.clientX/window.innerWidth  - .5) * 0.55;
         targetRX = (e.clientY/window.innerHeight - .5) * 0.18;
+      }, { passive: true });
+      window.addEventListener('scroll', ()=>{ scrollY = window.scrollY; }, { passive: true });
+      window.addEventListener('resize', resize, { passive: true });
+
+      /* Pause when tab hidden or hero off-screen */
+      function stopLoop()  { if(raf){ cancelAnimationFrame(raf); raf=null; running=false; } }
+      function startLoop() { if(!running){ running=true; animate(); } }
+
+      document.addEventListener('visibilitychange', () => {
+        document.hidden ? stopLoop() : startLoop();
       });
-      window.addEventListener('scroll', ()=>{ scrollY = window.scrollY; }, { passive:true });
-      window.addEventListener('resize', resize);
+
+      const heroObs = new IntersectionObserver(([e]) => {
+        e.isIntersecting ? startLoop() : stopLoop();
+      }, { threshold: 0.01 });
+      heroObs.observe(document.getElementById('hero'));
 
       /* ── Animation loop ── */
       function animate() {
-        requestAnimationFrame(animate);
+        raf = requestAnimationFrame(animate);
         t += 0.016;
 
         /* Smooth mouse tilt */
@@ -845,7 +871,7 @@
       }
 
       resize();
-      animate();
+      startLoop();
     })();
 
     /* ══ SCROLL PARALLAX — pull layers in/out at different depths ══ */
@@ -879,36 +905,34 @@
       tl.to(content, { yPercent: -38, opacity: 0, ease: 'none' }, 0);
     })();
 
-    /* ══ MOUSE PARALLAX — 3D tilt + depth shift ══ */
+    /* ══ MOUSE PARALLAX — only on desktop, rAF-throttled ══ */
     (function(){
+      if (window.innerWidth < 768) return; /* skip on mobile */
       const hero    = document.getElementById('hero');
       const bg      = document.getElementById('heroBg');
       const glow    = document.getElementById('heroGlow');
       const content = document.getElementById('heroContent');
       if (!hero || !bg) return;
 
-      let targetX=0, targetY=0, curX=0, curY=0;
-      let raf;
+      let targetX=0, targetY=0, curX=0, curY=0, active=false;
 
       hero.addEventListener('mousemove', e => {
         const r = hero.getBoundingClientRect();
-        targetX = (e.clientX - r.left) / r.width  - .5;   // -0.5 → 0.5
+        targetX = (e.clientX - r.left) / r.width  - .5;
         targetY = (e.clientY - r.top)  / r.height - .5;
-      });
-      hero.addEventListener('mouseleave', () => { targetX=0; targetY=0; });
+        active = true;
+      }, { passive: true });
+      hero.addEventListener('mouseleave', () => { targetX=0; targetY=0; }, { passive: true });
 
       function tick(){
-        curX += (targetX - curX) * .06;
-        curY += (targetY - curY) * .06;
-
-        /* Background: shift in same direction as mouse (parallax near) */
-        gsap.set(bg,      { x: curX * 38, y: curY * 28 });
-        /* Glow: slightly more movement */
-        gsap.set(glow,    { x: curX * 55, y: curY * 40 });
-        /* Content: shift opposite (depth illusion) */
-        gsap.set(content, { x: curX * -16, y: curY * -12 });
-
-        raf = requestAnimationFrame(tick);
+        if (active || Math.abs(curX) > 0.001 || Math.abs(curY) > 0.001) {
+          curX += (targetX - curX) * .055;
+          curY += (targetY - curY) * .055;
+          bg.style.transform      = `translate3d(${curX*36}px,${curY*26}px,0)`;
+          if (glow)    glow.style.transform    = `translate3d(${curX*52}px,${curY*38}px,0)`;
+          if (content) content.style.transform = `translate3d(${curX*-14}px,${curY*-10}px,0)`;
+        }
+        requestAnimationFrame(tick);
       }
       tick();
     })();

@@ -184,7 +184,7 @@
   <main class="reserve-page">
     <!-- Left: info panel -->
     <div class="res-panel-img">
-      <img src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=1400&q=85&auto=format&fit=crop"
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1580836103923-61625a6d2d26?w=1400&q=85&auto=format&fit=crop"
            alt="Shisha Cloud Lounge" />
       <div class="res-panel-img-overlay"></div>
       <div class="res-info">
@@ -283,10 +283,10 @@
     <div class="f-copy">© 2025 Shisha Cloud · Almada</div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="/js/main.js" defer></script>
   <script>
     /* Set min date */
     document.getElementById('dateInput').min = new Date().toISOString().split('T')[0];
