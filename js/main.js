@@ -92,7 +92,7 @@ document.querySelectorAll('a').forEach(a => {
 const preloader = document.getElementById('preloader');
 
 function startReveal() {
-  transitionOut();
+  if (!preloader) transitionOut();
 
   /* Intersection observer for reveal classes */
   const obs = new IntersectionObserver(entries => {

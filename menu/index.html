@@ -66,6 +66,23 @@
     }
     .ms-image:hover img { transform: scale(1.03); }
 
+    /* ── Flavour grid ── */
+    .flavour-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 1px; background: var(--border);
+    }
+    .flavour-item {
+      background: var(--bg); padding: 1.5rem 1.8rem;
+      transition: background .3s;
+    }
+    .flavour-item:hover { background: var(--bg3); }
+    .fi-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 300;
+    }
+    .fi-desc { font-size: .76rem; color: var(--muted); margin-top: .25rem; line-height: 1.5; }
+
     /* ── Shisha pricing ── */
     .shisha-prices {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -276,7 +293,21 @@
         </div>
       </div>
     </div>
-    <div class="shisha-note r d2">
+    <div class="sub-label r" style="margin-top:3.5rem">Sabores do Momento</div>
+    <div class="flavour-grid r">
+      <div class="flavour-item"><div class="fi-name">Love 66</div><div class="fi-desc">Frutos exóticos e menta</div></div>
+      <div class="flavour-item"><div class="fi-name">DragonCode</div><div class="fi-desc">Coca-Cola e RedBull</div></div>
+      <div class="flavour-item"><div class="fi-name">Baku Night</div><div class="fi-desc">Tutti-frutti e menta</div></div>
+      <div class="flavour-item"><div class="fi-name">Jhawaii</div><div class="fi-desc">Manga, menta e ananás</div></div>
+      <div class="flavour-item"><div class="fi-name">Wattermelon</div><div class="fi-desc">Melancia</div></div>
+      <div class="flavour-item"><div class="fi-name">Rocktime</div><div class="fi-desc">Limoncello e morango</div></div>
+      <div class="flavour-item"><div class="fi-name">Lady Killer</div><div class="fi-desc">Pêssego, manga e menta</div></div>
+      <div class="flavour-item"><div class="fi-name">Moscow</div><div class="fi-desc">Pêssego, melancia e menta</div></div>
+      <div class="flavour-item"><div class="fi-name">London Fog</div><div class="fi-desc">Maçã, laranja, menta e pitaya</div></div>
+      <div class="flavour-item"><div class="fi-name">Swiss Bonbon</div><div class="fi-desc">Doces e menta</div></div>
+      <div class="flavour-item"><div class="fi-name">Mi Amor</div><div class="fi-desc">Banana, ananás e menta</div></div>
+    </div>
+    <div class="shisha-note r" style="margin-top:2rem">
       <strong>Aviso de responsabilidade:</strong> O cliente assume total responsabilidade por todos os danos causados às shishas e ao material do estabelecimento (interior e exterior). Em caso de quebra ou dano, será aplicado um custo a partir de <strong>100€</strong> para substituição.
     </div>
   </section>
